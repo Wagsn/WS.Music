@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.Music", "WS.Music\WS.Music.csproj", "{4F44B81A-9E54-4033-8811-6ED6EA675A49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.Music.Core", "WS.Music.Core\WS.Music.Core.csproj", "{2202D0FF-EA39-473F-B15C-7F5C803231C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4F44B81A-9E54-4033-8811-6ED6EA675A49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F44B81A-9E54-4033-8811-6ED6EA675A49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F44B81A-9E54-4033-8811-6ED6EA675A49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2202D0FF-EA39-473F-B15C-7F5C803231C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2202D0FF-EA39-473F-B15C-7F5C803231C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2202D0FF-EA39-473F-B15C-7F5C803231C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2202D0FF-EA39-473F-B15C-7F5C803231C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
