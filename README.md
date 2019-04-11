@@ -5,13 +5,11 @@
 该项目主要使用技术：
 
 服务器端：
-C# 
-.NET Core API
+C# -> .NET Core API
 
 JSON
 
 客户端：
-Java
-Android
+Java -> Android
 
 
