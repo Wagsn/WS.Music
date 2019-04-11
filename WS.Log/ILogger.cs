@@ -37,6 +37,19 @@ namespace WS.Log
         /// <summary>
         /// 错误
         /// </summary>
+        /// <param name="message"></param>
+        void Error(object message);
+
+        /// <summary>
+        /// 错误
+        /// </summary>
+        /// <param name="tagName"></param>
+        /// <param name="message"></param>
+        void Error(object tagName, object message);
+
+        /// <summary>
+        /// 错误
+        /// </summary>
         /// <param name="formatString"></param>
         /// <param name="args"></param>
         void Error(string formatString, params object[] args);
