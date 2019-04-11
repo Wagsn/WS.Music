@@ -1,18 +1,12 @@
-# WS.Music
+# 基于 .NET Core 的在线音乐系统
 
-基于.NET_Core的在线音乐系统
-
-该项目主要使用技术：
+## 该项目主要使用技术
 
 服务器端：
-C# 
-.NET Core API
-
-JSON
+  C#  → .NET Core API
 
 客户端：
-Java
-Android
+  Java → Android
 
 ## 主要功能
 
@@ -34,9 +28,9 @@ Android
 
 	 停止
 
-	 下一首
-
 	 上一首
+
+	 下一首
 
 音乐搜索
 
