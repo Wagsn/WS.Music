@@ -30,22 +30,22 @@ namespace WS.Music.Core.Defines
         /// <summary>
         /// 签名 正则表达式
         /// </summary>
-        public const string SIGNNAME_REG = @"^[a-zA-Z0-9]{3,15}$";
+        public const string SIGNNAME_REG = @"^[\w]{3,15}$";
 
         /// <summary>
         /// 签名 格式错误消息
         /// </summary>
-        public const string SIGNNAME_ERR = "签名格式错误，长度为3-15，仅包含字母数字";
+        public const string USERNAME_ERR = "签名格式错误，长度为3-15，仅包含字母数字下划线";
 
         /// <summary>
         /// 密码 正则表达式
         /// </summary>
-        public const string PASSWORD_REG = @"^[a-zA-Z0-9_\.]{6,63}$";
+        public const string PASSWORD_REG = @"^[\w\.]{6,63}$";
 
         /// <summary>
         /// 密码 格式错误消息
         /// </summary>
-        public const string PASSWORD_ERR = "密码格式错误，长度在6-63位，包含字母数字下划线和点";
+        public const string PASSWORD_ERR = "密码格式错误，长度在6-63位，仅包含字母数字下划线和点";
 
         /// <summary>
         /// 可见字符 正则表达式

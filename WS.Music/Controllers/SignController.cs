@@ -52,11 +52,12 @@ namespace WS.Music.Controllers
         public IActionResult SignUp([FromForm]SignViewModel request, string returnUrl = null)
         {
             // 响应体构建
-            Logger.Trace($"注册、请求体：\r\n{JsonUtil.ToJson(request)}");
+            Logger.Trace($"[{nameof(SignUp)}] 请求体：\r\n{JsonUtil.ToJson(request)}");
             try
             {
                 if(Context.User.Any(a => a.Name == request.UserName))
                 {
+                    Logger.Trace($"[{nameof(SignUp)}] 注册失败-用户名已存在");
                     ModelState.AddModelError("UserName", "用户名已存在");
                     return View(nameof(Index), request);
                 }
@@ -68,11 +69,13 @@ namespace WS.Music.Controllers
                     PassWord = request.PassWord
                 });
                 Context.SaveChanges();
-                Logger.Trace("注册成功");
+                Logger.Trace($"[{nameof(SignUp)}] 注册成功");
             }
             catch (Exception e)
             {
-                Logger.Error($"[{nameof(SignUp)}] 用户创建失败：\r\n{e.ToString()}");
+                Logger.Error($"[{nameof(SignUp)}] 用户注册失败：\r\n{e.ToString()}");
+                ModelState.AddModelError("All", e.Message);
+                return View(nameof(Index), request);
             }
             return RedirectToAction(nameof(Index), new { returnUrl });
         }
@@ -87,30 +90,34 @@ namespace WS.Music.Controllers
         [HttpPost]
         public IActionResult SignIn([Required]SignViewModel request, string returnUrl = null)
         {
-            Logger.Trace("returnUrl: " + returnUrl + "\r\nrequest: " + JsonUtil.ToJson(request));
+            Logger.Trace($"[{nameof(SignIn)}] 用户登陆 returnUrl: {returnUrl}\r\nrequest: {JsonUtil.ToJson(request)}");
 
             ViewData["returnUrl"] = returnUrl;
 
-            // 参数检查
-            if (string.IsNullOrWhiteSpace(request.UserName) || string.IsNullOrWhiteSpace(request.PassWord))
+            // 参数检查-在Model里面验证
+            //if (string.IsNullOrWhiteSpace(request.UserName) || string.IsNullOrWhiteSpace(request.PassWord))
+            //{
+            //    Logger.Trace($"[{nameof(SignIn)}] 用户名或密码不能为空");
+            //    ModelState.AddModelError("All", "用户名或密码不能为空");
+            //    return View(nameof(Index), request);
+            //}
+            var user = Context.User.Where(u => u.Name == request.UserName).SingleOrDefault();
+            if (user == null)
             {
-                Logger.Trace($"[{nameof(SignIn)}] 用户名或密码不能为空");
-                ModelState.AddModelError("All", "用户名或密码不能为空");
+                Logger.Trace($"[{nameof(SignIn)}] 登陆失败-用户名不存在\r\nrequest{JsonUtil.ToJson(request)}");
+                ModelState.AddModelError("UserName", "用户名不存在");
                 return View(nameof(Index), request);
             }
-            if (Context.User.Any(user => user.Name == request.UserName && user.PassWord == request.PassWord))
+
+            if (!user.PassWord.Equals(request.PassWord))
             {
-                // 登陆成功
-                Logger.Trace("登陆成功");
-                return RedirectToLocal(returnUrl);
-            }
-            else
-            {
-                // 登陆失败
-                Logger.Trace("登陆失败");
-                ModelState.AddModelError("All", "用户名或密码错误");
+                Logger.Trace($"[{nameof(SignIn)}] 登陆失败-密码错误\r\nrequest{JsonUtil.ToJson(request)}");
+                ModelState.AddModelError("PassWord", "密码错误");
                 return View(nameof(Index), request);
             }
+
+            Logger.Trace($"[{nameof(SignIn)}] 登陆成功");
+            return RedirectToLocal(returnUrl);
         }
 
         private IActionResult RedirectToLocal(string returnUrl)

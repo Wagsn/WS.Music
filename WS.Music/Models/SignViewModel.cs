@@ -24,7 +24,7 @@ namespace WS.Music.Models
         /// </summary>
         [Required(ErrorMessage = "用户名不能为空")]
         [MaxLength(15)]
-        [RegularExpression(Constants.SIGNNAME_REG, ErrorMessage = Constants.SIGNNAME_ERR)]
+        [RegularExpression(Constants.SIGNNAME_REG, ErrorMessage = Constants.USERNAME_ERR)]
         public string UserName { get; set; }
 
         /// <summary>
