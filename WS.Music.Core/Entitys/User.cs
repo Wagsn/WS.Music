@@ -62,5 +62,7 @@ namespace WS.Music.Core.Entitys
         /// 用户唯一码，用以标识自然人、组织等
         /// </summary>
         public string UserCode { get; set; }
+
+        public User() { }
     }
 }

@@ -120,6 +120,69 @@ namespace WS.Music.Controllers
             return RedirectToLocal(returnUrl);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        public IActionResult SetPassWord(string returnUrl = null)
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult SetPassWord([Required]SetPassWordViewModel request, string returnUrl = null)
+        {
+            Logger.Trace($"[{nameof(SetPassWord)}] 设置密码 returnUrl: {returnUrl}\r\nrequest: {JsonUtil.ToJson(request)}");
+
+            try
+            {
+                // 用户名是唯一的可变的
+                var user = Context.User.Where(u => u.Name.Equals(request.UserName)).SingleOrDefault();
+                if(user == null)
+                {
+                    Logger.Trace($"[{nameof(SetPassWord)}] 设置密码-用户名不存在 returnUrl: {returnUrl}\r\nrequest: {JsonUtil.ToJson(request)}");
+                    ModelState.AddModelError("UserName", "用户名不存在");
+                    return View(request);
+                }
+                if (!user.PassWord.Equals(request.PassWord))
+                {
+                    Logger.Trace($"[{nameof(SetPassWord)}] 设置密码-旧密码错误 returnUrl: {returnUrl}\r\nrequest: {JsonUtil.ToJson(request)}");
+                    ModelState.AddModelError("PassWord", "旧密码错误");
+                    return View(request);
+                }
+                if (request.PassWord.Equals(request.NewPassWord))
+                {
+                    Logger.Trace($"[{nameof(SetPassWord)}] 设置密码-新密码不能与旧密码相同 returnUrl: {returnUrl}\r\nrequest: {JsonUtil.ToJson(request)}");
+                    ModelState.AddModelError("NewPassWord", "新密码不能与旧密码相同");
+                    return View(request);
+                }
+                if (!request.NewPassWord.Equals(request.Confirm))
+                {
+                    Logger.Trace($"[{nameof(SetPassWord)}] 设置密码-密码确认失败 returnUrl: {returnUrl}\r\nrequest: {JsonUtil.ToJson(request)}");
+                    ModelState.AddModelError("Confirm", "密码确认失败");
+                    return View(request);
+                }
+                user.PassWord = request.NewPassWord;
+                Context.User.Update(user);
+                Context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                Logger.Trace($"[{nameof(SetPassWord)}] 设置密码-服务器错误 returnUrl: {returnUrl}\r\nrequest: {JsonUtil.ToJson(request)}\r\n{e.ToString()}");
+                return View();
+            }
+        }
+
         private IActionResult RedirectToLocal(string returnUrl)
         {
             Console.WriteLine("登陆跳转URL：" + returnUrl);
