@@ -93,16 +93,25 @@ namespace WS.Text
             // @"(\$\{)(\w+)(\})"
             Regex regex = new Regex($"({leftReg}){@"(\w+)"}({rightReg})");
 
-            // 忽略不匹配项 key不存在保留${key}
+            // 忽略不匹配项
             if (option.Ignore)
             {
-                return regex.Replace(input, new MatchEvaluator(m => pairs.ContainsKey(m.Groups[2].ToString()) ? pairs[m.Groups[2].ToString()].ToString() : m.Value));
+                // 字典中key不存在的情况下保留${key}
+                return regex.Replace(input, new MatchEvaluator(m =>
+                {
+                    var key = m.Groups[2].ToString();
+                    return pairs.ContainsKey(key) ? pairs[key].ToString() : m.Value;
+                }));
             }
             // 将未找到匹配项值的占位符被删除
             else
             {
                 // 这里的m. m.Groups[2]指的是第二个分组（1-9）
-                return regex.Replace(input, new MatchEvaluator(m => pairs.ContainsKey(m.Groups[2].ToString()) ? pairs[m.Groups[2].ToString()].ToString() : ""));
+                return regex.Replace(input, new MatchEvaluator(m =>
+                {
+                    var key = m.Groups[2].ToString();
+                    return pairs.ContainsKey(key) ? pairs[key].ToString() : "";
+                }));
             }
         }
 
