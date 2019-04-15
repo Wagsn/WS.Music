@@ -3,11 +3,11 @@
 ## 使用技术
 
 服务器端：
-- C#  → .NET Core
-- MySQL
+  - C#  → .NET Core
+  - MySQL
 
 客户端：
-- Java → Android
+  - Java → Android
 
 ## 功能说明
 
