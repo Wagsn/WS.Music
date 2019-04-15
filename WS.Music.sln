@@ -20,8 +20,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.Music", "WS.Music\WS.Mus
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.Music.Core", "WS.Music.Core\WS.Music.Core.csproj", "{7D092706-8D9F-4484-81AA-B27E931E3360}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{C895369D-F500-4E94-A4A2-233CDE2E0C09}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
