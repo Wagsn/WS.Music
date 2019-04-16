@@ -15,7 +15,6 @@ namespace FileServer
     {
         private readonly FileServerConfig _config = null;
         private readonly ILogger _logger = LoggerManager.GetLogger<FileController>();
-        private readonly object FilrInfo;
 
         public FileController(FileServerConfig config)
         {
