@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="config.json" />
     <Content Remove="Views\Home\About.cshtml" />
     <Content Remove="Views\Home\Contact.cshtml" />
     <Content Remove="Views\Home\Index.cshtml" />
@@ -19,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Views\Home\About.cshtml" />
     <None Include="Views\Home\Contact.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
@@ -40,8 +44,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WS.IO\WS.IO.csproj" />
     <ProjectReference Include="..\WS.Log\WS.Log.csproj" />
     <ProjectReference Include="..\WS.Music.Core\WS.Music.Core.csproj" />
+    <ProjectReference Include="..\WS.Text\WS.Text.csproj" />
   </ItemGroup>
 
 </Project>

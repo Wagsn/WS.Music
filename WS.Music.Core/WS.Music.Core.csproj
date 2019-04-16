@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WS.Log\WS.Log.csproj" />
-    <ProjectReference Include="..\WS.Text\WS.Text.csproj" />
   </ItemGroup>
 
 </Project>

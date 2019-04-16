@@ -1,0 +1,54 @@
+﻿{
+  "Logging": {
+    "IncludeScopes": false,
+    "Debug": {
+      "LogLevel": {
+        "Default": "Warning"
+      }
+    },
+    "Console": {
+      "LogLevel": {
+        "Default": "Warning"
+      }
+    }
+  },
+  "FileServer": {
+    "PathList": [
+      {
+        "LocalPath": "f:\\files\\all",
+        "Url": "/files"
+      },
+      {
+        "LocalPath": "f:\\files\\images",
+        "Url": "/images",
+        "Exts": [
+          ".jpeg",
+          ".jpg",
+          ".png"
+        ]
+      },
+      {
+        "LocalPath": "f:\\files\\audios",
+        "Url": "/audios"
+      },
+      {
+        "LocalPath": "f:\\files\\videos",
+        "Url": "/videos"
+      },
+      {
+        "LocalPath": "f:\\files\\texts",
+        "Url": "/texts",
+        "Exts": [
+          ".txt",
+          ".md"
+        ]
+      }
+    ]
+  },
+  "Data": {
+    "DefaultConnection": {
+      "ConnectionString": "server=localhost;database=ws_music;user=admin;password=123456;"
+    }
+  },
+  "Port": 5001
+}

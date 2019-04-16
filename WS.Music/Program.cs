@@ -17,7 +17,15 @@ namespace WS.Music
     {
         public static void Main(string[] args)
         {
-            var host = WebHost.CreateDefaultBuilder(args).UseStartup<Startup>().Build();
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("config.json")
+                .AddEnvironmentVariables()
+                .Build();
+
+            var host = WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .UseUrls($"http://*:{configuration["Port"]}")
+                .Build();
 
             // 数据库初始化
             using (var scope = host.Services.CreateScope())
