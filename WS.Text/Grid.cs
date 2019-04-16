@@ -64,69 +64,6 @@ namespace WS.Text
         }
 
         /// <summary>
-        /// 打印表格、无用方法
-        /// </summary>
-        static void PrintTable()
-        {
-            const int ROWS = 3;
-            const int COLS = 3;
-            int[,] arr = new int[ROWS, COLS] {
-                {0,1,2},
-                {3,4,5},
-                {6,7,8}
-            };
-
-            for (int i = 0, r = 0; i < (ROWS * 2 + 1); ++i)
-            {
-                if (i == 0)
-                {
-                    Console.Write("┌");
-                    for (int j = 0; j < COLS; ++j)
-                    {
-                        if (j < COLS - 1)
-                            Console.Write("─┬");
-                        else
-                            Console.Write("─┐");
-                    }
-                }
-                else if (i == ROWS * 2)
-                {
-                    Console.Write("└");
-
-                    for (int j = 0; j < COLS; ++j)
-                    {
-                        if (j < COLS - 1)
-                            Console.Write("─┴");
-                        else
-                            Console.Write("─┘");
-                    }
-                }
-                else if (i % 2 == 0)
-                {
-                    Console.Write("├");
-                    for (int j = 0; j < COLS; ++j)
-                    {
-                        if (j < COLS - 1)
-                            Console.Write("─┼");
-                        else
-                            Console.Write("─┤");
-                    }
-                }
-                else
-                {
-                    Console.Write("│");
-                    for (int j = 0; j < COLS; ++j)
-                    {
-                        Console.Write(" {0}│", arr[r, j]);
-                    }
-                    ++r;
-                }
-
-                Console.WriteLine();
-            }
-        }
-
-        /// <summary>
         /// 打印等宽表格线
         /// location 表格线的位置， 0 表头线，1 表中线，2 表尾线
         /// colCount 表格的列数 
