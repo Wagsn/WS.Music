@@ -8,8 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{823DC9CE-BFBC-4F4F-A7B1-12DE373FC57B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.IO", "WS.IO\WS.IO.csproj", "{DC970D92-3CEF-488E-A60F-791A514687A1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.Log", "WS.Log\WS.Log.csproj", "{DEE86CDC-DEA9-4353-97C5-7831EA6B9E74}"
@@ -19,6 +17,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.Music", "WS.Music\WS.Music.csproj", "{8B59DFC1-3EC1-486D-B613-AB285BCA4993}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.Text", "WS.Text\WS.Text.csproj", "{BCF6E2E3-C5AD-4253-882A-F9EA980645B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{F787ABE6-1C3A-4F89-9AA6-6CEF1E6B0B9C}"
+	ProjectSection(SolutionItems) = preProject
+		doc\01_王森的毕业设计任务书.docx = doc\01_王森的毕业设计任务书.docx
+		doc\02_王森的毕业设计开题报告.docx = doc\02_王森的毕业设计开题报告.docx
+		doc\03_基于.NET Core的在线音乐系统_需求分析_王森.docx = doc\03_基于.NET Core的在线音乐系统_需求分析_王森.docx
+		doc\04_基于.NET Core的在线音乐系统_系统概要设计_王森.docx = doc\04_基于.NET Core的在线音乐系统_系统概要设计_王森.docx
+		doc\05_基于.NET Core的在线音乐系统_系统详细设计_王森.docx = doc\05_基于.NET Core的在线音乐系统_系统详细设计_王森.docx
+		doc\06_基于.NET Core的在线音乐系统_论文草稿_王森.docx = doc\06_基于.NET Core的在线音乐系统_论文草稿_王森.docx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
