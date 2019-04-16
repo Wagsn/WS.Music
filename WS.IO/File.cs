@@ -14,8 +14,6 @@
 * 版 本 号 ：v1.0.0.0
 //----------------------------------------------------------------*/
 #endregion
-using System.ComponentModel.DataAnnotations;
-using System.IO;
 
 namespace WS.IO
 {
@@ -29,13 +27,17 @@ namespace WS.IO
         /// </summary>
         /// <param name="path">文件路径</param>
         /// <param name="contents">文件正文</param>
-        public static void WriteAllText([Required]string path, string contents, bool append = false)
+        public static void WriteAllText(string path, string contents, bool append = false)
         {
-            FileInfo textFile = new FileInfo(path);
-            StreamWriter writer;
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                throw new System.ArgumentNullException(nameof(path));
+            }
+            var textFile = new System.IO.FileInfo(path);
+            System.IO.StreamWriter writer;
             if (!textFile.Exists)
             {
-                DirectoryInfo textDir = textFile.Directory;
+                System.IO.DirectoryInfo textDir = textFile.Directory;
                 if (!textDir.Exists)
                 {
                     textDir.Create();
