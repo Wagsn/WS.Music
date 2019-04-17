@@ -113,7 +113,10 @@ namespace WS.Log
         {
             Log(Config, LogLevels.Trace, message);
         }
-
+        public void Trace(object message)
+        {
+            Log(Config, LogLevels.Trace, JsonUtil.ToJson(message));
+        }
         public void Trace(string formatString, params object[] args)
         {
             Log(Config, LogLevels.Trace, formatString, args);

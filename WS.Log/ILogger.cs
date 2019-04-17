@@ -101,6 +101,8 @@ namespace WS.Log
         /// <param name="message"></param>
         void Trace(string message);
 
+        void Trace(object message);
+
         /// <summary>
         /// 痕迹
         /// </summary>
