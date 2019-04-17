@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WS.Music.Core.Entitys
+namespace WS.Music.Core.Entities
 {
     /// <summary>
     /// 数据库上下文

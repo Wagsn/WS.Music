@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace WS.Music.Core.Entitys
+namespace WS.Music.Core.Entities
 {
     /// <summary>
     /// 音乐专辑实体

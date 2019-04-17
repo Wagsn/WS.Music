@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace WS.Music.Core.Entitys
+namespace WS.Music.Core.Entities
 {
     /// <summary>
     /// 歌单与歌曲的关联实体，（多对多）,关联表不需要那么多其它数据

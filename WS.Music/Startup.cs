@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using WS.Music.Core.Entitys;
+using WS.Music.Core.Entities;
 
 namespace WS.Music
 {

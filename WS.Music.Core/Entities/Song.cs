@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace WS.Music.Core.Entitys
+namespace WS.Music.Core.Entities
 {
     /// <summary>
     /// 歌曲实体，逻辑信息（在文件服务器上的位置就不要写在这里），歌曲信息的更新必须要知道其ID，如何处理现场或翻唱之类的行为（有些是分成两首歌，歌名或歌手不同）

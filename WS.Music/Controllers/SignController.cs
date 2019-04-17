@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using WS.Log;
-using WS.Music.Core.Entitys;
+using WS.Music.Core.Entities;
 using WS.Music.Models;
 using WS.Text;
 
@@ -19,12 +19,12 @@ namespace WS.Music.Controllers
         /// <summary>
         /// 日志器
         /// </summary>
-        public ILogger Logger = LoggerManager.GetLogger<SignController>();
+        private readonly ILogger Logger = LoggerManager.GetLogger<SignController>();
 
         /// <summary>
         /// 数据库上下文
         /// </summary>
-        protected ApplicationDbContext Context { get; set; }
+        private ApplicationDbContext Context { get; set; }
 
 
         public SignController(ApplicationDbContext context)

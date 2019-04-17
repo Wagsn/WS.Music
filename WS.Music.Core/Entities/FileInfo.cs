@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WS.Music.Core.Entitys
+namespace WS.Music.Core.Entities
 {
     /// <summary>
     /// 文件描述

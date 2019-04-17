@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WS.Text;
 using WS.Log;
-using WS.Music.Core.Entitys;
+using WS.Music.Core.Entities;
 
 namespace FileServer
 {

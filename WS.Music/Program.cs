@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WS.Music.Core.Defines;
-using WS.Music.Core.Entitys;
+using WS.Music.Core.Entities;
 
 namespace WS.Music
 {
