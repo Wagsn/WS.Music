@@ -1,7 +1,5 @@
 package net.wagsn.music.storage;
 
-import android.util.Log;
-
 import net.wagsn.music.model.Song;
 import net.wagsn.util.Logger;
 
@@ -9,8 +7,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class StorageManagerTest {
 

@@ -12,10 +12,7 @@ import android.annotation.SuppressLint;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-
-import org.junit.Test;
 
 /**
  * 用来打印日志到项目根目录下的[log]文件下。
