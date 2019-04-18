@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using WS.Core.Dto;
-using WS.Core.MessageServer;
+using WS.Core;
 using WS.Log;
 using WS.Text;
 
-namespace WS.MessageServer.Controllers
+namespace WS.MessageServer
 {
     /// <summary>
     /// 消息服务的控制器
@@ -18,8 +16,13 @@ namespace WS.MessageServer.Controllers
     public class MessageController : Controller
     {
         private readonly ILogger Logger = LoggerManager.GetLogger<MessageController>();
-        private readonly IMessageSender Sender = new AppPusher();
 
+        private readonly IMessageSender Sender;
+
+        public MessageController(IMessageSender messageSender)
+        {
+            Sender = messageSender;
+        }
 
         /// <summary>
         /// 消息发送

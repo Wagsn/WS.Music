@@ -6,11 +6,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\WS.Core\WS.Core.csproj" />
     <ProjectReference Include="..\WS.Log\WS.Log.csproj" />
+    <ProjectReference Include="..\WS.MessageServer.Entities\WS.MessageServer.Entities.csproj" />
+    <ProjectReference Include="..\WS.MessageServer.Stores\WS.MessageServer.Stores.csproj" />
     <ProjectReference Include="..\WS.Text\WS.Text.csproj" />
   </ItemGroup>
 
