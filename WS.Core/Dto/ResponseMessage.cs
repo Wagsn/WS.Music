@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WS.Core.Dto
+namespace WS.Core
 {
     public class ResponseMessage
     {
@@ -14,22 +14,16 @@ namespace WS.Core.Dto
             Code = ResponseCodeDefines.SuccessCode;
         }
 
-        public bool IsSuccess()
-        {
-            if (Code == ResponseCodeDefines.SuccessCode)
-            {
-                return true;
-            }
-            return false;
-        }
+        public bool IsSuccess() => Code == ResponseCodeDefines.SuccessCode;
+        
     }
 
-    public class ResponseMessage<TEx> : ResponseMessage
+    public class ResponseMessage<TData> : ResponseMessage
     {
-        public TEx Extension { get; set; }
+        public TData Extension { get; set; }
     }
 
-    public class PagingResponseMessage<Tentity> : ResponseMessage<List<Tentity>>
+    public class PagingResponseMessage<TEntity> : ResponseMessage<List<TEntity>>
     {
         public int PageIndex { get; set; }
 

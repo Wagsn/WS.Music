@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WS.Core.Dto
+namespace WS.Core
 {
     /// <summary>
     /// 响应码定义
