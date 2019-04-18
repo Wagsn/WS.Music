@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WS.Music.Core.Defines;
-using WS.Music.Core.Entities;
+using System;
+using WS.Music.Defines;
+using WS.Music.Entities;
 
 namespace WS.Music
 {
@@ -24,6 +20,7 @@ namespace WS.Music
 
             var host = WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                // 设置端口（*表示使用本机IP地址）
                 .UseUrls($"http://*:{configuration["Port"]}")
                 .Build();
 

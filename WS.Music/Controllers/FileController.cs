@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
-using WS.Text;
-using WS.Log;
-using WS.Music.Core.Entities;
+using WS.Music.Entities;
 
 namespace FileServer
 {
@@ -14,7 +11,7 @@ namespace FileServer
     public class FileController : Controller
     {
         private readonly FileServerConfig _config = null;
-        private readonly ILogger _logger = LoggerManager.GetLogger<FileController>();
+        private readonly WS.Log.ILogger _logger = WS.Log.LoggerManager.GetLogger<FileController>();
 
         public FileController(FileServerConfig config)
         {
@@ -49,7 +46,7 @@ namespace FileServer
             }
 
             var files = Request.Form.Files;
-            _logger.Trace(JsonUtil.ToJson(files));
+            _logger.Trace(WS.Text.JsonUtil.ToJson(files));
 
             if (!Request.Form.Files.Any())
             {
@@ -102,7 +99,7 @@ namespace FileServer
                     await f.OpenReadStream().CopyToAsync(fs);
                     
                     // 添加描述文件
-                    WS.IO.File.WriteAllText(System.IO.Path.ChangeExtension(fi.Path, ".json"), JsonUtil.ToJson(fi));
+                    WS.IO.File.WriteAllText(System.IO.Path.ChangeExtension(fi.Path, ".json"), WS.Text.JsonUtil.ToJson(fi));
                 }
             }
             return new JsonResult(fileinfos);

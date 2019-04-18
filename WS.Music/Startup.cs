@@ -12,7 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using WS.Music.Core.Entities;
+using WS.MessageServer;
+using WS.Music.Entities;
 
 namespace WS.Music
 {
@@ -55,6 +56,11 @@ namespace WS.Music
                 it.UseMySql(configuration["Data:DefaultConnection:ConnectionString"]);
                 //it.UseMySql("server=localhost;database=ws_music;user=admin;password=123456;");
             });
+
+            // 依赖注入
+            MessageServerStartup.ConfigureServices(services);
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WS.Log;
-using WS.Music.Core.Defines;
+using WS.Music.Defines;
 
 namespace WS.Music.Core.Filters
 {

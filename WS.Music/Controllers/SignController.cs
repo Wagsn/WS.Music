@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using WS.Log;
-using WS.Music.Core.Entities;
+using WS.Music.Entities;
 using WS.Music.Models;
 using WS.Text;
 
@@ -55,14 +55,14 @@ namespace WS.Music.Controllers
             Logger.Trace($"[{nameof(SignUp)}] 请求体：\r\n{JsonUtil.ToJson(request)}");
             try
             {
-                if(Context.User.Any(a => a.Name == request.UserName))
+                if(Context.Users.Any(a => a.Name == request.UserName))
                 {
                     Logger.Trace($"[{nameof(SignUp)}] 注册失败-用户名已存在");
                     ModelState.AddModelError("UserName", "用户名已存在");
                     return View(nameof(Index), request);
                 }
                 // 用户创建
-                Context.User.Add(new User
+                Context.Users.Add(new User
                 {
                     Id = Guid.NewGuid().ToString(),
                     Name = request.UserName,
@@ -101,7 +101,7 @@ namespace WS.Music.Controllers
             //    ModelState.AddModelError("All", "用户名或密码不能为空");
             //    return View(nameof(Index), request);
             //}
-            var user = Context.User.Where(u => u.Name == request.UserName).SingleOrDefault();
+            var user = Context.Users.Where(u => u.Name == request.UserName).SingleOrDefault();
             if (user == null)
             {
                 Logger.Trace($"[{nameof(SignIn)}] 登陆失败-用户名不存在\r\nrequest{JsonUtil.ToJson(request)}");
@@ -146,7 +146,7 @@ namespace WS.Music.Controllers
             try
             {
                 // 用户名是唯一的可变的
-                var user = Context.User.Where(u => u.Name.Equals(request.UserName)).SingleOrDefault();
+                var user = Context.Users.Where(u => u.Name.Equals(request.UserName)).SingleOrDefault();
                 if(user == null)
                 {
                     Logger.Trace($"[{nameof(SetPassWord)}] 设置密码-用户名不存在 returnUrl: {returnUrl}\r\nrequest: {JsonUtil.ToJson(request)}");
@@ -172,7 +172,7 @@ namespace WS.Music.Controllers
                     return View(request);
                 }
                 user.PassWord = request.NewPassWord;
-                Context.User.Update(user);
+                Context.Users.Update(user);
                 Context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }

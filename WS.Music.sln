@@ -28,9 +28,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{F787ABE6-1C3
 		doc\06_基于.NET Core的在线音乐系统_论文草稿_王森.docx = doc\06_基于.NET Core的在线音乐系统_论文草稿_王森.docx
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.MessageServer", "WS.MessageServer\WS.MessageServer.csproj", "{A3A769F6-2E8F-43FA-A9AB-C7F4461E486D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.MessageServer", "WS.MessageServer\WS.MessageServer.csproj", "{A3A769F6-2E8F-43FA-A9AB-C7F4461E486D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.Core", "WS.Core\WS.Core.csproj", "{A6313F1A-088B-432D-A5D6-A3BBB3D1F450}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.Core", "WS.Core\WS.Core.csproj", "{A6313F1A-088B-432D-A5D6-A3BBB3D1F450}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.Music.Entities", "WS.Music.Entities\WS.Music.Entities.csproj", "{791C8AE0-D955-4681-9736-2D49F26FDE03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.Music.Stores", "WS.Music.Storage\WS.Music.Stores.csproj", "{C1DA2A15-C126-4D7F-A968-A18BB32FF82E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.Music.Defines", "WS.Music.Defines\WS.Music.Defines.csproj", "{6A490257-1E4B-4415-AD96-D3D8687759B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.MessageServer.Entities", "WS.MessageServer.Entities\WS.MessageServer.Entities.csproj", "{1CC7549F-3F5F-4300-8816-7944D1EB784A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.PluginCore", "WS.PluginCore\WS.PluginCore.csproj", "{123851BB-23DA-4B88-A40F-C8E2943E1B87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.MessageServer.Stores", "WS.MessageServer.Stores\WS.MessageServer.Stores.csproj", "{94FB5BDD-0ACA-4532-832E-C7B1F8690FC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +78,30 @@ Global
 		{A6313F1A-088B-432D-A5D6-A3BBB3D1F450}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6313F1A-088B-432D-A5D6-A3BBB3D1F450}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6313F1A-088B-432D-A5D6-A3BBB3D1F450}.Release|Any CPU.Build.0 = Release|Any CPU
+		{791C8AE0-D955-4681-9736-2D49F26FDE03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{791C8AE0-D955-4681-9736-2D49F26FDE03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{791C8AE0-D955-4681-9736-2D49F26FDE03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{791C8AE0-D955-4681-9736-2D49F26FDE03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1DA2A15-C126-4D7F-A968-A18BB32FF82E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1DA2A15-C126-4D7F-A968-A18BB32FF82E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1DA2A15-C126-4D7F-A968-A18BB32FF82E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1DA2A15-C126-4D7F-A968-A18BB32FF82E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A490257-1E4B-4415-AD96-D3D8687759B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A490257-1E4B-4415-AD96-D3D8687759B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A490257-1E4B-4415-AD96-D3D8687759B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A490257-1E4B-4415-AD96-D3D8687759B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CC7549F-3F5F-4300-8816-7944D1EB784A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CC7549F-3F5F-4300-8816-7944D1EB784A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CC7549F-3F5F-4300-8816-7944D1EB784A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CC7549F-3F5F-4300-8816-7944D1EB784A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{123851BB-23DA-4B88-A40F-C8E2943E1B87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{123851BB-23DA-4B88-A40F-C8E2943E1B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{123851BB-23DA-4B88-A40F-C8E2943E1B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{123851BB-23DA-4B88-A40F-C8E2943E1B87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94FB5BDD-0ACA-4532-832E-C7B1F8690FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94FB5BDD-0ACA-4532-832E-C7B1F8690FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94FB5BDD-0ACA-4532-832E-C7B1F8690FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94FB5BDD-0ACA-4532-832E-C7B1F8690FC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

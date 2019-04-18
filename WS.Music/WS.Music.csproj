@@ -29,10 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WS.IO\WS.IO.csproj" />
-    <ProjectReference Include="..\WS.Log\WS.Log.csproj" />
+    <ProjectReference Include="..\WS.MessageServer\WS.MessageServer.csproj" />
     <ProjectReference Include="..\WS.Music.Core\WS.Music.Core.csproj" />
-    <ProjectReference Include="..\WS.Text\WS.Text.csproj" />
   </ItemGroup>
 
 </Project>

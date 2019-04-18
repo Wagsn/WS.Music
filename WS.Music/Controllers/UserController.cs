@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using WS.Music.Core.Entities;
+using WS.Music.Entities;
 
 namespace WS.Music.Controllers
 {
@@ -21,7 +21,7 @@ namespace WS.Music.Controllers
         // GET: User
         public async Task<IActionResult> Index()
         {
-            return View(await Context.User.ToListAsync());
+            return View(await Context.Users.ToListAsync());
         }
 
         // GET: User/Details/5
@@ -32,7 +32,7 @@ namespace WS.Music.Controllers
                 return NotFound();
             }
 
-            var user = await Context.User
+            var user = await Context.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -72,7 +72,7 @@ namespace WS.Music.Controllers
                 return NotFound();
             }
 
-            var user = await Context.User.FindAsync(id);
+            var user = await Context.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace WS.Music.Controllers
                 return NotFound();
             }
 
-            var user = await Context.User
+            var user = await Context.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -138,15 +138,15 @@ namespace WS.Music.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var user = await Context.User.FindAsync(id);
-            Context.User.Remove(user);
+            var user = await Context.Users.FindAsync(id);
+            Context.Users.Remove(user);
             await Context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UserExists(string id)
         {
-            return Context.User.Any(e => e.Id == id);
+            return Context.Users.Any(e => e.Id == id);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using WS.Music.Core.Defines;
+using WS.Music.Defines;
 
 namespace WS.Music.Models
 {
