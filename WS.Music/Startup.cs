@@ -33,6 +33,7 @@ namespace WS.Music
                     .AddEnvironmentVariables()
                     .Build();
 
+            #region 文件上传
             var fs = configuration.GetSection("FileServer");
             FileServerConfig config = fs.Get<FileServerConfig>();
             services.AddSingleton(config);
@@ -43,6 +44,7 @@ namespace WS.Music
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            #endregion
 
             // 添加登陆过滤
             //services.AddMvc(config => config.Filters.Add(typeof(SignFilter))).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -66,6 +68,7 @@ namespace WS.Music
                 options.AllowCredentials();
             });
 
+            #region 文件上传
             FileServerConfig config = app.ApplicationServices.GetService<FileServerConfig>();
             if (config != null && config.PathList != null)
             {
@@ -99,6 +102,7 @@ namespace WS.Music
                     Console.WriteLine("路径映射：{0}-->{1}", pi.LocalPath, pi.Url);
                 }
             }
+            #endregion
 
             if (env.IsDevelopment())
             {
