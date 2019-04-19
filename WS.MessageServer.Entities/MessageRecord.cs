@@ -16,7 +16,7 @@
         public int Code { get; set; }
 
         /// <summary>
-        /// 正文
+        /// 正文（字符串与JSON对象）
         /// </summary>
         public string Content { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿namespace WS.Music.Entities
+﻿namespace WS.Music.Stores
 {
     /// <summary>
     /// 数据库初始化器
@@ -9,7 +9,7 @@
         /// 库初始化
         /// </summary>
         /// <param name="context"></param>
-        public static void Initialize(ApplicationDbContext context)
+        public static void Initialize(MusicDbContext context)
         {
             context.Database.EnsureCreated();
         }

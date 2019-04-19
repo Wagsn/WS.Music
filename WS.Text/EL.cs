@@ -16,6 +16,7 @@
 #endregion
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -34,7 +35,7 @@ namespace WS.Text
         /// <summary>
         /// 对象的键值映射
         /// </summary>
-        public Dictionary<string, Func<string>> KVs = new Dictionary<string, Func<string>>();
+        public Dictionary<string, Func<string>> KFs = new Dictionary<string, Func<string>>();
 
         /// <summary>
         /// 对象解析模板
@@ -43,7 +44,7 @@ namespace WS.Text
         /// <returns></returns>
         public string Parse (string template)
         {
-            return Parse(template, KVs, @"\$\{", @"\}");
+            return Parse(template, KFs, @"\$\{", @"\}");
         }
 
         /// <summary>
@@ -84,23 +85,26 @@ namespace WS.Text
         /// </summary>
         /// <param name="input">模板字符串</param>
         /// <param name="pairs">键值对</param>
-        /// <param name="leftReg">占位符左标识正则</param>
-        /// <param name="rightReg">占位符右标识正则</param>
+        /// <param name="leftPattern">占位符左标识正则</param>
+        /// <param name="rightPattern">占位符右标识正则</param>
         /// <returns></returns>
-        public static string Parse(string input, Dictionary<string, object> pairs, string leftReg, string rightReg, ELOption option = default(ELOption))
+        public static string Parse(string input, Dictionary<string, object> pairs, string leftPattern, string rightPattern, ELOption option = default(ELOption))
         {
+            // 后期需要加入匹配字符串正则表达化
             // left right 作为匹配字符串要正则表达式转义
             // @"(\$\{)(\w+)(\})"
-            Regex regex = new Regex($"({leftReg}){@"(\w+)"}({rightReg})");
+            Regex regex = new Regex($"({leftPattern}){@"(\w+)"}({rightPattern})");
 
             // 忽略不匹配项
-            if (option.Ignore)
+            if (!option.Ignore)
             {
                 // 字典中key不存在的情况下保留${key}
                 return regex.Replace(input, new MatchEvaluator(m =>
                 {
+                    // Group 是 指的第二个分组（小括号的顺序）
+                    // Capture 是 捕获的匹配该分组的所有字符串
                     var key = m.Groups[2].ToString();
-                    return pairs.ContainsKey(key) ? pairs[key].ToString() : m.Value;
+                    return pairs.ContainsKey(key) ? pairs[key].ToString() : m.Groups[2].Value;
                 }));
             }
             // 将未找到匹配项值的占位符被删除
@@ -109,7 +113,8 @@ namespace WS.Text
                 // 这里的m. m.Groups[2]指的是第二个分组（1-9）
                 return regex.Replace(input, new MatchEvaluator(m =>
                 {
-                    var key = m.Groups[2].ToString();
+                    // 忽略空格
+                    var key = m.Groups[2].ToString().Trim();
                     return pairs.ContainsKey(key) ? pairs[key].ToString() : "";
                 }));
             }
@@ -119,27 +124,27 @@ namespace WS.Text
         /// 表达式解析 动态计算Value(无参)
         /// </summary>
         /// <param name="input"></param>
-        /// <param name="pairs"></param>
+        /// <param name="funcs"></param>
         /// <param name="leftReg"></param>
         /// <param name="rightReg"></param>
         /// <param name="option"></param>
         /// <returns></returns>
-        public static string Parse(string input, Dictionary<string, Func<string>> pairs, string leftReg, string rightReg, ELOption option = default(ELOption))
+        public static string Parse(string input, Dictionary<string, Func<string>> funcs, string leftReg, string rightReg, ELOption option = default(ELOption))
         {
             // left right 作为匹配字符串要正则表达式转义
             // @"(\$\{)(\w+)(\})"
             Regex regex = new Regex($"({leftReg}){@"(\w+)"}({rightReg})");
 
             // 忽略不匹配项 key不存在保留${key}
-            if (option.Ignore)
+            if (!option.Ignore)
             {
-                return regex.Replace(input, new MatchEvaluator(m => pairs.ContainsKey(m.Groups[2].ToString()) ? pairs[m.Groups[2].ToString()]() : m.Value));
+                return regex.Replace(input, new MatchEvaluator(m => funcs.ContainsKey(m.Groups[2].ToString()) ? funcs[m.Groups[2].ToString()]() : m.Value));
             }
             // 将未找到匹配项值的占位符被删除
             else
             {
                 // 这里的m. m.Groups[2]指的是第二个分组（1-9）
-                return regex.Replace(input, new MatchEvaluator(m => pairs.ContainsKey(m.Groups[2].ToString()) ? pairs[m.Groups[2].ToString()]() : ""));
+                return regex.Replace(input, new MatchEvaluator(m => funcs.ContainsKey(m.Groups[2].ToString()) ? funcs[m.Groups[2].ToString()]() : ""));
             }
         }
 
@@ -147,27 +152,36 @@ namespace WS.Text
         /// 表达式解析 动态计算Value
         /// </summary>
         /// <param name="input"></param>
-        /// <param name="pairs"></param>
+        /// <param name="funcs"></param>
         /// <param name="leftReg"></param>
         /// <param name="rightReg"></param>
         /// <param name="option"></param>
         /// <returns></returns>
-        public static string Parse(string input, object entity, Dictionary<string, Func<object, string>> pairs, string leftReg, string rightReg, ELOption option = default(ELOption))
+        public static string Parse(string input, object entity, Dictionary<string, Func<object, string>> funcs, string leftReg, string rightReg, ELOption option = default(ELOption))
         {
             // left right 作为匹配字符串要正则表达式转义
             // @"(\$\{)(\w+)(\})"
             Regex regex = new Regex($"({leftReg}){@"(\w+)"}({rightReg})");
 
             // 忽略不匹配项 key不存在保留${key}
-            if (option.Ignore)
+            if (!option.Ignore)
             {
-                return regex.Replace(input, new MatchEvaluator(m => pairs.ContainsKey(m.Groups[2].ToString()) ? pairs[m.Groups[2].ToString()](entity) : m.Value));
+                //return regex.Replace(input, new MatchEvaluator(m => pairs.ContainsKey(m.Groups[2].ToString()) ? pairs[m.Groups[2].ToString()](entity) : m.Value));
+                return regex.Replace(input, new MatchEvaluator(m =>
+                {
+                    var key = m.Groups[2].ToString().Trim();
+                    return funcs.ContainsKey(key) ? funcs[key](entity) : m.Value;
+                }));
             }
             // 将未找到匹配项值的占位符被删除
             else
             {
                 // 这里的m. m.Groups[2]指的是第二个分组（1-9）
-                return regex.Replace(input, new MatchEvaluator(m => pairs.ContainsKey(m.Groups[2].ToString()) ? pairs[m.Groups[2].ToString()](entity) : ""));
+                return regex.Replace(input, new MatchEvaluator(m =>
+                {
+                    var key = m.Groups[2].ToString().Trim();
+                    return funcs.ContainsKey(key) ? funcs[key](entity) :"";
+                }));
             }
         }
 
@@ -177,10 +191,9 @@ namespace WS.Text
         public struct ELOption
         {
             /// <summary>
-            /// 是否忽略不匹配项
+            /// 是否忽略不匹配项 默认false
             /// false: "${Date} ${NotFoundTagName}" -> "2018-11-28 ${NotFoundTagName}"
             /// Created by Wagsn on 2018/11/28 11:29.
-            /// 默认false
             /// </summary>
             public bool Ignore { get; set; }
         }

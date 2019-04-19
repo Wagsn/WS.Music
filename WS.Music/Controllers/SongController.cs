@@ -10,22 +10,22 @@ using WS.Music.Stores;
 
 namespace WS.Music.Controllers
 {
-    public class UserController : Controller
+    public class SongController : Controller
     {
-        private readonly MusicDbContext Context;
+        private readonly MusicDbContext _context;
 
-        public UserController(MusicDbContext context)
+        public SongController(MusicDbContext context)
         {
-            Context = context;
+            _context = context;
         }
 
-        // GET: User
+        // GET: Song
         public async Task<IActionResult> Index()
         {
-            return View(await Context.Users.ToListAsync());
+            return View(await _context.Songs.ToListAsync());
         }
 
-        // GET: User/Details/5
+        // GET: Song/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace WS.Music.Controllers
                 return NotFound();
             }
 
-            var user = await Context.Users
+            var song = await _context.Songs
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            if (song == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(song);
         }
 
-        // GET: User/Create
+        // GET: Song/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Song/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,PassWord,Email,Address,Description,BirthTime,Sex,UserCode,_CreateUserId,_CreateTime,_UpdateUserId,_UpdateTime,_DeleteUserId,_DeleteTime,_IsDeleted")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Duration,ReleaseTime,Url,_CreateUserId,_CreateTime,_UpdateUserId,_UpdateTime,_DeleteUserId,_DeleteTime,_IsDeleted")] Song song)
         {
             if (ModelState.IsValid)
             {
-                Context.Add(user);
-                await Context.SaveChangesAsync();
+                _context.Add(song);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(song);
         }
 
-        // GET: User/Edit/5
+        // GET: Song/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace WS.Music.Controllers
                 return NotFound();
             }
 
-            var user = await Context.Users.FindAsync(id);
-            if (user == null)
+            var song = await _context.Songs.FindAsync(id);
+            if (song == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(song);
         }
 
-        // POST: User/Edit/5
+        // POST: Song/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,PassWord,Email,Address,Description,BirthTime,Sex,UserCode,_CreateUserId,_CreateTime,_UpdateUserId,_UpdateTime,_DeleteUserId,_DeleteTime,_IsDeleted")] User user)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Description,Duration,ReleaseTime,Url,_CreateUserId,_CreateTime,_UpdateUserId,_UpdateTime,_DeleteUserId,_DeleteTime,_IsDeleted")] Song song)
         {
-            if (id != user.Id)
+            if (id != song.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace WS.Music.Controllers
             {
                 try
                 {
-                    Context.Update(user);
-                    await Context.SaveChangesAsync();
+                    _context.Update(song);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.Id))
+                    if (!SongExists(song.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace WS.Music.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(song);
         }
 
-        // GET: User/Delete/5
+        // GET: Song/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace WS.Music.Controllers
                 return NotFound();
             }
 
-            var user = await Context.Users
+            var song = await _context.Songs
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            if (song == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(song);
         }
 
-        // POST: User/Delete/5
+        // POST: Song/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var user = await Context.Users.FindAsync(id);
-            Context.Users.Remove(user);
-            await Context.SaveChangesAsync();
+            var song = await _context.Songs.FindAsync(id);
+            _context.Songs.Remove(song);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(string id)
+        private bool SongExists(string id)
         {
-            return Context.Users.Any(e => e.Id == id);
+            return _context.Songs.Any(e => e.Id == id);
         }
     }
 }

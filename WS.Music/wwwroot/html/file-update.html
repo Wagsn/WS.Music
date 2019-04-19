@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>文件上传</title>
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        let fileLast = null;
+        // 文件添加
+        function fileAdd(dom) {
+            console.log('file add button clicked')
+            let temp = $('<div><lable>file:  </lable><input type="file" name="file"><br></div>')
+            if (fileLast == null) {
+                $('#group-password').after(temp)
+            } else {
+                fileLast.after(temp)
+            }
+            fileLast = temp
+        }
+    </script>
+</head>
+<body>
+    <h1>文件上传</h1>
+    <form action="../File/Upload/Wagsn" method="post" enctype="multipart/form-data">
+        <div>
+            <label>username: </label>
+            <input type="text" name="username" /><br />
+        </div>
+        <div id="group-password">
+            <label>password: </label>
+            <input type="text" name="password" /><br /> <br />
+        </div>
+        <br />
+        <button type="button" onclick="fileAdd(this);">添加文件</button>
+        <input type="submit" value="上传文件" />
+    </form>
+</body>
+
+</html>

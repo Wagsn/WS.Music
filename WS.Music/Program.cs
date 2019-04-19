@@ -4,8 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using WS.Music.Defines;
-using WS.Music.Entities;
+using WS.Music.Stores;
 
 namespace WS.Music
 {
@@ -30,7 +29,7 @@ namespace WS.Music
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<ApplicationDbContext>();
+                    var context = services.GetRequiredService<MusicDbContext>();
                     DbIntializer.Initialize(context);
                 }
                 catch (Exception e)

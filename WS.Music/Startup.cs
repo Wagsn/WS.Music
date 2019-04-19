@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using WS.MessageServer;
-using WS.Music.Entities;
+using WS.Music.Stores;
 
 namespace WS.Music
 {
@@ -51,11 +51,13 @@ namespace WS.Music
             //services.AddMvc(config => config.Filters.Add(typeof(SignFilter))).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<ApplicationDbContext>(it =>
+            services.AddDbContext<MusicDbContext>(it =>
             {
                 it.UseMySql(configuration["Data:DefaultConnection:ConnectionString"]);
                 //it.UseMySql("server=localhost;database=ws_music;user=admin;password=123456;");
             });
+
+            services.AddScoped<IMusicStore, MusicStore>();
 
             // 依赖注入
             MessageServerStartup.ConfigureServices(services);

@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>音乐搜索</title>
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        // 获取搜索表单数据
+        function getSearchData() {
+            return {
+                pageIndex: $('[name=pageIndex]').val().trim(),
+                pageSize: $('[name=pageSize]').val().trim(),
+                keyWord: $('[name=keyWord]').val().trim(),
+            }
+        }
+        // 设置搜索表单数据
+        function setSearchData(data) {
+            pageIndex: $('[name=pageIndex]').val(data.pageIndex)
+            pageSize: $('[name=pageSize]').val(data.pageSize)
+            keyWord: $('[name=keyWord]').val(data.keyWord)
+        }
+        // 设置歌曲列表数据
+        function setSongList(data) {
+            console.log("song list: ", data)
+            let songList = $('.song-list')
+            let bodyHtml =""
+            data.forEach(v => {
+                console.log('v: ', v)
+                let rowHtml = ""
+                rowHtml += '<tr>'
+                rowHtml += '<td>' + v.name + '</td>'
+                rowHtml += '<td>' + v.description + '</td>'
+                rowHtml += '<td>' + v.duration + '</td>'
+                rowHtml += '<td>' + v.releaseTime + '</td>'
+                rowHtml += '<td>'+v.url+'</td>'
+                rowHtml += '</tr>'
+                bodyHtml += rowHtml;
+            })
+            songList.html(bodyHtml);
+        }
+        // 搜索请求
+        function search() {
+            console.log('request: ', getSearchData())
+            $.ajax({
+                url: "../api/song/list/search",
+                method: "post",
+                contentType: "application/json",
+                data: JSON.stringify(getSearchData()),
+                success: function (body) {
+                    console.log("response body:", body)
+                    if (body.code == "0") {
+                        setSongList(body.data)
+                    }
+                    else {
+                        alert('歌曲数据加载失败！')
+                    }
+                },
+                error: function (data) {
+                    alert('请求失败！' + JSON.stringify(data))
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <h1>音乐搜索</h1>
+    <form action="../api/song/list/search" method="get">
+        <div class="form-group">
+            <label class="form-lable">分页索引</label>
+            <input type="number" min="0" name="pageIndex" value="0" />
+        </div>
+        <div class="form-group">
+            <label class="form-lable">分页大小</label>
+            <input type="number" min="1" name="pageSize" value="10" />
+        </div>
+        <div class="form-group">
+            <label class="form-lable">关键词</label>
+            <input type="text" name="keyWord" placeholder="输入歌名"/>
+        </div>
+        <input type="button" value="开始搜索" onclick="search()"/>
+    </form>
+    <br/>
+    <br/>
+    <table border="1" cellpadding="10" cellspacing="0">
+        <tr>
+            <th>歌名</th>
+            <th>描述</th>
+            <th>时长</th>
+            <th>发布时间</th>
+            <th>资源</th>
+        </tr>
+        <tbody class="song-list">
+
+        </tbody>
+    </table>
+</body>
+</html>

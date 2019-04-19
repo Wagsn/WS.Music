@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WS.Log;
 using WS.Music.Entities;
 using WS.Music.Models;
+using WS.Music.Stores;
 using WS.Text;
 
 namespace WS.Music.Controllers
@@ -24,12 +25,18 @@ namespace WS.Music.Controllers
         /// <summary>
         /// 数据库上下文
         /// </summary>
-        private ApplicationDbContext Context { get; set; }
+        private MusicDbContext Context { get; set; }
+
+        /// <summary>
+        /// 音乐存储（对应音乐实体的存储操作）
+        /// </summary>
+        private IMusicStore MusicStore { get; set; }
 
 
-        public SignController(ApplicationDbContext context)
+        public SignController(MusicDbContext context, IMusicStore musicStore)
         {
             Context = context;
+            MusicStore = musicStore;
         }
 
         /// <summary>

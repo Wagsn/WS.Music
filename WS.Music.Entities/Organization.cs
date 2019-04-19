@@ -25,6 +25,6 @@ namespace WS.Music.Entities
         /// <summary>
         /// 创建时间
         /// </summary>
-        public DateTime? BuildTime { get; set; }
+        public DateTime? CreateTime { get; set; }
     }
 }

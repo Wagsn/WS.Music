@@ -33,7 +33,10 @@ namespace WS.Text
         {
             if (obj == null)
                 return "";
-
+            //if(obj is string)
+            //{
+            //    return obj.ToString();
+            //}
             return JsonConvert.SerializeObject(obj, setting);
         }
 

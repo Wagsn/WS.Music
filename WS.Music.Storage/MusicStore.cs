@@ -6,11 +6,11 @@ using WS.Music.Entities;
 
 namespace WS.Music.Stores
 {
-    public class StoreBase : IStore
+    public class MusicStore : IMusicStore
     {
-        private readonly ApplicationDbContext Context;
+        private readonly MusicDbContext Context;
 
-        public StoreBase(ApplicationDbContext context)
+        public MusicStore(MusicDbContext context)
         {
             Context = context;
         }

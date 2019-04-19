@@ -20,7 +20,7 @@ namespace WS.Core
 
     public class ResponseMessage<TData> : ResponseMessage
     {
-        public TData Extension { get; set; }
+        public TData Data { get; set; }
     }
 
     public class PagingResponseMessage<TEntity> : ResponseMessage<List<TEntity>>

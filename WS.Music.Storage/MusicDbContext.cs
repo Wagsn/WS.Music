@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WS.Music.Entities;
 
-namespace WS.Music.Entities
+namespace WS.Music.Stores
 {
     /// <summary>
     /// 数据库上下文
     /// </summary>
-    public class ApplicationDbContext : DbContext
+    public class MusicDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public MusicDbContext(DbContextOptions<MusicDbContext> options) : base(options) { }
 
-        public ApplicationDbContext() { }
+        public MusicDbContext() { }
 
         /// <summary>
         /// 用户
@@ -26,7 +27,30 @@ namespace WS.Music.Entities
         /// </summary>
         public DbSet<Artist> Artists { get; set; }
 
+        /// <summary>
+        /// 音乐
+        /// </summary>
+        public DbSet<Song> Songs { get; set; }
 
+        /// <summary>
+        /// 组织
+        /// </summary>
+        public DbSet<Organization> Organizations { get; set; }
+
+        /// <summary>
+        /// 文件信息
+        /// </summary>
+        public DbSet<FileInfo> FileInfos { get; set; }
+
+        /// <summary>
+        /// 歌单
+        /// </summary>
+        public DbSet<PlayList> PlayLists { get; set; }
+
+        /// <summary>
+        /// 歌单歌曲关联
+        /// </summary>
+        public DbSet<RelPlayListSong> RelPlayListSongs { get; set; }
 
         ///// <summary>
         ///// 模型创建
@@ -47,5 +71,5 @@ namespace WS.Music.Entities
         //    //TODO: 采用配置文件的方式
         //    builder.UseMySql("server=192.168.100.132;database=ws_internship;user=admin;password=123456;");
         //}
-}
+    }
 }

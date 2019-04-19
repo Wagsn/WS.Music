@@ -10,18 +10,10 @@ namespace WS.Music.Entities
     /// </summary>
     public class RelPlayListSong
     {
-        /// <summary>
-        /// 歌单ID
-        /// </summary>
-        [Key]
-        [MaxLength(63)]
+        public string Id { get; set; }
+
         public string PlayListId { get; set; }
 
-        /// <summary>
-        /// 歌曲ID
-        /// </summary>
-        [Key]
-        [MaxLength(63)]
         public string SongId { get; set; }
 
         ///// <summary>

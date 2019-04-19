@@ -21,7 +21,7 @@
         public string ReceiveUserId { get; set; }
 
         /// <summary>
-        /// 接收人类型（私人、群组、广场、主页？合并成组织）
+        /// 接收人类型（1：私人、2：群组、3：主页、4：广场？合并成组织）
         /// </summary>
         public int ReceiveUserType { get; set; }
 
