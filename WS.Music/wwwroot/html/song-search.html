@@ -13,7 +13,7 @@
                 keyWord: $('[name=keyWord]').val().trim(),
             }
         }
-        // 设置搜索表单数据
+        // 设置搜索表单数据  组件化与插件化
         function setSearchData(data) {
             pageIndex: $('[name=pageIndex]').val(data.pageIndex)
             pageSize: $('[name=pageSize]').val(data.pageSize)
@@ -47,7 +47,7 @@
                 contentType: "application/json",
                 data: JSON.stringify(getSearchData()),
                 success: function (body) {
-                    console.log("response body:", body)
+                    console.log("song search response body:", body)
                     if (body.code == "0") {
                         setSongList(body.data)
                     }
