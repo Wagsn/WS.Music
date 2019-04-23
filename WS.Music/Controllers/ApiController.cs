@@ -45,5 +45,28 @@ namespace WS.Music.Controllers
             }
             return response;
         }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="songId"></param>
+        /// <returns></returns>
+        [HttpDelete("")]
+        public ResponseMessage SongDelete([FromRoute] string id)
+        {
+            Console.WriteLine($"[{nameof(SongDelete)}] 歌曲删除开始\r\n请求体：{JsonUtil.ToJson(id)}");
+            var response = new ResponseMessage();
+
+            try
+            {
+
+            }
+            catch(Exception e)
+            {
+
+            }
+
+            return response;
+        }
     }
 }

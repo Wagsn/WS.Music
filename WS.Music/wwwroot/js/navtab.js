@@ -1,5 +1,7 @@
 ﻿
-layui.define(['element'], function (exports) {
+layui.config({
+    dir: "/lib/layui/"
+}).define(['element'], function (exports) {
     var element = layui.element(),
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : parent.layer,
