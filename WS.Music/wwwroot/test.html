@@ -3,16 +3,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API测试主页</title>
+    <title>后台管理</title>
     <link rel="stylesheet" href="../lib/layui/css/layui.css">
-    
+    <link rel="stylesheet" type="text/css" href="../css/site.css" media="all">
+    <link rel="stylesheet" type="text/css" href="" ../css/adminstyle.css" media="all">
+
 </head>
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
+        <!-- 头部区域（可配合layui已有的水平导航） -->
         <div class="layui-header">
-            <div class="layui-logo">API测试主页</div>
-            <!-- 头部区域（可配合layui已有的水平导航） -->
-
+            <!-- logo区域 -->
+            <div class="layui-logo">后台管理</div>
+            <!-- 右侧导航 -->
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
                     <a href="javascript:;">
@@ -28,16 +31,33 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">退了</a>
+                    <a class="sign-out-btn" href="">退了</a>
                 </li>
             </ul>
         </div>
 
+        <!-- 左边导航区域 -->
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
+                <ul id="larry-nav-side" class="layui-nav layui-nav-tree" lay-filter="left-nav">
+
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">音乐管理</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="javascript:;" data-url="html/song-index.html">
+                                    <span>音乐测试</span>
+                                </a>
+                            </dd>
+                        </dl>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="html/song-search.html">音乐搜索测试</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
                         <a class="" href="javascript:;">菜单栏</a>
                         <dl class="layui-nav-child">
                             <dd>
@@ -64,66 +84,56 @@
                         </dl>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;">菜单栏</a>
-                        <dl class="layui-nav-child"></dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">菜单栏</a>
-                        <dl class="layui-nav-child"></dl>
-                    </li>
-
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">音乐测试</a>
+                        <a href="javascript:;">安全设置</a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="html/song-search.html">音乐搜索测试</a>
+                                <a href="#我的资料">我的资料</a>
+                            </dd>
+                            <dd>
+                                <a href="#密码修改">密码修改</a>
                             </dd>
                         </dl>
-                    </li>
-
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">菜单栏</a>
-                        <dl class="layui-nav-child"></dl>
-                    </li>
-
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">菜单栏</a>
-                        <dl class="layui-nav-child"></dl>
                     </li>
 
                 </ul>
             </div>
         </div>
+        <!-- 左边导航区域结束 -->
+        <!-- 内容主体区域 -->
+        <div id="larry-body" class="layui-body" style="z-index: 0; bottom: 0;border-left: solid 2px #2299ee;">
+            <div class="layui-tab layui-tab-card larry-tab-box" id="larry-tab" lay-filter="demo" lay-allowclose="true">
+                <!-- ？？ -->
+                <div class="go-left key-press pressKey" id="titleLeft" title="滚动至最右侧"><i class="larry-icon larry-weibiaoti6-copy"></i> </div>
 
-        <div class="layui-body" style="z-index: 0;">
-            <!-- 内容主体区域 -->
-            <div style="padding: 15px;">
-                <iframe src="html/song-index.html" name="right" frameborder="0" width="100%" height="1200"></iframe>
+                <!--  选项卡标题 -->
+                <ul class="layui-tab-title">
+                    <li class="layui-this" id="admin-home"><em>系统首页</em></li>
+                    <!-- 根据所选添加 -->
+                </ul>
+                <!-- ？？ -->
+                <div class="go-right key-press pressKey" id="titleRight" title="滚动至最左侧"><i class="larry-icon larry-right"></i></div>
 
+                <!-- 页面操作下拉单 -->
+                <!-- 选项卡主体内容 -->
+                <div class="layui-tab-content" style="min-height: 150px; ">
+                    <div class="layui-tab-item layui-show">
+                        <iframe class="larry-iframe" data-id='0' src="html/admin-main.html"></iframe>
+                    </div>
+                </div>
             </div>
         </div>
-
+        <!-- 内容主体区域结束 -->
+        <!-- 底部固定区域 -->
         <div class="layui-footer">
-            <!-- 底部固定区域 -->
             底部固定区域
         </div>
+        <!-- 底部固定区域结束 -->
 
     </div>
-    <script type="text/javascript" src="../lib/dist/jquery.js"></script>
-    <!--<script type="text/javascript" src="../myplugs/js/plugs.js">
-    </script>-->
-    <script type="text/javascript">
-        //添加编辑弹出层
-        function updatePwd(title, id) {
-            $.jq_Panel({
-                title: title,
-                iframeWidth: 500,
-                iframeHeight: 300,
-                url: "updatePwd.html"
-            });
-        }
-    </script>
-    <script src="../lib/layui/layui.js"></script>
+    <script type="text/javascript" src="../lib/layui/layui.js"></script>
+    <script type="text/javascript" src="../js/larry.js"></script>
+    <script type="text/javascript" src="../js/navtab.js"></script>
+    <script type="text/javascript" src="../lib/jquery/dist/jquery.js"></script>
     <script>
         //JavaScript代码区域
         layui.use('element', function () {
