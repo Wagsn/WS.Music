@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
+ * 系统工具
  * Created by hzwangchenyan on 2016/3/22.
  */
 public class SystemUtils {

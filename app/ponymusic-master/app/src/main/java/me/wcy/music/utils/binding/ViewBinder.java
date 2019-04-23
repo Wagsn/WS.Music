@@ -5,6 +5,9 @@ import android.view.View;
 
 import java.lang.reflect.Field;
 
+/**
+ * View 绑定器
+ */
 public class ViewBinder {
 
     public static void bind(Activity activity) {

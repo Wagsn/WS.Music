@@ -44,6 +44,9 @@ import me.wcy.music.utils.ViewUtils;
 import me.wcy.music.utils.binding.Bind;
 import me.wcy.music.widget.AutoLoadListView;
 
+/**
+ * 在线音乐列表界面
+ */
 public class OnlineMusicActivity extends BaseActivity implements OnItemClickListener
         , OnMoreClickListener, AutoLoadListView.OnLoadListener {
     private static final int MUSIC_LIST_SIZE = 20;

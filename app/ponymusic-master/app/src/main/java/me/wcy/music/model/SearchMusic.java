@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
+ * 搜索音乐
  * JavaBean
  * Created by hzwangchenyan on 2016/1/13.
  */

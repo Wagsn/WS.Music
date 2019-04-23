@@ -22,6 +22,11 @@ import me.wcy.music.constants.RequestCode;
 public class ImageUtils {
     private static final int BLUR_RADIUS = 50;
 
+    /**
+     * 虚化
+     * @param source
+     * @return
+     */
     @Nullable
     public static Bitmap blur(Bitmap source) {
         if (source == null) {

@@ -18,6 +18,7 @@ import me.wcy.music.utils.binding.Bind;
 import me.wcy.music.utils.binding.ViewBinder;
 
 /**
+ * 播放控制
  * Created by hzwangchenyan on 2018/1/26.
  */
 public class ControlPanel implements View.OnClickListener, OnPlayerEventListener {

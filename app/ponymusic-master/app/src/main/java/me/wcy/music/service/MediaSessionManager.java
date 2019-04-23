@@ -10,6 +10,7 @@ import me.wcy.music.model.Music;
 import me.wcy.music.utils.CoverLoader;
 
 /**
+ * 媒体会话管理
  * Created by hzwangchenyan on 2017/8/8.
  */
 public class MediaSessionManager {

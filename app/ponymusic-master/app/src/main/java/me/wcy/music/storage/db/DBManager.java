@@ -9,6 +9,7 @@ import me.wcy.music.storage.db.greendao.DaoSession;
 import me.wcy.music.storage.db.greendao.MusicDao;
 
 /**
+ * 数据库管理
  * Created by wcy on 2018/1/27.
  */
 public class DBManager {

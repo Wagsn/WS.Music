@@ -9,6 +9,7 @@ import me.wcy.music.application.AppCache;
 import me.wcy.music.constants.Actions;
 
 /**
+ * 退出计时器
  * Created by hzwangchenyan on 2017/8/8.
  */
 public class QuitTimer {

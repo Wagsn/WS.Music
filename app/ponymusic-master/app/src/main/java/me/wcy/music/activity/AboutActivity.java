@@ -19,6 +19,9 @@ public class AboutActivity extends BaseActivity {
         getFragmentManager().beginTransaction().replace(R.id.ll_fragment_container, new AboutFragment()).commit();
     }
 
+    /**
+     * 关于
+     */
     public static class AboutFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
         private Preference mVersion;
         private Preference mShare;
@@ -27,6 +30,10 @@ public class AboutActivity extends BaseActivity {
         private Preference mJianshu;
         private Preference mGithub;
 
+        /**
+         * 关于
+         * @param savedInstanceState
+         */
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -43,6 +50,9 @@ public class AboutActivity extends BaseActivity {
             setListener();
         }
 
+        /**
+         * 设置监听
+         */
         private void setListener() {
             mShare.setOnPreferenceClickListener(this);
             mStar.setOnPreferenceClickListener(this);
@@ -51,6 +61,11 @@ public class AboutActivity extends BaseActivity {
             mGithub.setOnPreferenceClickListener(this);
         }
 
+        /**
+         * 当点击到关于里面的各个选项
+         * @param preference
+         * @return
+         */
         @Override
         public boolean onPreferenceClick(Preference preference) {
             if (preference == mShare) {
@@ -66,6 +81,9 @@ public class AboutActivity extends BaseActivity {
             return false;
         }
 
+        /**
+         * 分享到
+         */
         private void share() {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
@@ -73,6 +91,10 @@ public class AboutActivity extends BaseActivity {
             startActivity(Intent.createChooser(intent, getString(R.string.share)));
         }
 
+        /**
+         * 通过URL打开页面
+         * @param url
+         */
         private void openUrl(String url) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));

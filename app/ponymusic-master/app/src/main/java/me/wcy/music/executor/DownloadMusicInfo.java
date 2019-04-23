@@ -1,6 +1,7 @@
 package me.wcy.music.executor;
 
 /**
+ * 音乐下载信息
  * Created by hzwangchenyan on 2017/8/11.
  */
 public class DownloadMusicInfo {

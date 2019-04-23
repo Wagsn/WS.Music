@@ -6,6 +6,7 @@ import android.media.AudioManager;
 import static android.content.Context.AUDIO_SERVICE;
 
 /**
+ * 音乐焦点管理
  * Created by hzwangchenyan on 2017/8/8.
  */
 public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListener {

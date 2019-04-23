@@ -3,6 +3,7 @@ package me.wcy.music.model;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * 在线音乐信息
  * JavaBean
  * Created by wcy on 2015/12/20.
  */

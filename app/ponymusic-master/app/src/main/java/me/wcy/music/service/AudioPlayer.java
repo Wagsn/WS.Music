@@ -21,6 +21,7 @@ import me.wcy.music.storage.preference.Preferences;
 import me.wcy.music.utils.ToastUtils;
 
 /**
+ * 音乐播放器
  * Created by hzwangchenyan on 2018/1/26.
  */
 public class AudioPlayer {

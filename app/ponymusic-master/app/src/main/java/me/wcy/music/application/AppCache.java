@@ -21,6 +21,7 @@ import me.wcy.music.utils.ScreenUtils;
 import me.wcy.music.utils.ToastUtils;
 
 /**
+ * 应用缓存
  * Created by hzwangchenyan on 2016/11/23.
  */
 public class AppCache {

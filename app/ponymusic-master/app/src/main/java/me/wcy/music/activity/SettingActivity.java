@@ -17,6 +17,9 @@ import me.wcy.music.utils.MusicUtils;
 import me.wcy.music.storage.preference.Preferences;
 import me.wcy.music.utils.ToastUtils;
 
+/**
+ * 设置界面
+ */
 public class SettingActivity extends BaseActivity {
 
     @Override

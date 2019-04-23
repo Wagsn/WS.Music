@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.WindowManager;
 
 /**
- * 工具类
+ * 屏幕工具类
  * Created by hzwangchenyan on 2016/1/6.
  */
 public class ScreenUtils {

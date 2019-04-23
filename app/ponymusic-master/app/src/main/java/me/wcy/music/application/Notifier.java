@@ -27,6 +27,7 @@ import me.wcy.music.utils.CoverLoader;
 import me.wcy.music.utils.FileUtils;
 
 /**
+ * 通知
  * Created by wcy on 2017/4/18.
  */
 public class Notifier {

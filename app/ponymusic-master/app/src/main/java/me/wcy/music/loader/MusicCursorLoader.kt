@@ -5,6 +5,7 @@ import android.content.CursorLoader
 import android.provider.MediaStore
 
 /**
+ * 音乐加载
  * @author wcy
  * @date 2018/7/11
  */

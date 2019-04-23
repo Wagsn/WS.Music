@@ -33,6 +33,9 @@ import me.wcy.music.utils.ToastUtils;
 import me.wcy.music.utils.ViewUtils;
 import me.wcy.music.utils.binding.Bind;
 
+/**
+ * 搜索音乐界面
+ */
 public class SearchMusicActivity extends BaseActivity implements SearchView.OnQueryTextListener
         , AdapterView.OnItemClickListener, OnMoreClickListener {
     @Bind(R.id.lv_search_music_list)

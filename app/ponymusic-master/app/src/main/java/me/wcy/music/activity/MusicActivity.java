@@ -34,6 +34,9 @@ import me.wcy.music.utils.SystemUtils;
 import me.wcy.music.utils.ToastUtils;
 import me.wcy.music.utils.binding.Bind;
 
+/**
+ * APP主界面
+ */
 public class MusicActivity extends BaseActivity implements View.OnClickListener, QuitTimer.OnTimerListener,
         NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
     @Bind(R.id.drawer_layout)

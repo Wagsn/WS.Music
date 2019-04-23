@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import me.wcy.music.service.AudioPlayer;
 
 /**
+ * 状态栏按钮接收器
  * Created by wcy on 2017/4/18.
  */
 public class StatusBarReceiver extends BroadcastReceiver {

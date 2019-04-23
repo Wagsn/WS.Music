@@ -28,6 +28,9 @@ import me.wcy.music.model.ArtistInfo;
 import me.wcy.music.utils.ViewUtils;
 import me.wcy.music.utils.binding.Bind;
 
+/**
+ * 艺人信息界面
+ */
 public class ArtistInfoActivity extends BaseActivity {
     @Bind(R.id.sv_artist_info)
     private ScrollView svArtistInfo;

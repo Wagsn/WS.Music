@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 /**
+ * 键盘工具
  * Created by hzwangchenyan on 2017/6/2.
  */
 public class KeyboardUtils {

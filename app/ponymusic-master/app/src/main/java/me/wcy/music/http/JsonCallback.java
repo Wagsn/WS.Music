@@ -20,6 +20,13 @@ public abstract class JsonCallback<T> extends Callback<T> {
         gson = new Gson();
     }
 
+    /**
+     * 将响应体解析成指定类型的对象
+     * @param response
+     * @param id
+     * @return
+     * @throws IOException
+     */
     @Override
     public T parseNetworkResponse(Response response, int id) throws IOException {
         try {

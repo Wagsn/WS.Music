@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 前台监控
  * Created by hzwangchenyan on 2017/9/20.
  */
 public class ForegroundObserver implements Application.ActivityLifecycleCallbacks {

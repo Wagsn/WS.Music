@@ -3,10 +3,14 @@ package me.wcy.music.model;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * 下载信息
  * JavaBean
  * Created by wcy on 2015/12/27.
  */
 public class DownloadInfo {
+    /**
+     * 比特率（码率）
+     */
     @SerializedName("bitrate")
     private Bitrate bitrate;
 

@@ -3,6 +3,7 @@ package me.wcy.music.model;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * 艺人信息
  * JavaBean
  * Created by hzwangchenyan on 2016/1/11.
  */
