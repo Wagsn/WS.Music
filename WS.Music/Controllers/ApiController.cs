@@ -47,26 +47,59 @@ namespace WS.Music.Controllers
         }
 
         /// <summary>
-        /// 删除
+        /// 歌曲删除 -管理后台接口
+        /// TODO：包含歌曲文件的删除
         /// </summary>
-        /// <param name="songId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("")]
+        [HttpDelete("song/{id}")]
         public ResponseMessage SongDelete([FromRoute] string id)
         {
-            Console.WriteLine($"[{nameof(SongDelete)}] 歌曲删除开始\r\n请求体：{JsonUtil.ToJson(id)}");
+            Console.WriteLine($"[{nameof(SongDelete)}] 歌曲 删除 开始\r\n请求体：{JsonUtil.ToJson(id)}");
             var response = new ResponseMessage();
 
             try
             {
-
+                var song = MusicStore.Set<Song>().Find(id);
+                MusicStore.DeleteAll(song);
             }
             catch(Exception e)
             {
-
+                Console.WriteLine($"[{nameof(SongDelete)}] 歌曲 删除 失败\r\n请求体：{JsonUtil.ToJson(id)}\r\n错误：{e.ToString()}");
             }
-
             return response;
         }
+
+        /// <summary>
+        /// 歌曲信息保存
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("song/info/save")]
+        public ResponseMessage SongInfoSave([FromBody]Song request)
+        {
+            Console.WriteLine($"[{nameof(SongInfoSave)}] 歌曲信息 保存 开始\r\n请求体：{JsonUtil.ToJson(request)}");
+            var response = new ResponseMessage();
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(request.Id))
+                {
+                    MusicStore.AddAll(request);
+                }
+                else
+                {
+                    request.Id = Guid.NewGuid().ToString();
+                    MusicStore.UpdateAll(request);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"[{nameof(SongInfoSave)}] 歌曲信息 保存 失败\r\n请求体：{JsonUtil.ToJson(request)}\r\n错误：{e.ToString()}");
+            }
+            return response;
+        }
+
+
     }
 }
