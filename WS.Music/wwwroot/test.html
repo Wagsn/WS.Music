@@ -46,14 +46,14 @@
                         <a href="javascript:;">音乐管理</a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="javascript:;" data-url="html/song-index.html">
-                                    <span>音乐测试</span>
+                                <a href="html/song-index.html" target="right">
+                                    <span>歌曲管理</span>
                                 </a>
                             </dd>
                         </dl>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="html/song-search.html">音乐搜索测试</a>
+                                <a href="html/song-search.html" target="right">音乐搜索测试</a>
                             </dd>
                         </dl>
                     </li>
@@ -61,7 +61,7 @@
                         <a class="" href="javascript:;">菜单栏</a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="product.html" target="right">产品管理</a>
+                                <a href="/html/admin-main.html" target="right">产品管理</a>
                             </dd>
                             <dd>
                                 <a href="newsType.html" target="right">新闻分类管理</a>
@@ -100,26 +100,11 @@
         </div>
         <!-- 左边导航区域结束 -->
         <!-- 内容主体区域 -->
-        <div id="larry-body" class="layui-body" style="z-index: 0; bottom: 0;border-left: solid 2px #2299ee;">
-            <div class="layui-tab layui-tab-card larry-tab-box" id="larry-tab" lay-filter="demo" lay-allowclose="true">
-                <!-- ？？ -->
-                <div class="go-left key-press pressKey" id="titleLeft" title="滚动至最右侧"><i class="larry-icon larry-weibiaoti6-copy"></i> </div>
+        <div class="layui-body" style="z-index: 0;">
+            <!-- 内容主体区域 -->
+            <div style="padding: 15px;">
+                <iframe src="/html/admin-main.html" name="right" frameborder="0" width="100%" height="1200"></iframe>
 
-                <!--  选项卡标题 -->
-                <ul class="layui-tab-title">
-                    <li class="layui-this" id="admin-home"><em>系统首页</em></li>
-                    <!-- 根据所选添加 -->
-                </ul>
-                <!-- ？？ -->
-                <div class="go-right key-press pressKey" id="titleRight" title="滚动至最左侧"><i class="larry-icon larry-right"></i></div>
-
-                <!-- 页面操作下拉单 -->
-                <!-- 选项卡主体内容 -->
-                <div class="layui-tab-content" style="min-height: 150px; ">
-                    <div class="layui-tab-item layui-show">
-                        <iframe class="larry-iframe" data-id='0' src="html/admin-main.html"></iframe>
-                    </div>
-                </div>
             </div>
         </div>
         <!-- 内容主体区域结束 -->
