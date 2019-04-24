@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace WS.Music.Entities
@@ -9,8 +10,10 @@ namespace WS.Music.Entities
     /// </summary>
     public class TopItem
     {
+        [MaxLength(36)]
         public string Id { get; set; }
 
+        [MaxLength(36)]
         public string TopListId { get; set; }
 
         /// <summary>
@@ -21,6 +24,7 @@ namespace WS.Music.Entities
         /// <summary>
         /// 实际资源
         /// </summary>
+        [MaxLength(36)]
         public string SrcId { get; set; }
     }
 }

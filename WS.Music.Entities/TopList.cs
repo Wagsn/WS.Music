@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace WS.Music.Entities
@@ -9,13 +10,16 @@ namespace WS.Music.Entities
     /// </summary>
     public class TopList
     {
+        [MaxLength(36)]
         public string Id { get; set; }
 
+        [MaxLength(63)]
         public string Name { get; set; }
 
         /// <summary>
         /// 图标路径
         /// </summary>
+        [MaxLength(511)]
         public string IcoUrl { get; set; }
 
         /// <summary>

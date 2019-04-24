@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace WS.Music.Entities
@@ -9,10 +10,13 @@ namespace WS.Music.Entities
     /// </summary>
     public class RelOrganization
     {
+        [MaxLength(36)]
         public string Id { get; set; }
 
+        [MaxLength(36)]
         public string ParentId { get; set; }
 
+        [MaxLength(36)]
         public string ChildId { get; set; }
 
         /// <summary>

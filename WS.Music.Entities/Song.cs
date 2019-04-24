@@ -14,13 +14,14 @@ namespace WS.Music.Entities
         /// 歌曲ID
         /// </summary>
         [Key]
-        [MaxLength(63)]
+        [MaxLength(36)]
         public string Id { get; set; }
 
         /// <summary>
         /// 歌曲名
         /// </summary>
         [Required]
+        [MaxLength(63)]
         public string Name { get; set; }
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace WS.Music.Entities
         /// <summary>
         /// 歌曲文件的URL，标准输出，如果想听其他规格的歌曲文件，请在SongFile中查找
         /// </summary>
-        [MaxLength(255)]
+        [MaxLength(511)]
         public string Url { get; set; }
 
         // 还有个来源Link，比如来源（ID+Type：id=156&type=songlist）于专辑，歌单、排行榜、分享，这个主要是标注播放时的来源问题，方便跳转过去

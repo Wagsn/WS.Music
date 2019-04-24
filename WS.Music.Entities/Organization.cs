@@ -20,6 +20,7 @@ namespace WS.Music.Entities
         /// <summary>
         /// 名称
         /// </summary>
+        [MaxLength(63)]
         public string Name { get; set; }
 
         /// <summary>

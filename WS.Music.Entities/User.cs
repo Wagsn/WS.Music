@@ -36,7 +36,7 @@ namespace WS.Music.Entities
         /// <summary>
         /// 地址
         /// </summary>
-        [MaxLength(127)]
+        [MaxLength(255)]
         public string Address { get; set; }
 
         /// <summary>
@@ -58,6 +58,7 @@ namespace WS.Music.Entities
         /// <summary>
         /// 用户唯一码，用以标识自然人、组织等
         /// </summary>
+        [MaxLength(36)]
         public string UserCode { get; set; }
     }
 }

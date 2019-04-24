@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace WS.Music.Entities
@@ -9,16 +10,19 @@ namespace WS.Music.Entities
     /// </summary>
     public class RelSongAlbum
     {
+        [MaxLength(36)]
         public string Id { get; set; }
 
         /// <summary>
         /// 歌曲ID
         /// </summary>
+        [MaxLength(36)]
         public string SongId { get; set; }
 
         /// <summary>
         /// 专辑ID
         /// </summary>
+        [MaxLength(36)]
         public string AlbumId { get; set; }
 
         /// <summary>

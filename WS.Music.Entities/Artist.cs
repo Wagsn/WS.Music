@@ -14,7 +14,7 @@ namespace WS.Music.Entities
         /// ID
         /// </summary>
         [Key]
-        [MaxLength(63)]
+        [MaxLength(36)]
         public string Id { get; set; }
 
         /// <summary>
