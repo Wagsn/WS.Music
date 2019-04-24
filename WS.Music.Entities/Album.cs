@@ -9,7 +9,7 @@ namespace WS.Music.Entities
     /// <summary>
     /// 音乐专辑实体
     /// </summary>
-    public class Album : TraceUpdate
+    public class Album
     {
         /// <summary>
         /// 标签 Album

@@ -8,7 +8,7 @@ namespace WS.Music.Entities
     /// <summary>
     /// 歌单（独立实体，不产生外键关联，关联由关联实体来做），（播放列表是歌单的特殊形式）,用户查询喜欢的歌曲时其实没有查询到PlayList这个表，而是UserPlayList中找PlayListId，再PlayListSong找SongId
     /// </summary>
-    public class PlayList : TraceUpdate
+    public class PlayList
     {
         /// <summary>
         /// 歌单ID

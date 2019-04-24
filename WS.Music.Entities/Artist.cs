@@ -6,9 +6,9 @@ using System.Text;
 namespace WS.Music.Entities
 {
     /// <summary>
-    /// 艺人，艺人与用户是分离的
+    /// 艺人，艺人与用户是分离的，如何描述乐队组合之类的东西？
     /// </summary>
-    public class Artist : TraceUpdate
+    public class Artist
     {
         /// <summary>
         /// ID
@@ -27,7 +27,7 @@ namespace WS.Music.Entities
         /// <summary>
         /// 描述介绍，可空(Empty=Blank>Null)
         /// </summary>
-        [MaxLength(255)]
+        [MaxLength(511)]
         public string Description { get; set; }
 
         /// <summary>

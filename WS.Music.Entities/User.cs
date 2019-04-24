@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 namespace WS.Music.Entities
 {
     /// <summary>
-    /// 用户信息，用于登陆
+    /// 用户信息，用于登陆，UserName和PassWord是基础数据
     /// </summary>
-    public class User : TraceUpdate
+    public class User
     {
         /// <summary>
         /// ID，主键
@@ -18,13 +18,13 @@ namespace WS.Music.Entities
         /// <summary>
         /// 昵称
         /// </summary>
-        [MaxLength(31)]
+        [MaxLength(63)]
         public string Name { get; set; }
 
         /// <summary>
         /// 密码
         /// </summary>
-        [MaxLength(63)]
+        [MaxLength(127)]
         public string PassWord { get; set; }
 
         /// <summary>
