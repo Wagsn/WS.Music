@@ -16,12 +16,13 @@ import me.wcy.music.model.DownloadInfo;
 import me.wcy.music.model.Lrc;
 import me.wcy.music.model.OnlineMusicList;
 import me.wcy.music.model.SearchMusic;
+import me.wcy.music.model.Song;
 import me.wcy.music.model.Splash;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
 /**
- * HTTP 数据请求相关
+ * HTTP客户端
  * Created by hzwangchenyan on 2017/2/8.
  * Updated by Wagsn on 2019/4/23.
  */
@@ -41,7 +42,8 @@ public class HttpClient {
     private static final String PARAM_TING_UID = "tinguid";
     private static final String PARAM_QUERY = "query";
 
-    private static final  String  WS_MUSIC_BASE_URL ="http://music.wagsn.net/api";
+    private static final String  WS_MUSIC_BASE_URL ="http://music.wagsn.net/api";
+    private static final String WS_SONG_INFO_URL = WS_MUSIC_BASE_URL+"song";
 
     static {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -54,9 +56,16 @@ public class HttpClient {
     }
 
 
+    /**
+     * 从Wagsn的服务器上下载音乐信息
+      * @param callback
+     */
+    public static void getSongInfo(@NonNull final HttpCallback<Song> callback){
+
+    }
 
     /**
-     * 获取广告页
+     * 获取启动页
      * @param callback
      */
     public static void getSplash(@NonNull final HttpCallback<Splash> callback) {

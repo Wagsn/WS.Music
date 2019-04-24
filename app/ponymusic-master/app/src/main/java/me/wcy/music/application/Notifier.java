@@ -27,7 +27,7 @@ import me.wcy.music.utils.CoverLoader;
 import me.wcy.music.utils.FileUtils;
 
 /**
- * 通知
+ * 通知器
  * Created by wcy on 2017/4/18.
  */
 public class Notifier {
@@ -46,11 +46,19 @@ public class Notifier {
     private Notifier() {
     }
 
+    /**
+     * 初始化通知器
+     * @param playService
+     */
     public void init(PlayService playService) {
         this.playService = playService;
         notificationManager = (NotificationManager) playService.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
+    /**
+     * 显示播放
+     * @param music
+     */
     public void showPlay(Music music) {
         if (music == null) {
             return;
@@ -58,6 +66,10 @@ public class Notifier {
         playService.startForeground(NOTIFICATION_ID, buildNotification(playService, music, true));
     }
 
+    /**
+     * 显示暂停
+     * @param music
+     */
     public void showPause(Music music) {
         if (music == null) {
             return;
@@ -66,10 +78,20 @@ public class Notifier {
         notificationManager.notify(NOTIFICATION_ID, buildNotification(playService, music, false));
     }
 
+    /**
+     * 取消所有
+     */
     public void cancelAll() {
         notificationManager.cancelAll();
     }
 
+    /**
+     * 绑定通知
+     * @param context
+     * @param music
+     * @param isPlaying
+     * @return
+     */
     private Notification buildNotification(Context context, Music music, boolean isPlaying) {
         Intent intent = new Intent(context, MusicActivity.class);
         intent.putExtra(Extras.EXTRA_NOTIFICATION, true);
@@ -85,6 +107,13 @@ public class Notifier {
         return builder.build();
     }
 
+    /**
+     * 获取远程视图
+     * @param context 上下文
+     * @param music
+     * @param isPlaying
+     * @return
+     */
     private RemoteViews getRemoteViews(Context context, Music music, boolean isPlaying) {
         String title = music.getTitle();
         String subtitle = FileUtils.getArtistAndAlbum(music.getArtist(), music.getAlbum());
@@ -116,6 +145,12 @@ public class Notifier {
         return remoteViews;
     }
 
+    /**
+     * 获取播放图标
+     * @param isLightNotificationTheme
+     * @param isPlaying
+     * @return
+     */
     private int getPlayIconRes(boolean isLightNotificationTheme, boolean isPlaying) {
         if (isPlaying) {
             return isLightNotificationTheme
@@ -128,17 +163,32 @@ public class Notifier {
         }
     }
 
+    /**
+     * 获取下一个图标资源
+     * @param isLightNotificationTheme
+     * @return
+     */
     private int getNextIconRes(boolean isLightNotificationTheme) {
         return isLightNotificationTheme
                 ? R.drawable.ic_status_bar_next_dark_selector
                 : R.drawable.ic_status_bar_next_light_selector;
     }
 
+    /**
+     * 是白天模式吗
+     * @param context
+     * @return
+     */
     private boolean isLightNotificationTheme(Context context) {
         int notificationTextColor = getNotificationTextColor(context);
         return isSimilarColor(Color.BLACK, notificationTextColor);
     }
 
+    /**
+     * 获取通知文本颜色
+     * @param context
+     * @return
+     */
     private int getNotificationTextColor(Context context) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         Notification notification = builder.build();
@@ -179,6 +229,11 @@ public class Notifier {
         return Color.BLACK;
     }
 
+    /**
+     * 递归查找文本视图
+     * @param view
+     * @param textViewList
+     */
     private void findTextView(View view, List<TextView> textViewList) {
         if (view instanceof ViewGroup) {
             ViewGroup viewGroup = (ViewGroup) view;
@@ -190,6 +245,12 @@ public class Notifier {
         }
     }
 
+    /**
+     * 是否为相似颜色
+     * @param baseColor
+     * @param color
+     * @return
+     */
     private boolean isSimilarColor(int baseColor, int color) {
         int simpleBaseColor = baseColor | 0xff000000;
         int simpleColor = color | 0xff000000;

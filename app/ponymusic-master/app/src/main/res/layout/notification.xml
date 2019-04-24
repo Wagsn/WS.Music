@@ -30,6 +30,7 @@
             android:ellipsize="end"
             android:fadingEdge="horizontal"
             android:maxLines="1"
+            android:textColor="@color/grey_900"
             android:textAppearance="@android:style/TextAppearance.StatusBar.EventContent.Title" />
 
         <TextView
