@@ -14,6 +14,7 @@ namespace WS.Music.Controllers
 {
     [Route("api")]
     [ApiController]
+    [Produces("application/json")]
     public class ApiController : ControllerBase
     {
         public ApiController(IMusicStore musicStore)

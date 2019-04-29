@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/lib/layui/css/layui.css" media="all">
+    <title>专辑管理 - 在线音乐后台管理</title>
+</head>
+<body>
+    <section class="layui-larry-box">
+        <div class="larry-personal">
+            <div class="layui-tab">
+                <!-- 搜索栏 news_search -->
+                <blockquote class="layui-elem-quote ">
+                    <form class="layui-form">
+                        <div class="layui-form-item" style="margin-left: 68px">
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input value="" placeholder="请输入关键字" class="layui-input search_input" type="text">
+                                </div>
+                                <a class="layui-btn search_btn">查询</a>
+                            </div>
+
+                            <div class="layui-inline">
+                                <a class="layui-btn layui-btn-normal studentAdd_btn">新增</a>
+                            </div>
+                            <div class="layui-inline">
+                                <a class="layui-btn layui-btn-danger batchDel">批量删除</a>
+                            </div>
+                        </div>
+                    </form>
+                </blockquote>
+
+                <!-- 操作日志 -->
+                <div class="layui-form student_list">
+                    <table class="layui-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input name="allChoose" lay-skin="primary" lay-filter="allChoose" id="allChoose" type="checkbox">
+                                    <div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"> </i></div>
+                                </th>
+                                <th style="text-align:center;">学号</th>
+                                <th>名称</th>
+                                <th>说明</th>
+                                <th>生日</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="news_content" id="student_list"></tbody>
+                    </table>
+                    <div class="larry-table-page clearfix">
+                        <div id="page" class="page"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

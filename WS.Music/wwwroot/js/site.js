@@ -5,6 +5,8 @@
 
 // Get|Set from Html, Save|Load from Storage|Server
 
+'use strict';
+
 // 获取搜索表单数据
 function getSearchData() {
     return {
@@ -49,7 +51,7 @@ function loadSongList(query = {}) {
     }
     //console.log("song list load request:", request)
     $.ajax({
-        url: "../api/song/list/search",
+        url: "../api/song/list",
         method: "post",
         contentType: "application/json",
         data: JSON.stringify(request),
@@ -74,141 +76,29 @@ function songSearch() {
     loadSongList(getSearchData())
 }
 
-// 分页查询请求
-class PageQuery {
-    constructor() {
-        this.pageIndex = 0
-        this.pageSize = 10
-        this.keyWord = ""
-    }
+function getTableHtml() {
+    let itemHtml = `<div class="layui-form student-list-wrap">
+        < table class="layui-table" >
+            <thead>
+                <tr>
+                    <th>
+                        <input name="all-choose" lay-skin="primary" lay-filter="all-choose" id="all-choose" type="checkbox">
+                            <div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"> </i></div>
+                                </th>
+                        <th style="text-align:center;">学号</th>
+                        <th>名称</th>
+                        <th>说明</th>
+                        <th>时长</th>
+                        <th>发行时间</th>
+                        <th>资源</th>
+                        <th>操作</th>
+                            </tr>
+                        </thead>
+                <tbody class="news_content" id="song-list-body"></tbody>
+                    </table>
+            <div class="larry-table-page clearfix">
+                <div id="page" class="page"></div>
+            </div>
+                </div >`
+
 }
-
-'use strict';
-layui.use(['jquery', 'layer', 'element'], function () {
-    var element = layui.element;
-    window.jQuery = window.$ = layui.jquery;
-    window.layer = layui.layer;
-
-    //登录加载用户名
-    //$(function(){
-    //	var str = sessionStorage.obj;
-    //	if(str==null){
-    //         window.location.href="index.html";
-    //    }else{
-    //         var obj = $.parseJSON(str);
-    //         //alert(obj);
-    //          $("#user").text(obj.username);
-    //         }
-    //})
-
-    // larry-side-menu向左折叠
-    $('.larry-side-menu').click(function () {
-        var sideWidth = $('#larry-side').width();
-        if (sideWidth === 200) {
-            $('#larry-body').animate({
-                left: '0'
-            }); //admin-footer
-            $('#larry-footer').animate({
-                left: '0'
-            });
-            $('#larry-side').animate({
-                width: '0'
-            });
-        } else {
-            $('#larry-body').animate({
-                left: '200px'
-            });
-            $('#larry-footer').animate({
-                left: '200px'
-            });
-            $('#larry-side').animate({
-                width: '200px'
-            });
-        }
-    });
-    $(function () {
-        // 刷新iframe操作
-        $("#refresh_iframe").click(function () {
-            $(".layui-tab-content .layui-tab-item").each(function () {
-                if ($(this).hasClass('layui-show')) {
-                    $(this).children('iframe')[0].contentWindow.location.reload(true);
-                }
-            });
-        });
-
-        $('#lock').mouseover(function () {
-            layer.tips('请按Alt+L快速锁屏！', '#lock', {
-                tips: [1, '#FF5722'],
-                time: 4000
-            });
-        })
-        // 快捷键锁屏设置
-        $(document).keydown(function (e) {
-            if (e.altKey && e.which == 76) {
-                lockSystem();
-            }
-        });
-        function startTimer() {
-            var today = new Date();
-            var h = today.getHours();
-            var m = today.getMinutes();
-            var s = today.getSeconds();
-            m = m < 10 ? '0' + m : m;
-            s = s < 10 ? '0' + s : s;
-            $('#time').html(h + ":" + m + ":" + s);
-            t = setTimeout(function () { startTimer() }, 500);
-        }
-        // 锁屏状态检测
-        function checkLockStatus(locked) {
-            // 锁屏
-            if (locked == 1) {
-                $('.lock-screen').show();
-                $('#locker').show();
-                $('#layui_layout').hide();
-                $('#lock_password').val('');
-            } else {
-                $('.lock-screen').hide();
-                $('#locker').hide();
-                $('#layui_layout').show();
-            }
-        }
-
-        checkLockStatus('0');
-        // 锁定屏幕
-        function lockSystem() {
-
-            var url = '';
-            $.post(
-                url,
-                function (data) {
-                    if (data == '1') {
-                        checkLockStatus(1);
-                    } else {
-                        layer.alert('锁屏失败，请稍后再试！');
-                    }
-                });
-            startTimer();
-        }
-        //解锁屏幕
-        function unlockSystem() {
-            // 与后台交互代码已移除，根据需求定义或删除此功能
-
-            checkLockStatus(0);
-        }
-        // 点击锁屏
-        $('#lock').click(function () {
-            lockSystem();
-        });
-        // 解锁进入系统
-        $('#unlock').click(function () {
-            unlockSystem();
-        });
-        // 监控lock_password 键盘事件
-        $('#lock_password').keypress(function (e) {
-            var key = e.which;
-            if (key == 13) {
-                unlockSystem();
-            }
-        });
-    });
-});

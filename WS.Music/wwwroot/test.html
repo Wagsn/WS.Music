@@ -14,7 +14,7 @@
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <div class="layui-header">
             <!-- logo区域 -->
-            <div class="layui-logo">后台管理</div>
+            <div class="layui-logo">在线音乐系统后台管理</div>
             <!-- 右侧导航 -->
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
@@ -58,28 +58,30 @@
                         </dl>
                     </li>
                     <li class="layui-nav-item">
-                        <a class="" href="javascript:;">菜单栏</a>
+                        <a href="javascript:;">基础信息管理</a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="/html/admin-main.html" target="right">产品管理</a>
+                                <a href="html/song-manage.html" target="right">
+                                    <span>歌曲管理</span>
+                                </a>
                             </dd>
                             <dd>
-                                <a href="newsType.html" target="right">新闻分类管理</a>
+                                <a href="html/album-manage.html" target="right">
+                                    <span>专辑管理</span>
+                                </a>
                             </dd>
                             <dd>
-                                <a href="news.html" target="right">新闻管理</a>
+                                <a href="html/artist-manage.html" target="right">
+                                    <span>艺人管理</span>
+                                </a>
                             </dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;">MVC专辑管理</a>
+                        <dl class="layui-nav-child">
                             <dd>
-                                <a href="link.html" target="right">友情链接</a>
-                            </dd>
-                            <dd>
-                                <a href="message.html" target="right">留言管理</a>
-                            </dd>
-                            <dd>
-                                <a href="message.html" target="right">用户管理</a>
-                            </dd>
-                            <dd>
-                                <a href="javascript:void(0)" onclick="updatePwd('修改密码',1)">修改密码</a>
+                                <a href="/album" target="right">专辑管理</a>
                             </dd>
                         </dl>
                     </li>

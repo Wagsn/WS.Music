@@ -54,7 +54,7 @@ namespace WS.Music.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Duration,ReleaseTime,Url,_CreateUserId,_CreateTime,_UpdateUserId,_UpdateTime,_DeleteUserId,_DeleteTime,_IsDeleted")] Song song)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Duration,ReleaseTime,Url")] Song song)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace WS.Music.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Description,Duration,ReleaseTime,Url,_CreateUserId,_CreateTime,_UpdateUserId,_UpdateTime,_DeleteUserId,_DeleteTime,_IsDeleted")] Song song)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Description,Duration,ReleaseTime,Url")] Song song)
         {
             if (id != song.Id)
             {
