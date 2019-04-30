@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace WS.Music.Entities
@@ -23,6 +24,18 @@ namespace WS.Music.Entities
         [Required]
         [MaxLength(63)]
         public string Name { get; set; }
+
+        /// <summary>
+        /// 艺人名称
+        /// </summary>
+        [NotMapped]
+        public string ArtistName { get; set; }
+
+        /// <summary>
+        /// 专辑名称
+        /// </summary>
+        [NotMapped]
+        public string AlbumName { get; set; }
 
         /// <summary>
         /// 描述介绍，可空(Empty=Blank>Null)
