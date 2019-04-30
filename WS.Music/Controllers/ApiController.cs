@@ -14,7 +14,7 @@ namespace WS.Music.Controllers
 {
     [Route("api")]
     [ApiController]
-    [Produces("application/json")]
+    //[Produces("application/json")]
     public class ApiController : ControllerBase
     {
         public ApiController(IMusicStore musicStore)
@@ -205,7 +205,7 @@ namespace WS.Music.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("song/list")]
-        public PagingResponseMessage<Song> SongSearch([FromBody]PageSearchRequest request)
+        public PagingResponseMessage<Song> SongSearch([FromForm]PageSearchRequest request)
         {
             Console.WriteLine($"[{nameof(SongSearch)}] 歌曲搜索开始\r\n请求体：{JsonUtil.ToJson(request)}");
             var response = new PagingResponseMessage<Song>();

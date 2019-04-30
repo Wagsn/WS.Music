@@ -1,13 +1,12 @@
 ﻿// 音乐管理界面
 
-layui.use(['form', 'layer', 'jquery', 'laypage', 'layedit', 'laydate', 'element'], function () {
+layui.use(['form', 'layer', 'laypage', 'layedit', 'laydate', 'element'], function () {
     var form = layui.form,
         element = layui.element,
         layer = parent.layer === undefined ? layui.layer : parent.layer,
         laypage = layui.laypage,
         layedit = layui.layedit,
-        laydate = layui.laydate,
-        $ = layui.jquery;
+        laydate = layui.laydate
 
     // 查询到的数据全局
     var studentData = ' ';
@@ -53,14 +52,10 @@ layui.use(['form', 'layer', 'jquery', 'laypage', 'layedit', 'laydate', 'element'
         //        alert("添加成功！");
         //    }
         //})
-        $.ajax({
-            type: "post",
-            async: true,
-            url: songListUrl,
-            dataType: 'json',
-            contentType: "application/json",
-            data: JSON.stringify(query),
-            success: function (resbody) {
+        $.post(
+            songListUrl,
+            query,
+            function (resbody) {
                 console.log("Loading song list response body: ", resbody);
                 // 设置第一次页面的数据
                 //setRollListData(body.data);
@@ -80,34 +75,24 @@ layui.use(['form', 'layer', 'jquery', 'laypage', 'layedit', 'laydate', 'element'
                         layer.msg(obj.curr + ' pages');
                         query.pageIndex = obj.curr - 1;
                         console.log("Jump to page " + obj.curr + ", the query is ", query)
-                        $.ajax({
-                            type: "post",
-                            async: true,
-                            url: songListUrl,
-                            dataType: 'json',
-                            data: query,
-                            success: function (body) {
-                                console.log("Load list data for song on page " + obj.curr + ": ", body);
-                                loadSongListData(renderSongList)
-                            }
-                        });
+                        loadSongListData(query, renderSongList)
                     }
                 });
             }
-        });
+        )
     }
 
     // 异步网络加载歌曲列表，callback: 页面渲染回调函数
-    function loadSongListData(callback) {
+    function loadSongListData(query, callback) {
         $.ajax({
             type: "post",
             async: true,
             url: songListUrl,
             dataType: 'json',
             contentType: "application/json",
-            data: (getSearchFormData()),
+            data: JSON.stringify(query),
             success: function (body) {
-                console.log("Load list data for song on page " + obj.curr + ": ", body);
+                console.log("Load list data for song on page " + body.pageIndex + ": ", body);
                 rollData = body.data
                 callback(body.data);
             }
