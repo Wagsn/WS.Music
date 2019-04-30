@@ -210,6 +210,11 @@ namespace WS.Music.Controllers
             Console.WriteLine($"[{nameof(SongSearch)}] 歌曲搜索开始\r\n请求体：{JsonUtil.ToJson(request)}");
             var response = new PagingResponseMessage<Song>();
 
+            if (request != null && request.KeyWord == null)
+            {
+                request.KeyWord = "";
+            }
+
             try
             {
                 response.Data= MusicStore.Set<Song>().Where(a => a.Name.Contains(request.KeyWord)).Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();

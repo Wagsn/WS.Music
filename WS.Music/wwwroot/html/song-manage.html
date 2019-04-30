@@ -35,7 +35,7 @@
                 </blockquote>
 
                 <!-- 操作日志 -->
-                <div class="layui-form student-list-wrap">
+                <div class="layui-form song-list-wrap">
                     <table class="layui-table">
                         <thead>
                             <tr>
@@ -43,8 +43,9 @@
                                     <input name="all-choose" lay-skin="primary" lay-filter="all-choose" id="all-choose" type="checkbox">
                                     <div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"> </i></div>
                                 </th>
-                                <th style="text-align:center;">学号</th>
                                 <th>名称</th>
+                                <th>艺人</th>
+                                <th>专辑</th>
                                 <th>说明</th>
                                 <th>时长</th>
                                 <th>发行时间</th>
@@ -53,6 +54,9 @@
                             </tr>
                         </thead>
                         <tbody class="news_content" id="song-list-body"></tbody>
+                    </table>
+                    <table id="song-list-tb">
+
                     </table>
                     <div class="larry-table-page clearfix">
                         <div id="page" class="page"></div>

@@ -1,12 +1,13 @@
 ﻿// 音乐管理界面
 
-layui.use(['form', 'layer', 'laypage', 'layedit', 'laydate', 'element'], function () {
+layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element'], function () {
     var form = layui.form,
         element = layui.element,
         layer = parent.layer === undefined ? layui.layer : parent.layer,
         laypage = layui.laypage,
         layedit = layui.layedit,
-        laydate = layui.laydate
+        laydate = layui.laydate,
+        table  =layui.table
 
     // 查询到的数据全局
     var studentData = ' ';
@@ -52,14 +53,19 @@ layui.use(['form', 'layer', 'laypage', 'layedit', 'laydate', 'element'], functio
         //        alert("添加成功！");
         //    }
         //})
+        console.log('Loading song list page, the query is', query)
         $.post(
             songListUrl,
             query,
             function (resbody) {
-                console.log("Loading song list response body: ", resbody);
+                //table.render({
+                //    elem: '#song-list-tb',
+                //    ,url: ''
+                //})
+                console.log("Loaded song list response body: ", resbody);
                 // 设置第一次页面的数据
                 //setRollListData(body.data);
-                console.log("song list page count: ", Math.ceil(resbody.totalCount / resbody.pageSize))
+                console.log("Song list page count: ", Math.ceil(resbody.totalCount / resbody.pageSize))
                 // 其次获取实际数据
                 laypage.render({
                     cont: 'page',
@@ -75,7 +81,7 @@ layui.use(['form', 'layer', 'laypage', 'layedit', 'laydate', 'element'], functio
                         layer.msg(obj.curr + ' pages');
                         query.pageIndex = obj.curr - 1;
                         console.log("Jump to page " + obj.curr + ", the query is ", query)
-                        loadSongListData(query, renderSongList)
+                        loadSongListData(query, songListRender)
                     }
                 });
             }
@@ -84,34 +90,29 @@ layui.use(['form', 'layer', 'laypage', 'layedit', 'laydate', 'element'], functio
 
     // 异步网络加载歌曲列表，callback: 页面渲染回调函数
     function loadSongListData(query, callback) {
-        $.ajax({
-            type: "post",
-            async: true,
-            url: songListUrl,
-            dataType: 'json',
-            contentType: "application/json",
-            data: JSON.stringify(query),
-            success: function (body) {
-                console.log("Load list data for song on page " + body.pageIndex + ": ", body);
-                rollData = body.data
-                callback(body.data);
-            }
-        });
+        $.post(
+            songListUrl,
+            query,
+            function (resbody) {
+                console.log("Loaded list data for song on page " + resbody.pageIndex + " is: ", resbody);
+                callback(resbody.data);
+            })
     }
 
     // 渲染歌曲列表数据
-    function renderSongList(data) {
+    function songListRender(data) {
         console.log("Rendering Song List Data: ", data)
         let dataHtml = ""
         $.each(data, function (v, o) {
             dataHtml += '<tr>' +
-                '<td><input name="checked" lay-skin="primary" lay-filter="choose" type="checkbox"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div></td>' +
-                '<td align="center">' + o.name + '</td>' +
+                '<td><input name="checked" lay-skin="primary" lay-filter="choose" type="checkbox"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></td>' +
+                '<td>' + o.name + '</td>' +
+                '<td>' + (o.artistName || "未知") + '</td>' +
+                '<td>' + (o.albumName || "未知") + '</td>' +
                 '<td>' + o.description + '</td>' +
                 '<td>' + o.duration + '</td>' +
-                '<td>' + o.classNo + '</td>' +
                 '<td>' + o.releaseTime + '</td>' +
-                '<td>' + o.url + '</td>' +
+                '<td>' + (o.url || '暂无') + '</td>' +
                 '<td>' +
                 '<a class="layui-btn layui-btn-normal layui-btn-mini song-details-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe600;</i>详情</a>' +
                 '<a class="layui-btn layui-btn-normal layui-btn-mini song-edit-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe600;</i>编辑</a>' +
@@ -119,23 +120,8 @@ layui.use(['form', 'layer', 'laypage', 'layedit', 'laydate', 'element'], functio
                 '</td>' +
                 '</tr>';
         })
-        $('#roll_list').html(dataHtml);
-    }
-
-    // 通过关键词获取学生搜索数据 会导致页数的变化，所以用setPageStudent
-    function loadSongSearchData(query = { pageIndex: 0, pageSize: 5, keyWord: "" }) {
-        $.ajax({
-            type: "get",
-            async: true,
-            url: "api/student/list?pageIndex=" + (query.pageIndex || "0") + "&pageSize=" + (query.pageSize || "10") + "&keyWord=" + (query.keyWord),
-            dataType: 'json',
-            success: function (body) {
-                console.log("响应数据：", body);
-                console.log("通过关键字在服务器查询到的学生数据：", body.data)
-                studentData = body.data
-                setStudentListData(body.data);
-            }
-        });
+        $('#song-list-body').html(dataHtml)
+        form.render()
     }
 
     // 获取搜索表单数据
@@ -147,36 +133,59 @@ layui.use(['form', 'layer', 'laypage', 'layedit', 'laydate', 'element'], functio
         }
     }
 
-    // 设置搜索表单数据
-    function setSearchFormData(data) {
-        $('.search-input').val(data.keyWord)
-    }
+    // 全选按钮绑定点击事件
+    form.on('checkbox(all-choose)', function (data) {
+        //data.elem); //得到select原始DOM对象  (data.value); //得到被选中的值  (data.othis); //得到美化后的DOM对象
+        //(data.elem.checked); //是否被选中，true或者false
+        var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
+        //each遍历 each() 方法为每个匹配元素规定要运行的函数。$(selector).each(function(index,element)) 
+        //element - 当前的元素（也可使用 "this" 选择器）
+        child.each(function (index, item) {
+            item.checked = data.elem.checked
+        });
+        form.render('checkbox'); ////渲染表单
+    })
 
-    function setStudentListData(data) {
-        //console.log("学生数据：", studentData)
-        let dataHtml = ""
-        $.each(data, function (v, o) {
-            dataHtml += '<tr>' +
-                '<td><input name="checked" lay-skin="primary" lay-filter="choose" type="checkbox"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div></td>' +
-                '<td align="center">' + o.studentNo + '</td>' +
-                '<td>' + o.name + '</td>' +
-                '<td>' + o.password + '</td>' +
-                '<td>' + o.majorName + '</td>' +
-                '<td>' + o.classNo + '</td>' +
-                '<td>' + o.email + '</td>' +
-                '<td>' + o.mobileNumber + '</td>' +
-                '<td>' +
-                '<a class="layui-btn layui-btn-mini student_edit" data-id="' + o.id + '"><i class="iconfont icon-edit"></i> 编辑</a>' +
-                '<a class="layui-btn layui-btn-normal layui-btn-mini shop_details" data-id="' + o.id + '"><i class="layui-icon">&#xe600;</i>详情</a>' +
-                '<a class="layui-btn layui-btn-danger layui-btn-mini student_del" data-id="' + o.id + '"><i class="layui-icon">&#xe640;</i> 删除</a>' +
-                '</td>' +
-                '</tr>';
+    // 判断是否选中
+    form.on("checkbox(choose)", function (data) {
+        //parents() 方法返回被选元素的所有祖先元素。
+        //$(selector).parents(filter) parent() - 返回被选元素的直接父元素
+        var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])')
+        var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"]):checked')
+        if (childChecked.length == child.length) {
+            $(data.elem).parents('table').find('thead input#all-choose').get(0).checked = true
+        } else {
+            $(data.elem).parents('table').find('thead input#all-choose').get(0).checked = false
+        }
+        form.render('checkbox')
+    })
+
+    // 添加按钮绑定点击事件
+    $(window).one("resize", function () {
+        $(".song-add-btn").click(function () {
+            console.log('song-add-btn clicked')
+            //弹窗新增教师
+            var index = layui.layer.open({
+                title: "添加歌曲",
+                type: 2,
+                maxmin: true,
+                shadeClose: true, //点击遮罩关闭层
+                area: ['680px', '500px'],
+                content: "song-add.html",
+                success: function (layero, index) {
+                    setTimeout(function () {
+                        layui.layer.tips('点击此处返回歌曲列表', '.layui-layer-setwin .layui-layer-close', {
+                            tips: 3
+                        });
+                    }, 500)
+                }
+            })
+            //layui.layer.full(index);
         })
-        $('#student_list').html(dataHtml);
+    }).resize();
 
-    }
-    /*点击删除按钮删除该行数据*/
-    $("body").on("click", ".student_del", function () { //删除
+    // 点击删除按钮删除该行数据
+    $("body").on("click", ".song-del-btn", function () { //删除
         console.log("teacher deleting")
         var _this = $(this);
         layer.confirm('确定删除此信息？', { icon: 3, title: '提示信息' }, function (index) {
@@ -235,29 +244,7 @@ layui.use(['form', 'layer', 'laypage', 'layedit', 'laydate', 'element'], functio
     }
 
 
-    //添加学生
-    $(window).one("resize", function () {
-        $(".studentAdd_btn").click(function () {
-            console.log('studentAdd_btn clicked')
-            //弹窗新增教师
-            var index = layui.layer.open({
-                title: "增加学生",
-                type: 2,
-                maxmin: true,
-                shadeClose: true, //点击遮罩关闭层
-                area: ['680px', '500px'],
-                content: "studentAdd.html",
-                success: function (layero, index) {
-                    setTimeout(function () {
-                        layui.layer.tips('点击此处返回学生列表', '.layui-layer-setwin .layui-layer-close', {
-                            tips: 3
-                        });
-                    }, 500)
-                }
-            })
-            //layui.layer.full(index);
-        })
-    }).resize();
+    
 
 
     // 批量删除
@@ -297,31 +284,7 @@ layui.use(['form', 'layer', 'laypage', 'layedit', 'laydate', 'element'], functio
         }
     })
 
-    //全选
-    form.on('checkbox(allChoose)', function (data) {
-        //data.elem); //得到select原始DOM对象  (data.value); //得到被选中的值  (data.othis); //得到美化后的DOM对象
-        //(data.elem.checked); //是否被选中，true或者false
-        var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
-        //each遍历 each() 方法为每个匹配元素规定要运行的函数。$(selector).each(function(index,element)) 
-        //element - 当前的元素（也可使用 "this" 选择器）
-        child.each(function (index, item) {
-            item.checked = data.elem.checked;
-        });
-        form.render('checkbox'); ////渲染表单
-    });
-    //判断是否选中
-    form.on("checkbox(choose)", function (data) {
-        //parents() 方法返回被选元素的所有祖先元素。
-        //$(selector).parents(filter) parent() - 返回被选元素的直接父元素
-        var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
-        var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"]):checked')
-        if (childChecked.length == child.length) {
-            $(data.elem).parents('table').find('thead input#allChoose').get(0).checked = true;
-        } else {
-            $(data.elem).parents('table').find('thead input#allChoose').get(0).checked = false;
-        }
-        form.render('checkbox');
-    })
+    
 
 
     //编辑学生信息
