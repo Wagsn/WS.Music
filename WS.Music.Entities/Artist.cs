@@ -31,7 +31,7 @@ namespace WS.Music.Entities
         public string Description { get; set; }
 
         /// <summary>
-        /// 建立时间
+        /// 建立时间，出道时间
         /// </summary>
         public DateTime? BirthTime { get; set; }
     }
