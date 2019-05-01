@@ -13,10 +13,18 @@ namespace WS.Music.Dto
     {
         public User User { get; set; }
 
+        public List<User> Users { get; set; }
+
         public Song Song { get; set; }
+
+        public List<Song> Songs { get; set; }
 
         public Album Album { get; set; }
 
+        public List<Album> Albums { get; set; }
+
         public Artist Artist { get; set; }
+
+        public List<Artist> Artists { get; set; }
     }
 }

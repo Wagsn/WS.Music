@@ -31,10 +31,15 @@ namespace WS.Music.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("artist/list")]
-        public PagingResponseMessage<Artist> ArtistList([FromBody]PageSearchRequest request)
+        public PagingResponseMessage<Artist> ArtistList([FromForm]PageSearchRequest request)
         {
             Console.WriteLine($"[{nameof(AlbumList)}] 艺人 信息 列表 开始\r\n请求体：{JsonUtil.ToJson(request)}");
             var response = new PagingResponseMessage<Artist>();
+
+            if (request != null && request.KeyWord == null)
+            {
+                request.KeyWord = "";
+            }
 
             try
             {
@@ -56,14 +61,15 @@ namespace WS.Music.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("artist/delete")]
-        public ResponseMessage ArtistDelete([FromBody]CommonRequest request)
+        public ResponseMessage ArtistDelete([FromForm]CommonRequest request)
         {
             Console.WriteLine($"[{nameof(AlbumDelete)}] 艺人 信息 删除 开始\r\n请求体：{JsonUtil.ToJson(request)}");
             var response = new ResponseMessage();
 
             try
             {
-                MusicStore.DeleteAll(MusicStore.Set<Artist>().Find(request.Album.Id));
+                var artistIds = request.Artists.Select(a => a.Id).ToList();
+                MusicStore.DeleteAll(MusicStore.Set<Artist>().Where(a => artistIds.Contains(a.Id)).ToArray());
             }
             catch (Exception e)
             {
@@ -122,6 +128,11 @@ namespace WS.Music.Controllers
         {
             Console.WriteLine($"[{nameof(AlbumList)}] 专辑 信息 列表 开始\r\n请求体：{JsonUtil.ToJson(request)}");
             var response = new PagingResponseMessage<Album>();
+
+            if (request != null && request.KeyWord == null)
+            {
+                request.KeyWord = "";
+            }
 
             try
             {
