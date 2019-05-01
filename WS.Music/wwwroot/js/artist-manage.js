@@ -1,114 +1,92 @@
-﻿// 音乐管理界面
+﻿// 艺人管理界面
 
 layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element'], function () {
-    var form = layui.form,
-        element = layui.element,
-        layer = parent.layer === undefined ? layui.layer : parent.layer,
-        laypage = layui.laypage,
-        layedit = layui.layedit,
-        laydate = layui.laydate,
-        table  =layui.table
+    // 组件加载
+    var form = layui.form
+        ,element = layui.element
+        ,layer = parent.layer === undefined ? layui.layer : parent.layer
+        ,laypage = layui.laypage
+        ,layedit = layui.layedit
+        ,laydate = layui.laydate
+        ,table = layui.table
 
-    // 查询到的数据全局
-    var studentData = ' ';
+    // 网络数据源
+    let listUrl = "/api/artist/list"
 
-    let songListUrl = "/api/song/list"
-
-    
-
-    //jq初始化页面
+    // 初始化页面
     $(document).ready(function () {
         // 初始化列表
-        initSongList()
-        // 搜索按钮绑定点击事件
-        $(".search-btn").click(function () {
-            let searchFromData = getSearchFormData()
-            console.log('search form data: ', searchFromData)
-            if (searchFromData.keyWord != '') {
-                var index = layer.msg('查询中，请稍候', { icon: 16, time: false, shade: 0.8 })
-                setTimeout(function () {
-                    loadSongPageData(searchFromData)
-                    layer.close(index)
-                }, 1000);  // 1000 ms 超时
-            } else {
-                layer.msg("请输入需要查询的内容")
-            }
-        })
-    })
-
-    // 初始化列表
-    function initSongList() {
-        loadSongPageData({
+        loadPageData({
             pageIndex: 0,
             pageSize: 5
         })
-    }
+        // 搜索按钮点击事件
+        $(".search-btn").click(function () {
+            let index = layer.msg('查询中，请稍候', { icon: 16, time: false, shade: 0.8 })
+            setTimeout(function () {
+                loadPageData(getSearchFormData())
+                layer.close(index)
+            }, 1000);
+        })
+    })
 
-    // 加载音乐列表数据
-    function loadSongPageData(query = { pageIndex: 0, pageSize: 5, keyWord: "" }) {
+    // 加载分页数据
+    function loadPageData(query = { pageIndex: 0, pageSize: 5, keyWord: "" }) {
         // 数据来源 服务器
-        // 首先要获取分页索引信息
-        //$.post(songListUrl, query, function (data) {
-        //    if (data == "ok") {
-        //        alert("添加成功！");
-        //    }
-        //})
-        console.log('Loading song list page, the query is', query)
+        console.log('Loading data, query: ', query)
         $.post(
-            songListUrl,
+            listUrl,
             query,
             function (resbody) {
-                console.log("Loaded song list response body: ", resbody);
-                // 设置第一次页面的数据
-                //setRollListData(body.data);
-                console.log("Song list page count: ", Math.ceil(resbody.totalCount / resbody.pageSize))
-                // 其次获取实际数据
+                let pageInfo = {
+                    count: Math.ceil(resbody.totalCount / resbody.pageSize)
+                    ,index: resbody.pageIndex
+                    ,total: resbody.totalCount
+                    ,limit: resbody.pageSize
+                }
+                console.log("Paging information: ", pageInfo);
                 laypage.render({
-                    cont: 'page',
-                    //总页数后台返回总的数据页数
-                    pages: resbody.pageSize == 0 ? 1 : Math.ceil(resbody.totalCount / resbody.pageSize),  // 这里计算是不是出现了问题
-                    //当前页数
-                    curr: resbody.pageIndex,
-                    //连续显示分页数
-                    groups: 0,
-                    // 这里是执行跳转的接口
-                    jump: function (obj, first) {
+                    // 显示分页信息的标签
+                    elem: 'page'
+                    , limit: pageInfo.limit
+                    , count: pageInfo.total
+                    , pages: pageInfo.count
+                    , curr: pageInfo.index
+                    , layout: ['prev', 'page', 'next']
+                    // 连续显示分页数
+                    //,groups: 3
+                    // 页面跳转
+                    ,jump: function (obj, first) {
                         //得到了当前页，用于向服务端请求对应数据
-                        layer.msg(obj.curr + ' pages');
-                        query.pageIndex = obj.curr - 1;
+                        layer.msg(obj.curr + ' pages')
+                        query.pageIndex = (obj.curr - 1)
                         console.log("Jump to page " + obj.curr + ", the query is ", query)
-                        loadSongListData(query, songListRender)
+                        loadTableData(query, tableRender)
                     }
                 });
             }
         )
     }
 
-    // 异步网络加载歌曲列表，callback: 页面渲染回调函数
-    function loadSongListData(query, callback) {
-        $.post(
-            songListUrl,
-            query,
+    // 加载表格数据，render: 页面渲染回调函数
+    function loadTableData(query, render) {
+        $.post(listUrl, query,
             function (resbody) {
-                console.log("Loaded list data for song on page " + resbody.pageIndex + " is: ", resbody);
-                callback(resbody.data);
+                console.log("Loaded data on page " + resbody.pageIndex + " is: ", resbody)
+                render(resbody.data)
             })
     }
 
-    // 渲染歌曲列表数据
-    function songListRender(data) {
-        console.log("Rendering Song List Data: ", data)
+    // 表格数据渲染
+    function tableRender(data) {
+        console.log("Rendering Data: ", data)
         let dataHtml = ""
         $.each(data, function (v, o) {
             dataHtml += '<tr>' +
                 '<td><input name="checked" lay-skin="primary" lay-filter="choose" type="checkbox"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></td>' +
                 '<td>' + o.name + '</td>' +
-                '<td>' + (o.artistName || "未知") + '</td>' +
-                '<td>' + (o.albumName || "未知") + '</td>' +
                 '<td>' + o.description + '</td>' +
-                '<td>' + o.duration + '</td>' +
-                '<td>' + o.releaseTime + '</td>' +
-                '<td>' + (o.url || '暂无') + '</td>' +
+                '<td>' + o.birthTime + '</td>' +
                 '<td>' +
                 '<a class="layui-btn layui-btn-normal layui-btn-mini song-details-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe600;</i>详情</a>' +
                 '<a class="layui-btn layui-btn-normal layui-btn-mini song-edit-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe600;</i>编辑</a>' +
@@ -116,7 +94,7 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
                 '</td>' +
                 '</tr>';
         })
-        $('#song-list-body').html(dataHtml)
+        $('#page-table-body').html(dataHtml)
         form.render()
     }
 
