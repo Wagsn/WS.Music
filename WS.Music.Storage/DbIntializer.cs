@@ -19,7 +19,7 @@ namespace WS.Music.Stores
             context.Database.EnsureCreated();
 
             // 初始化数据
-            if (context.Artists.Any() || context.Albums.Any())
+            if (context.Artists.Any() || context.Albums.Any() || context.RelArtistAlbums.Any())
             {
                 return;
             }
@@ -339,7 +339,7 @@ namespace WS.Music.Stores
                         Id = tlbbAlbum,
                         Name = "天龙八部之宿敌",
                         Description = "",
-                        ReleaseTime = DateTime.Parse("2011-09-2")1
+                        ReleaseTime = DateTime.Parse("2011-09-2")
                     },
                     new Album
                     {
@@ -419,7 +419,7 @@ namespace WS.Music.Stores
                         ReleaseTime = DateTime.Parse("2007-05-24")
                     }
                 };
-
+            context.AddRange(albums);
             #endregion
 
             // 艺人专辑
@@ -612,6 +612,7 @@ namespace WS.Music.Stores
                     AlbumId =vAlbum
                 }
             };
+            context.AddRange(relArtistAlbums);
             // 歌曲专辑
             var relSongAlbums = new List<RelSongAlbum>
             {

@@ -34,7 +34,7 @@ namespace WS.Music.Entities
         /// <summary>
         /// 描述介绍，可空(Empty=Blank>Null)
         /// </summary>
-        [MaxLength(511)]
+        //[MaxLength(2047)]
         public string Description { get; set; }
 
         /// <summary>
