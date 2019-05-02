@@ -43,10 +43,11 @@ namespace WS.Music.Controllers
 
             try
             {
-                response.Data = MusicStore.Set<Artist>().Where(a => a.Name.Contains(request.KeyWord)).Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();
+                var query = MusicStore.Set<Artist>().Where(a => a.Name.Contains(request.KeyWord));
+                response.Data = query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();
                 response.PageSize = request.PageSize;
                 response.PageIndex = request.PageIndex;
-                response.TotalCount = MusicStore.Set<Artist>().Count();
+                response.TotalCount = query.Count();
             }
             catch (Exception e)
             {
@@ -84,7 +85,7 @@ namespace WS.Music.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("artist/save")]
-        public ResponseMessage ArtistSave([FromBody]CommonRequest request)
+        public ResponseMessage ArtistSave([FromForm]CommonRequest request)
         {
             Console.WriteLine($"[{nameof(ArtistSave)}] 艺人 信息 保存 开始\r\n请求体：{JsonUtil.ToJson(request)}");
             var response = new ResponseMessage();
@@ -136,10 +137,11 @@ namespace WS.Music.Controllers
 
             try
             {
-                response.Data = MusicStore.Set<Album>().Where(a => a.Name.Contains(request.KeyWord)).Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();
+                var query = MusicStore.Set<Album>().Where(a => a.Name.Contains(request.KeyWord));
+                response.Data = query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();
                 response.PageSize = request.PageSize;
                 response.PageIndex = request.PageIndex;
-                response.TotalCount = MusicStore.Set<Album>().Count();
+                response.TotalCount = query.Count();
             }
             catch (Exception e)
             {
@@ -228,10 +230,11 @@ namespace WS.Music.Controllers
 
             try
             {
-                response.Data= MusicStore.Set<Song>().Where(a => a.Name.Contains(request.KeyWord)).Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();
+                var query = MusicStore.Set<Song>().Where(a => a.Name.Contains(request.KeyWord));
+                response.Data= query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();
                 response.PageSize = request.PageSize;
                 response.PageIndex = request.PageIndex;
-                response.TotalCount = MusicStore.Set<Song>().Count();
+                response.TotalCount = query.Count();
             }
             catch(Exception e)
             {

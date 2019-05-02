@@ -131,7 +131,12 @@ namespace WS.Music.Stores
                     new Artist
                     {
                         Id = psArtist,
-                        Name = zxzArtist
+                        Name = "朴树"
+                    },
+                    new Artist
+                    {
+                        Id =zxzArtist,
+                        Name = "张信哲"
                     },
                     new Artist
                     {

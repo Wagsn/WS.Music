@@ -12,7 +12,8 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
 
     // 网络数据源
     let listUrl = "/api/artist/list"
-        ,delUrl = "/api/artist/delete"
+        , delUrl = "/api/artist/delete"
+        , saveUrl = "/api/artist/save"
 
     // 初始化页面
     $(document).ready(function () {
@@ -75,7 +76,7 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             })
     }
 
-    // 表格数据渲染
+    // 渲染表格
     function renderTable(data) {
         console.log("Rendering Data: ", data)
         let dataHtml = ""
@@ -83,8 +84,8 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             dataHtml += '<tr>' +
                 '<td><input name="checked" lay-skin="primary" lay-filter="choose" type="checkbox"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></td>' +
                 '<td>' + o.name + '</td>' +
-                '<td>' + o.description + '</td>' +
-                '<td>' + o.birthTime + '</td>' +
+                '<td>' + (o.description || '暂无') + '</td>' +
+                '<td>' + (o.birthTime || '暂无') + '</td>' +
                 '<td>' +
                 '<a class="layui-btn layui-btn-normal layui-btn-sm details-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe600;</i>详情</a>' +
                 '<a class="layui-btn layui-btn-normal layui-btn-sm edit-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe600;</i>编辑</a>' +
