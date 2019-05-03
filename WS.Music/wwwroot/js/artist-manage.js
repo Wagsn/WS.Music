@@ -1,5 +1,11 @@
 ﻿// 艺人管理界面
 
+//import('/js/store.js').then(module => {
+//    console.log('then store:', module.default)
+//});
+
+console.log('store:', store)
+
 layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element'], function () {
     // 组件加载
     var form = layui.form
@@ -28,8 +34,7 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             }, 1000);
         })
     })
-
-    // 加载分页数据
+    // 加载分页
     function loadPage(query = { pageIndex: 0, pageSize: 5, keyWord: "" }) {
         // 数据来源 服务器
         console.log('Loading data, query:', query)
@@ -66,8 +71,7 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             }
         )
     }
-
-    // 加载表格数据，render: 页面渲染回调函数
+    // 加载表格数据，query: 查询条件 render: 页面渲染回调函数
     function loadTable(query, render) {
         $.post(listUrl, query,
             function (resbody) {
@@ -75,7 +79,6 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
                 render(resbody.data)
             })
     }
-
     // 渲染表格
     function renderTable(data) {
         console.log("Rendering Data: ", data)
@@ -96,7 +99,6 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
         $('#page-table-body').html(dataHtml)
         form.render()
     }
-
     // 获取搜索表单数据
     function getSearchFormData() {
         return {
@@ -105,20 +107,19 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             keyWord: $('.search-input').val().trim() || ''
         }
     }
-
     // 全选按钮绑定点击事件
     form.on('checkbox(all-choose)', function (data) {
-        //data.elem); //得到select原始DOM对象  (data.value); //得到被选中的值  (data.othis); //得到美化后的DOM对象
-        //(data.elem.checked); //是否被选中，true或者false
+        // (data.elem); // 得到select原始DOM对象  (data.value); // 得到被选中的值  (data.othis); // 得到美化后的DOM对象
+        // (data.elem.checked); // 是否被选中，true或者false
         var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
         //each遍历 each() 方法为每个匹配元素规定要运行的函数。$(selector).each(function(index,element)) 
         //element - 当前的元素（也可使用 "this" 选择器）
         child.each(function (index, item) {
             item.checked = data.elem.checked
         });
-        form.render('checkbox'); ////渲染表单
+        // 渲染表单
+        form.render('checkbox'); 
     })
-
     // 判断是否选中
     form.on("checkbox(choose)", function (data) {
         //parents() 方法返回被选元素的所有祖先元素。
@@ -132,7 +133,6 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
         }
         form.render('checkbox')
     })
-
     // 添加按钮绑定点击事件
     $(window).one("resize", function () {
         $(".add-btn").click(function () {
@@ -156,7 +156,6 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             //layui.layer.full(index);
         })
     }).resize();
-
     // 点击删除按钮删除该行数据
     $("body").on("click", ".del-btn", function () { //删除
         var _this = $(this);
@@ -167,38 +166,22 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             layer.close(index)
         });
     })
-
     // 提交删除改行数据的ajax请求
     function deleteItem(id) {
         console.log('Deleting:', id);
-        //	alert(datajson);
         $.post(delUrl, { artists: [{ id }]},
             function (resbody) {
-                if (data.code == "200") {
-                    console.log('Deleted('+id+'):', resbody);
-                    layer.msg("删除成功");
+                console.log('Deleted('+id+'):', resbody);
+                if (resbody.code == "0") {
+                    layer.msg("删除成功")
+                    location.reload()
                 } else {
-                    alert('删除失败!');
+                    alert('删除失败!')
                 }
             })
     }
-
-    /*获取添加页面的id提交查询请求*/
-    function getstudentidAndShow() {
-        var thisURL = document.URL;
-        var getval = thisURL.split('?')[1];
-        var showval = getval.split("=")[1];
-        function showvalf() {
-            alert(showval);
-            console.log(showval);
-            selectValue = showval;
-            getstudentManagePageInfo();
-        }
-    }
-
     // 批量删除
     $(".batch-del-btn").click(function () {
-
         var $checkbox = $('.student_list tbody input[type="checkbox"][name="checked"]');
         var $checked = $('#page-table-body input[type="checkbox"][name="checked"]:checked');
 
@@ -206,10 +189,9 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             layer.confirm('确定删除选中的信息？', { icon: 3, title: '提示信息' }, function (index) {
                 var index2 = layer.msg('删除中，请稍候', { icon: 16, time: false, shade: 0.8 });
                 setTimeout(function () {
-
                     //删除数据
                     for (var j = 0; j < $checked.length; j++) { ///选中的个数$checked.length
-                        deleteItem($checked.eq(j).parents("tr").find(".student_del").attr("data-id"));//循环调用删除
+                        deleteItem($checked.eq(j).parents("tr").find(".del-btn").attr("data-id"));//循环调用删除
                     }
                     //prop() 方法设置或返回被选元素的属性和值。
                     $('.page-table thead input[type="checkbox"]').prop("checked", false);
@@ -223,75 +205,55 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             layer.msg("请选择需要删除的项");
         }
     })
-
-    //编辑学生信息
-    $("body").on("click", ".student_edit", function () {
+    // 编辑项
+    $("body").on("click", ".edit-btn", function () {
         var _this = $(this);
         layer.confirm('确定编辑此信息？', { icon: 3, title: '提示信息' }, function (index) {
-            for (var i = 0; i < studentData.length; i++) {
-                if (studentData[i].id == _this.attr("data-id")) {
-                    //alert(bigcateData[i].cateId);
-                    console.log("jump to student edit view: ", studentData[i]);  //获取到该行对象
-                    sessionStorage.obj1 = JSON.stringify(studentData[i]);
-
-                    layer.msg("加载成功");
-
-                    var index = layui.layer.open({
-                        title: "编辑学生信息",
-                        type: 2,
-                        maxmin: true,
-                        shadeClose: true, //点击遮罩关闭层
-                        area: ['800px', '500px'],
-                        content: "studentChange.html",
-                        success: function (layero, index) {
-                            setTimeout(function () {
-                                layui.layer.tips('点击此处返回学生列表', '.layui-layer-setwin .layui-layer-close', {
-                                    tips: 3
-
-                                });
-                            }, 500)
-                        }
-                    })
-                }
-
+            let artist = {
+                id: _this.attr("data-id")
             }
-
-            layer.close(index);
+            store.save('artist-edit', artist)
+            console.log("Jump to edit page: ", _this.attr("data-id"));  //获取到该行对象
+            layer.msg("加载成功");
+            var index = layui.layer.open({
+                title: "编辑信息",
+                type: 2,
+                maxmin: true,
+                shadeClose: true, //点击遮罩关闭层
+                area: ['800px', '500px'],
+                content: "artist-edit.html",
+                success: function (layero, index) {
+                    setTimeout(function () {
+                        layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
+                            tips: 3
+                        });
+                    }, 500)
+                    //layer.close(index);
+                }
+            })
         });
     })
-
-    //详情
-    $("body").on("click", ".shop_details", function () {
+    // 详情项
+    $("body").on("click", ".details-btn", function () {
         var _this = $(this);
-        layer.confirm('查看该学生详情？', { icon: 3, title: '提示信息' }, function (index) {
-            //	_this.parents("tr").remove();//移除显示
-            for (var i = 0; i < shopData.length; i++) {
-                if (shopData[i].id == _this.attr("data-id")) {
-                    console.log(shopData[i]);//获取到该行对象
-                    sessionStorage.obj2 = JSON.stringify(shopData[i]);
-
-                    layer.msg("加载成功");
-
-                    var index = layui.layer.open({
-                        title: "学生详情",
-                        type: 2,
-                        maxmin: true,
-                        shadeClose: false, //点击遮罩关闭层
-                        area: ['600px', '420px'],
-                        content: "shopDetails.html",
-                        success: function (layero, index) {
-                            setTimeout(function () {
-                                layui.layer.tips('点击此处返回学生列表', '.layui-layer-setwin .layui-layer-close', {
-                                    tips: 3
-
-                                });
-                            }, 500)
-                        }
-                    })
-
+        layer.confirm('查看该详情？', { icon: 3, title: '提示信息' }, function (index) {
+            let id = _this.attr("data-id")
+            store.save('artist-details', { id })
+            var index2 = layui.layer.open({
+                title: "详情",
+                type: 2,
+                maxmin: true,
+                shadeClose: false, //点击遮罩关闭层
+                area: ['600px', '420px'],
+                content: "artist-details.html",
+                success: function (layero, index) {
+                    setTimeout(function () {
+                        layui.layer.tips('点击此处返回学生列表', '.layui-layer-setwin .layui-layer-close', {
+                            tips: 3
+                        });
+                    }, 500)
                 }
-            }
-
+            })
             layer.close(index);
         });
     })

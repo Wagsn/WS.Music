@@ -2,8 +2,9 @@
     console.log("artist-add.html is loaded");
     var form = layui.form;
     $ = layui.jquery;
-
+    
     let saveUrl = '/api/artist/save'
+    //let listUrl = '/api/artist/list'
 
     //$(document).ready(function () {
     //})
@@ -12,7 +13,7 @@
         console.log("saveform clicked");
         var index = parent.layer.msg('数据提交中，请稍候', { icon: 16, time: false, shade: 0.8 });
         setTimeout(function () {
-            addItem();
+            saveItem();
             //关闭加载层
             parent.layer.close(index);
             //提示成功
@@ -24,32 +25,39 @@
         return true;
     })
     // 加载表单数据
-    function getFormData() {
+    function loadFormData() {
         return {
-            name: $(".name").val()
-            , description: $(".description").val()
-            , releaseTime: $(".releaseTime").val()
+            //id: $('.id').val() || '',
+            name: $(".name").val(),
+            description: $(".desc").val(),
+            birthTime: $(".time").val(),
         }
     }
-    // 添加提交
-    function addItem() {
+    // 保存项
+    function saveItem() {
         let request = {
-            artist: getFormData()
+            artist: loadFormData()
         }
-        console.log('', request)
+        console.log('Save request:', JSON.stringify(request))
         $.post(saveUrl, request,
             function (resbody) {
                 console.log('Response Body:', resbody);
                 if (resbody.code == "0") {
-                    alert('添加成功！');
-                    console.log(resbody)
-                    //window.location.reload(); //刷新当前页面
+                    alert('保存成功！');
                     parent.location.reload();
                 } else {
-                    alert('添加失败');
+                    alert('保存失败');
                 }
             })
     }
+    //// 渲染表单数据
+    //function renderForm(data) {
+    //    $('.id').val(data.id)
+    //    $(".name").val(data.name)
+    //    $(".desc").val(data.description)
+    //    $(".time").val(data.releaseTime)
+    //    form.render()
+    //}
     // 监听专业选择器的变化
     form.on('select(major_select)', function (data) {
         // 获取班级列表 class/list
@@ -82,11 +90,5 @@
         }
         select.html(select_html);
         form.render();
-    }
-    // 渲染表单数据
-    function renderFormData(data) {
-        $(".name").val(data.name)
-        $(".description").val(data.description)
-        $(".releaseTime").val(data.releaseTime)
     }
 });

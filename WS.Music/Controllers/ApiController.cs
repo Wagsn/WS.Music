@@ -43,7 +43,15 @@ namespace WS.Music.Controllers
 
             try
             {
-                var query = MusicStore.Set<Artist>().Where(a => a.Name.Contains(request.KeyWord));
+                var query = MusicStore.Set<Artist>().AsQueryable();
+                if (!string.IsNullOrWhiteSpace(request.KeyWord))
+                {
+                    query = query.Where(a => a.Name.Contains(request.KeyWord));
+                }
+                if(request.Ids != null && request.Ids.Count > 0)
+                {
+                    query = query.Where(a => request.Ids.Contains(a.Id));
+                }
                 response.Data = query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();
                 response.PageSize = request.PageSize;
                 response.PageIndex = request.PageIndex;
@@ -108,7 +116,14 @@ namespace WS.Music.Controllers
                 }
                 else
                 {
-                    MusicStore.UpdateAll(request);
+                    var entity = MusicStore.Find<Artist>(a => a.Id.Equals(request.Artist.Id)).SingleOrDefault();
+                    if(entity != null)
+                    {
+                        entity.Name = request.Artist.Name;
+                        entity.Description= request.Artist.Description;
+                        entity.BirthTime= request.Artist.BirthTime;
+                        MusicStore.UpdateAll(entity);
+                    }
                 }
             }
             catch (Exception e)
@@ -201,7 +216,7 @@ namespace WS.Music.Controllers
                 }
                 else
                 {
-                    MusicStore.UpdateAll(request);
+                    MusicStore.UpdateAll(request.Album);
                 }
             }
             catch (Exception e)
@@ -286,7 +301,7 @@ namespace WS.Music.Controllers
                 }
                 else
                 {
-                    MusicStore.UpdateAll(request);
+                    MusicStore.UpdateAll(request.Song);
                 }
             }
             catch (Exception e)

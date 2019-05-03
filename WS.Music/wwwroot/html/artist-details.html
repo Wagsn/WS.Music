@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/lib/layui/css/layui.css" media="all">
+    <title>歌手详情 - 后台管理</title>
+</head>
+<body class="song-add-body">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称：</label>
+            <div class="layui-input-block">
+                <input class="layui-input name" lay-verify="required" placeholder="请输入歌手名" type="text" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">简介说明：</label>
+            <div class="layui-input-block">
+                <input class="layui-input desc" placeholder="请输入简介说明" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">出道时间：</label>
+            <div class="layui-input-block">
+                <input class="layui-input time" type="datetime-local">
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript" src="/lib/layui/layui.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js "></script>
+    <script src="/js/store.js"></script>
+    <script type="text/javascript">
+        layui.use(['form', 'jquery'], function () {
+        var form = layui.form;
+        $ = layui.jquery;
+        let listUrl = '/api/artist/list'
+        // 加载
+        $(document).ready(function () {
+            // 加载信息
+            loadForm({
+                pageIndex: 0, pageSize: 5, ids: [
+                    store.load('artist-details').id
+                ]
+            })
+        })
+        // 加载表单数据
+        function loadForm(query = { pageIndex: 0, pageSize: 5}) {
+            console.log('Loading data, query:', query)
+            $.post(
+                listUrl,
+                query,
+                function (resbody) {
+                    console.log('Response Body:', resbody)
+                    if (resbody.data.length > 0) {
+                        renderForm(resbody.data[0])
+                    }
+                    else {
+                        alert('没有数据')
+                    }
+                }
+            )
+        }
+        // 渲染表单数据
+        function renderForm(data) {
+            $('.id').val(data.id)
+            $(".name").val(data.name)
+            $(".desc").val(data.description)
+            $(".time").val(data.birthTime)
+            form.render()
+        }
+        });
+    </script>
+</body>
+</html>
