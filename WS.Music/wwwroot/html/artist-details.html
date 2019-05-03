@@ -29,46 +29,6 @@
     <script type="text/javascript" src="/lib/layui/layui.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js "></script>
     <script src="/js/store.js"></script>
-    <script type="text/javascript">
-        layui.use(['form', 'jquery'], function () {
-        var form = layui.form;
-        $ = layui.jquery;
-        let listUrl = '/api/artist/list'
-        // 加载
-        $(document).ready(function () {
-            // 加载信息
-            loadForm({
-                pageIndex: 0, pageSize: 5, ids: [
-                    store.load('artist-details').id
-                ]
-            })
-        })
-        // 加载表单数据
-        function loadForm(query = { pageIndex: 0, pageSize: 5}) {
-            console.log('Loading data, query:', query)
-            $.post(
-                listUrl,
-                query,
-                function (resbody) {
-                    console.log('Response Body:', resbody)
-                    if (resbody.data.length > 0) {
-                        renderForm(resbody.data[0])
-                    }
-                    else {
-                        alert('没有数据')
-                    }
-                }
-            )
-        }
-        // 渲染表单数据
-        function renderForm(data) {
-            $('.id').val(data.id)
-            $(".name").val(data.name)
-            $(".desc").val(data.description)
-            $(".time").val(data.birthTime)
-            form.render()
-        }
-        });
-    </script>
+    <script type="text/javascript" src="/js/artist-details.js"></script>
 </body>
 </html>
