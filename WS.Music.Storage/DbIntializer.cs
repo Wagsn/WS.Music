@@ -24,6 +24,122 @@ namespace WS.Music.Stores
                 return;
             }
 
+            #region 歌曲
+            var yhbkSong = Guid.NewGuid().ToString();
+            var ysgsSong = Guid.NewGuid().ToString();
+            var jhymSong = Guid.NewGuid().ToString();
+            var sySong = Guid.NewGuid().ToString();
+            var htSong = Guid.NewGuid().ToString();
+            var rgdsSong = Guid.NewGuid().ToString();
+            var qmysSong = Guid.NewGuid().ToString();
+            var nrcfSong = Guid.NewGuid().ToString();
+            var lzySong = Guid.NewGuid().ToString();
+            var dqcxSong = Guid.NewGuid().ToString();
+            var hstxSong = Guid.NewGuid().ToString();
+            var mghdzlSong = Guid.NewGuid().ToString();
+            var bcysSong = Guid.NewGuid().ToString();
+            var cfSong = Guid.NewGuid().ToString();
+            var qgSong = Guid.NewGuid().ToString();
+            var syswSong = Guid.NewGuid().ToString();
+            var xzssSong = Guid.NewGuid().ToString();
+            var qbdSong = Guid.NewGuid().ToString();
+
+            var songs = new List<Song>
+            {
+                new Song
+                {
+                    Id = yhbkSong,
+                    Name = "有何不可"
+                },
+                new Song
+                {
+                    Id = ysgsSong,
+                    Name = "雅俗共赏"
+                },
+                new Song
+                {
+                    Id = jhymSong,
+                    Name = "惊鸿一面"
+                },
+                new Song
+                {
+                    Id = sySong,
+                    Name ="素颜"
+                },
+                new Song
+                {
+                    Id = htSong,
+                    Name = "幻听"
+                },
+                new Song
+                {
+                    Id = rgdsSong,
+                    Name = "如果当时"
+                },
+                new Song
+                {
+                    Id = qmysSong,
+                    Name = "清明雨上"
+                },
+                new Song
+                {
+                    Id = nrcfSong ,
+                    Name = "你若成风"
+                },
+                new Song
+                {
+                    Id = lzySong,
+                    Name = "庐州月"
+                },
+                new Song
+                {
+                    Id = dqcxSong,
+                    Name = "断桥残雪"
+                },
+                new Song
+                {
+                    Id = hstxSong,
+                    Name = "灰色头像"
+                },
+                new Song
+                {
+                    Id = mghdzlSong,
+                    Name = "玫瑰花的葬礼"
+                },
+                new Song
+                {
+                    Id = bcysSong,
+                    Name = "半城烟沙"
+                },
+                new Song
+                {
+                    Id = cfSong,
+                    Name = "城府"
+                },
+                new Song
+                {
+                    Id = qbdSong,
+                    Name ="千百度"
+                },
+                new Song
+                {
+                    Id = qgSong,
+                    Name = "千古"
+                },
+                new Song
+                {
+                    Id = syswSong,
+                    Name ="河山大好"
+                },
+                new Song
+                {
+                    Id = xzssSong,
+                    Name = "星座书上"
+                }
+            };
+            context.AddRange(songs);
+            #endregion
+
             #region 艺人
             var xsArtist = Guid.NewGuid().ToString();
             var wslArtist = Guid.NewGuid().ToString();
@@ -618,7 +734,7 @@ namespace WS.Music.Stores
                 }
             };
             context.AddRange(relArtistAlbums);
-            // 歌曲专辑
+            // 歌曲专辑 关联
             var relSongAlbums = new List<RelSongAlbum>
             {
 

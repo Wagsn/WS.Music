@@ -18,10 +18,10 @@ namespace WS.Music.Entities
 
         /// <summary>
         /// 专辑ID
-        /// </summary>
+        /// </summary>8
         [MaxLength(36)]
         public string AlbumId { get; set; }
-
+        
         ///// <summary>
         ///// 艺人
         ///// </summary>

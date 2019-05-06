@@ -27,9 +27,11 @@ namespace WS.Music.Entities
         /// <summary>
         /// 专辑名称
         /// </summary>
-        [Required]
         [MaxLength(63)]
         public string Name { get; set; }
+
+        [NotMapped]
+        public string ArtistName { get; set; }
 
         /// <summary>
         /// 描述介绍，可空(Empty=Blank>Null)

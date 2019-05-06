@@ -29,7 +29,7 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
         $(".search-btn").click(function () {
             let index = layer.msg('查询中，请稍候', { icon: 16, time: false, shade: 0.8 })
             setTimeout(function () {
-                loadPage(getSearchFormData())
+                loadPage(loadSearchFormData())
                 layer.close(index)
             }, 1000);
         })
@@ -100,7 +100,7 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
         form.render()
     }
     // 获取搜索表单数据
-    function getSearchFormData() {
+    function loadSearchFormData() {
         return {
             pageIndex: 0,
             pageSize: 5,
@@ -257,5 +257,4 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             layer.close(index);
         });
     })
-
 });

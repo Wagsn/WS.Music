@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="/lib/layui/css/layui.css" media="all">
     <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.js"></script>
     <script src="/lib/layui/layui.js"></script>
+    <script src="/js/store.js"></script>
     <script src="/js/song-manage.js"></script>
 
     <title>音乐管理 - 在线音乐后台管理</title>
@@ -25,7 +26,7 @@
                             </div>
 
                             <div class="layui-inline">
-                                <a class="layui-btn layui-btn-normal song-add-btn">新增</a>
+                                <a class="layui-btn layui-btn-normal add-btn">新增</a>
                             </div>
                             <div class="layui-inline">
                                 <a class="layui-btn layui-btn-danger batch-del-btn">批量删除</a>
@@ -43,7 +44,7 @@
                                     <input name="all-choose" lay-skin="primary" lay-filter="all-choose" id="all-choose" type="checkbox">
                                     <div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"> </i></div>
                                 </th>
-                                <th>名称</th>
+                                <th>歌名</th>
                                 <th>艺人</th>
                                 <th>专辑</th>
                                 <th>说明</th>
@@ -53,10 +54,7 @@
                                 <th>操作</th>
                             </tr>
                         </thead>
-                        <tbody class="news_content" id="song-list-body"></tbody>
-                    </table>
-                    <table id="song-list-tb">
-
+                        <tbody id="page-table-body"></tbody>
                     </table>
                     <div class="larry-table-page clearfix">
                         <div id="page" class="page"></div>

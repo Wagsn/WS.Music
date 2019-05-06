@@ -21,7 +21,6 @@ namespace WS.Music.Entities
         /// <summary>
         /// 歌曲名
         /// </summary>
-        [Required]
         [MaxLength(63)]
         public string Name { get; set; }
 

@@ -3,6 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="/lib/layui/css/layui.css" media="all">
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.js"></script>
+    <script src="/lib/layui/layui.js"></script>
+    <script src="/js/store.js"></script>
+    <script src="/js/album-manage.js"></script>
     <title>专辑管理 - 在线音乐后台管理</title>
 </head>
 <body>
@@ -15,38 +19,37 @@
                         <div class="layui-form-item" style="margin-left: 68px">
                             <div class="layui-inline">
                                 <div class="layui-input-inline">
-                                    <input value="" placeholder="请输入关键字" class="layui-input search_input" type="text">
+                                    <input value="" placeholder="请输入关键字" class="layui-input search-input" type="text">
                                 </div>
-                                <a class="layui-btn search_btn">查询</a>
+                                <a class="layui-btn search-btn">查询</a>
                             </div>
 
                             <div class="layui-inline">
-                                <a class="layui-btn layui-btn-normal studentAdd_btn">新增</a>
+                                <a class="layui-btn layui-btn-normal add-btn">新增</a>
                             </div>
                             <div class="layui-inline">
-                                <a class="layui-btn layui-btn-danger batchDel">批量删除</a>
+                                <a class="layui-btn layui-btn-danger batch-del-btn">批量删除</a>
                             </div>
                         </div>
                     </form>
                 </blockquote>
 
-                <!--   -->
-                <div class="layui-form student_list">
-                    <table class="layui-table">
+                <div class="layui-form page-wrap">
+                    <table class="layui-table page-table">
                         <thead>
                             <tr>
                                 <th>
-                                    <input name="allChoose" lay-skin="primary" lay-filter="allChoose" id="allChoose" type="checkbox">
+                                    <input name="allChoose" lay-skin="primary" lay-filter="all-choose" id="all-choose" type="checkbox">
                                     <div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"> </i></div>
                                 </th>
-                                <th style="text-align:center;">学号</th>
-                                <th>名称</th>
+                                <th>专辑名</th>
+                                <th>歌手名</th>
                                 <th>说明</th>
                                 <th>发行时间</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
-                        <tbody class="news_content" id="student_list"></tbody>
+                        <tbody id="page-table-body"></tbody>
                     </table>
                     <div class="larry-table-page clearfix">
                         <div id="page" class="page"></div>

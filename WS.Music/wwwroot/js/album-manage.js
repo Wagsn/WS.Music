@@ -1,6 +1,13 @@
-﻿// 音乐管理界面
+﻿// 艺人管理界面
+
+//import('/js/store.js').then(module => {
+//    console.log('then store:', module.default)
+//});
+
+console.log('store:', store)
 
 layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element'], function () {
+    // 组件加载
     var form = layui.form
     let element = layui.element
     let layer = parent.layer === undefined ? layui.layer : parent.layer
@@ -8,11 +15,25 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
     let layedit = layui.layedit
     let laydate = layui.laydate
     let table = layui.table
-    
-    
-    let listUrl = "/api/song/list"
-    let delUrl = '/api/song/delete'
-    
+
+    // Net Data URL 网络数据源
+    let listUrl = "/api/album/list"
+    let delUrl = "/api/album/delete"
+    let saveUrl = "/api/album/save"
+
+    // Html 页面
+    let addHtml = 'album-add.html'
+    let editHtml = 'album-edit.html'
+    let detailsHtml ='album-details.html'
+
+    // Notice 提示信息
+    let msg_search = '查询中，请稍候'
+    let msg_return = '点击此处返回列表'
+    let log_loading = 'Loading Query:'
+    let log_pageInfo = 'Paging information:'
+    let log_loaded = 'Loaded table data:'
+    let log_render = 'Rendering Data: '
+
     // Selector 选择器
     let searchBtn = '.search-btn'
     let addBtn = '.add-btn'
@@ -22,18 +43,33 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
     let searchInput = '.search-input'
     let pageTableBody = '#page-table-body'
 
-    let log_pageInfo = 'Paging information:'
-    let msg_return = '点击此处返回列表'
-    let msg_search = '查询中，请稍候'
+    // Store Key
+    let key_details = 'album-details'
+    let key_edit = 'album-edit'
+    let key_curr = 'album-curr'
 
-    // Html 页面
-    let addHtml = 'song-add.html'
-    let editHtml = 'song-edit.html'
-    let detailsHtml = 'song-details.html'
-
-    let key_curr = 'song-curr'
-
-    //jq初始化页面
+    // 渲染表格
+    function renderTable(data) {
+        console.log(log_render, data)
+        let dataHtml = ""
+        $.each(data, function (v, o) {
+            dataHtml += '<tr>' +
+                '<td><input name="checked" lay-skin="primary" lay-filter="choose" type="checkbox"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></td>' +
+                '<td>' + o.name + '</td>' +
+                '<td>' + (o.artistName || '暂无') + '</td>' +
+                '<td>' + (o.description || '暂无') + '</td>' +
+                '<td>' + (o.releaseTime || '暂无') + '</td>' +
+                '<td>' +
+                '<a class="layui-btn layui-btn-normal layui-btn-sm details-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe600;</i>详情</a>' +
+                '<a class="layui-btn layui-btn-normal layui-btn-sm edit-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe600;</i>编辑</a>' +
+                '<a class="layui-btn layui-btn-danger layui-btn-sm del-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe640;</i>删除</a>' +
+                '</td>' +
+                '</tr>';
+        })
+        $(pageTableBody).html(dataHtml)
+        form.render()
+    }
+    // 初始化页面
     $(document).ready(function () {
         // 初始化列表
         loadPage()
@@ -46,10 +82,10 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             }, 1000);
         })
     })
-    // 加载音乐列表数据
+    // 加载分页
     function loadPage(query = { pageIndex: 0, pageSize: 5, keyWord: "" }) {
         // 数据来源 服务器
-        console.log('Loading Query', query)
+        console.log(log_loading, query)
         $.post(
             listUrl,
             query,
@@ -83,59 +119,34 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             }
         )
     }
-    // 异步网络加载歌曲列表，callback: 页面渲染回调函数
-    function loadTable(query, callback) {
-        $.post(
-            listUrl,
-            query,
+    // 加载表格数据，query: 查询条件 render: 页面渲染回调函数
+    function loadTable(query, render) {
+        $.post(listUrl, query,
             function (resbody) {
-                console.log("Loaded list data for song on page " + resbody.pageIndex + " is: ", resbody);
-                callback(resbody.data);
+                console.log(log_loaded, resbody)
+                render(resbody.data)
             })
-    }
-    // 渲染歌曲列表数据
-    function renderTable(data) {
-        console.log("Rendering Data: ", data)
-        let dataHtml = ""
-        $.each(data, function (v, o) {
-            dataHtml += '<tr>' +
-                '<td><input name="checked" lay-skin="primary" lay-filter="choose" type="checkbox"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></td>' +
-                '<td>' + o.name + '</td>' +
-                '<td>' + (o.artistName || "未知") + '</td>' +
-                '<td>' + (o.albumName || "未知") + '</td>' +
-                '<td>' + (o.description || '') + '</td>' +
-                '<td>' + (o.duration || '') + '</td>' +
-                '<td>' + (o.releaseTime || '') + '</td>' +
-                '<td>' + (o.url || '') + '</td>' +
-                '<td>' +
-                '<a class="layui-btn layui-btn-normal layui-btn-mini details-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe600;</i>详情</a>' +
-                '<a class="layui-btn layui-btn-normal layui-btn-mini edit-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe600;</i>编辑</a>' +
-                '<a class="layui-btn layui-btn-danger layui-btn-mini del-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe640;</i>删除</a>' +
-                '</td>' +
-                '</tr>';
-        })
-        $(pageTableBody).html(dataHtml)
-        form.render()
     }
     // 获取搜索表单数据
     function loadSearchFormData() {
         return {
             pageIndex: 0,
             pageSize: 5,
-            keyWord: $('.search-input').val().trim() || ''
+            keyWord: $(searchInput).val().trim() || ''
         }
     }
     // 全选按钮绑定点击事件
     form.on('checkbox(all-choose)', function (data) {
-        //data.elem); //得到select原始DOM对象  (data.value); //得到被选中的值  (data.othis); //得到美化后的DOM对象
-        //(data.elem.checked); //是否被选中，true或者false
+        // (data.elem); // 得到select原始DOM对象  (data.value); // 得到被选中的值  (data.othis); // 得到美化后的DOM对象
+        // (data.elem.checked); // 是否被选中，true或者false
         var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
         //each遍历 each() 方法为每个匹配元素规定要运行的函数。$(selector).each(function(index,element)) 
         //element - 当前的元素（也可使用 "this" 选择器）
         child.each(function (index, item) {
             item.checked = data.elem.checked
         });
-        form.render('checkbox'); ////渲染表单
+        // 渲染表单
+        form.render('checkbox');
     })
     // 判断是否选中
     form.on("checkbox(choose)", function (data) {
@@ -185,8 +196,9 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
     })
     // 提交删除改行数据的ajax请求
     function deleteItem(id) {
-        console.log('Deleting:', id);
-        $.post(delUrl, { songs: [{ id }] },
+        let delRequest = { albums: [{ id }] }
+        console.log(`Delete Request ${JSON.stringify(delRequest)}`)
+        $.post(delUrl, delRequest,
             function (resbody) {
                 console.log('Deleted(' + id + '):', resbody);
                 if (resbody.code == "0") {
@@ -199,7 +211,9 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
     }
     // 批量删除
     $(".batch-del-btn").click(function () {
+        //var $checkbox = $('.page-table tbody input[type="checkbox"][name="checked"]');
         var $checked = $('#page-table-body input[type="checkbox"][name="checked"]:checked');
+
         if ($('input[type="checkbox"]').is(':checked')) {
             layer.confirm('确定删除选中的信息？', { icon: 3, title: '提示信息' }, function (index) {
                 var index2 = layer.msg('删除中，请稍候', { icon: 16, time: false, shade: 0.8 });
@@ -246,7 +260,7 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             })
         });
     })
-    // 详情
+    // 详情项
     $("body").on("click", detailsBtn, function () {
         var _this = $(this);
         layer.confirm('查看该详情？', { icon: 3, title: '提示信息' }, function (index) {
