@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCore.MultipartRequest;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WS.Music.Entities;
+using WS.Music.Filters;
 
 namespace FileServer
 {
@@ -103,6 +106,30 @@ namespace FileServer
                 }
             }
             return new JsonResult(fileinfos);
+        }
+
+        [HttpPost]
+        [DisableFormValueModelBinding]
+        public async Task<IActionResult> Index()
+        {
+            FormValueProvider formModel;
+            formModel = await Request.StreamFiles(@"D:\UploadingFiles");
+
+            //var viewModel = new MyViewModel();
+
+            //var bindingSuccessful = await TryUpdateModelAsync(viewModel, prefix: "",
+            //    valueProvider: formModel);
+
+            //if (!bindingSuccessful)
+            //{
+            //    if (!ModelState.IsValid)
+            //    {
+            //        return BadRequest(ModelState);
+            //    }
+            //}
+
+            //return Ok(viewModel);
+            return Ok();
         }
     }
 }

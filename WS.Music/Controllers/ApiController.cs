@@ -341,6 +341,7 @@ namespace WS.Music.Controllers
         private async Task<SongFile> SaveSongFile(IFormFile file, Song song)
         {
             // audio - song  / indexs - json
+            Console.WriteLine("File: " + JsonUtil.ToJson(file));
             // 存到files/audio/song下
             var root = FileServerConfig.Root;
             var fileId = Guid.NewGuid().ToString();

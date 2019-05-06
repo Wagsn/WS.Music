@@ -59,6 +59,7 @@
             url: saveUrl,
             type: "POST",
             data: formData,
+            cache: false,
             /**
             *必须false才会自动加上正确的Content-Type
             */
