@@ -52,7 +52,7 @@
             id: $('.id').val() || ''
             , name: $(".name").val()
             , description: $(".desc").val()
-            , birthTime: $(".time").val()
+            , debutTime: $(".time").val()
         }
     }
     // 添加提交
@@ -78,7 +78,7 @@
         $('.id').val(data.id)
         $(".name").val(data.name)
         $(".desc").val(data.description)
-        $(".time").val(data.birthTime)
+        $(".time").val(data.debutTime)
         form.render()
     }
 });

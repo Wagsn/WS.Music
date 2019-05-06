@@ -6,7 +6,7 @@
     <title>歌曲添加 - 后台管理</title>
 </head>
 <body class="song-add-body">
-    <form class="layui-form">
+    <form class="layui-form" method="post" enctype="multipart/form-data">
         <!-- 歌手-专辑-歌曲 -->
         <div class="layui-form-item">
             <label class="layui-form-label">歌名：</label>
@@ -50,7 +50,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">资源：</label>
             <div class="layui-input-block">
-                <input class="layui-input url" lay-verify="required" placeholder="请输入资源" type="file"/>
+                <input id="file" name="file" class="layui-input url" lay-verify="required" placeholder="请输入资源" type="file" multiple/>
             </div>
         </div>
         <!--<div class="layui-form-item">

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FileServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WS.Core;
@@ -17,12 +18,14 @@ namespace WS.Music.Controllers
     //[Produces("application/json")]
     public class ApiController : ControllerBase
     {
-        public ApiController(IMusicStore musicStore)
+        public ApiController(IMusicStore musicStore, FileServerConfig fileServerConfig)
         {
             MusicStore = musicStore;
+            FileServerConfig = fileServerConfig;
         }
 
         private IMusicStore MusicStore { get; set; }
+        private FileServerConfig FileServerConfig { get; set; }
 
 
         #region << Artist >>
@@ -96,6 +99,7 @@ namespace WS.Music.Controllers
         public ResponseMessage ArtistSave([FromForm]CommonRequest request)
         {
             Console.WriteLine($"[{nameof(ArtistSave)}] 艺人 信息 保存 开始\r\n请求体：{JsonUtil.ToJson(request)}");
+            Console.WriteLine($"Request {JsonUtil.ToJson(Request.Form)}");
             var response = new ResponseMessage();
 
             if (request == null || request.Artist == null)
@@ -121,7 +125,7 @@ namespace WS.Music.Controllers
                     {
                         entity.Name = request.Artist.Name;
                         entity.Description= request.Artist.Description;
-                        entity.BirthTime= request.Artist.BirthTime;
+                        entity.DebutTime= request.Artist.DebutTime;
                         MusicStore.UpdateAll(entity);
                     }
                 }
@@ -333,27 +337,88 @@ namespace WS.Music.Controllers
             return response;
         }
 
+        // 保存音乐文件
+        private async Task<SongFile> SaveSongFile(IFormFile file, Song song)
+        {
+            // audio - song  / indexs - json
+            // 存到files/audio/song下
+            var root = FileServerConfig.Root;
+            var fileId = Guid.NewGuid().ToString();
+            var songFile = new SongFile
+            {
+                Id = fileId,
+                SongId = song.Id,
+                ContentType = file.ContentType,
+                Path = System.IO.Path.Combine(root.LocalPath, $"audio\\song\\{fileId}{System.IO.Path.GetExtension(file.FileName)}"),
+                Url = root.Url + $"/audio/song/{fileId}{System.IO.Path.GetExtension(file.FileName)}" 
+            };
+            // 保存
+            string dir = System.IO.Path.GetDirectoryName(songFile.Path);
+            try
+            {
+                System.IO.Directory.CreateDirectory(dir);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("创建目录失败：{0}\r\n{1}", dir, e.ToString());
+                // Logger.Warn("创建目录失败：{0}\r\n{1}", dir, e.ToString());
+                return null;
+            }
+            // 保存文件
+            using (System.IO.FileStream fs = new System.IO.FileStream(songFile.Path, System.IO.FileMode.Create))
+            {
+                await file.OpenReadStream().CopyToAsync(fs);
+                // 添加描述文件
+                WS.IO.File.WriteAllText(System.IO.Path.Combine(root.LocalPath, $"Indexs\\{fileId}.json"), WS.Text.JsonUtil.ToJson(songFile));
+                // 保存进数据库
+                MusicStore.AddAll(songFile);
+            }
+            return songFile;
+        }
+
         /// <summary>
         /// 歌曲信息保存
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("song/save")]
-        public ResponseMessage SongSave([FromForm]CommonRequest request)
+        public async Task<ResponseMessage> SongSave([FromForm]CommonRequest request)
         {
             Console.WriteLine($"[{nameof(SongSave)}] 歌曲 信息 保存 开始\r\n请求体：{JsonUtil.ToJson(request)}");
+            Console.WriteLine($"Request Form: ${JsonUtil.ToJson(Request.Form)}");
             var response = new ResponseMessage();
 
             try
             {
+                // 根据name属性获取值
+                var file = Request.Form.Files["file"];
                 if (string.IsNullOrWhiteSpace(request.Song.Id))
                 {
                     request.Song.Id = Guid.NewGuid().ToString();
+                    if (file != null)
+                    {
+                        request.Song.Url = (await SaveSongFile(file, request.Song))?.Url;
+                    }
                     MusicStore.AddAll(request.Song);
                 }
                 else
                 {
                     MusicStore.UpdateAll(request.Song);
+                    var entity = MusicStore.Find<Song>(a => a.Id.Equals(request.Song.Id)).SingleOrDefault();
+                    if (entity != null)
+                    {
+                        entity.Name = request.Song.Name;
+                        entity.ArtistName = request.Song.ArtistName;
+                        entity.Description = request.Song.Description;
+                        entity.ReleaseTime = request.Song.ReleaseTime;
+                        entity.Url = (await SaveSongFile(file, request.Song))?.Url;
+                        if (file != null)
+                        {
+                            entity.Url = (await SaveSongFile(file, request.Song))?.Url;
+                        }
+                        // audio - song
+                        MusicStore.UpdateAll(entity);
+                    }
                 }
             }
             catch (Exception e)

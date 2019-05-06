@@ -43,6 +43,11 @@ namespace WS.Music.Stores
         public DbSet<FileInfo> FileInfos { get; set; }
 
         /// <summary>
+        /// 歌曲信息保存
+        /// </summary>
+        public DbSet<SongFile> SongFiles { get; set; }
+
+        /// <summary>
         /// 歌单
         /// </summary>
         public DbSet<PlayList> PlayLists { get; set; }

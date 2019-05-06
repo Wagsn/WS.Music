@@ -6,6 +6,7 @@ namespace FileServer
 {
     public class FileServerConfig
     {
+        public PathItem Root { get; set; }
         public List<PathItem> PathList { get; set; }
     }
 

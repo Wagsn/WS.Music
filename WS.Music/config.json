@@ -13,10 +13,14 @@
     }
   },
   "FileServer": {
+    "Root": {
+      "LocalPath": "F:\\WS\\Music\\Files",
+      "Url": "/files"
+    },
     "PathList": [
       {
         "LocalPath": "f:\\files\\all",
-        "Url": "/files"
+        "Url": "/files/all"
       },
       {
         "LocalPath": "f:\\files\\images",

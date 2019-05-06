@@ -99,6 +99,14 @@ namespace WS.Music
                         Console.WriteLine("文件夹创建失败：\r\n{0}", e.ToString());
                     }
                 }
+                if(config.Root != null)
+                {
+                    if (!System.IO.Directory.Exists(config.Root.LocalPath))
+                    {
+                        System.IO.Directory.CreateDirectory(config.Root.LocalPath);
+                    }
+                    pathList.Add(config.Root);
+                }
 
                 foreach (PathItem pi in pathList)
                 {

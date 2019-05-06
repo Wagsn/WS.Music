@@ -30,7 +30,14 @@ namespace WS.Music.Entities
         public string Description { get; set; }
 
         /// <summary>
-        /// 建立时间，出道时间
+        /// 出道/首秀 时间
+        /// </summary>
+        public DateTime? DebutTime { get; set; }
+
+        public DateTime? CreateTime { get; set; }
+
+        /// <summary>
+        /// 生日
         /// </summary>
         public DateTime? BirthTime { get; set; }
     }

@@ -42,7 +42,7 @@
         $(class_id).val(data.id)
         $(class_name).val(data.name)
         $(class_desc).val(data.description)
-        $(class_time).val(data.birthTime)
+        $(class_time).val(data.debutTime)
         form.render()
     }
 });
