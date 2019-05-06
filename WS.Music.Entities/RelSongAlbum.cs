@@ -25,14 +25,14 @@ namespace WS.Music.Entities
         [MaxLength(36)]
         public string AlbumId { get; set; }
 
-        /// <summary>
-        /// 歌曲
-        /// </summary>
-        public Song Song { get; set; }
+        ///// <summary>
+        ///// 歌曲
+        ///// </summary>
+        //public Song Song { get; set; }
 
-        /// <summary>
-        /// 专辑
-        /// </summary>
-        public Album Album { get; set; }
+        ///// <summary>
+        ///// 专辑
+        ///// </summary>
+        //public Album Album { get; set; }
     }
 }

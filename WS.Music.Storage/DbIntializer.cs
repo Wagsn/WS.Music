@@ -24,122 +24,6 @@ namespace WS.Music.Stores
                 return;
             }
 
-            #region 歌曲
-            var yhbkSong = Guid.NewGuid().ToString();
-            var ysgsSong = Guid.NewGuid().ToString();
-            var jhymSong = Guid.NewGuid().ToString();
-            var sySong = Guid.NewGuid().ToString();
-            var htSong = Guid.NewGuid().ToString();
-            var rgdsSong = Guid.NewGuid().ToString();
-            var qmysSong = Guid.NewGuid().ToString();
-            var nrcfSong = Guid.NewGuid().ToString();
-            var lzySong = Guid.NewGuid().ToString();
-            var dqcxSong = Guid.NewGuid().ToString();
-            var hstxSong = Guid.NewGuid().ToString();
-            var mghdzlSong = Guid.NewGuid().ToString();
-            var bcysSong = Guid.NewGuid().ToString();
-            var cfSong = Guid.NewGuid().ToString();
-            var qgSong = Guid.NewGuid().ToString();
-            var syswSong = Guid.NewGuid().ToString();
-            var xzssSong = Guid.NewGuid().ToString();
-            var qbdSong = Guid.NewGuid().ToString();
-
-            var songs = new List<Song>
-            {
-                new Song
-                {
-                    Id = yhbkSong,
-                    Name = "有何不可"
-                },
-                new Song
-                {
-                    Id = ysgsSong,
-                    Name = "雅俗共赏"
-                },
-                new Song
-                {
-                    Id = jhymSong,
-                    Name = "惊鸿一面"
-                },
-                new Song
-                {
-                    Id = sySong,
-                    Name ="素颜"
-                },
-                new Song
-                {
-                    Id = htSong,
-                    Name = "幻听"
-                },
-                new Song
-                {
-                    Id = rgdsSong,
-                    Name = "如果当时"
-                },
-                new Song
-                {
-                    Id = qmysSong,
-                    Name = "清明雨上"
-                },
-                new Song
-                {
-                    Id = nrcfSong ,
-                    Name = "你若成风"
-                },
-                new Song
-                {
-                    Id = lzySong,
-                    Name = "庐州月"
-                },
-                new Song
-                {
-                    Id = dqcxSong,
-                    Name = "断桥残雪"
-                },
-                new Song
-                {
-                    Id = hstxSong,
-                    Name = "灰色头像"
-                },
-                new Song
-                {
-                    Id = mghdzlSong,
-                    Name = "玫瑰花的葬礼"
-                },
-                new Song
-                {
-                    Id = bcysSong,
-                    Name = "半城烟沙"
-                },
-                new Song
-                {
-                    Id = cfSong,
-                    Name = "城府"
-                },
-                new Song
-                {
-                    Id = qbdSong,
-                    Name ="千百度"
-                },
-                new Song
-                {
-                    Id = qgSong,
-                    Name = "千古"
-                },
-                new Song
-                {
-                    Id = syswSong,
-                    Name ="河山大好"
-                },
-                new Song
-                {
-                    Id = xzssSong,
-                    Name = "星座书上"
-                }
-            };
-            context.AddRange(songs);
-            #endregion
-
             #region 艺人
             var xsArtist = Guid.NewGuid().ToString();
             var wslArtist = Guid.NewGuid().ToString();
@@ -326,9 +210,20 @@ namespace WS.Music.Stores
             var snddbAlbum = Guid.NewGuid().ToString();
             var xhyAlbum = Guid.NewGuid().ToString();
             var vAlbum = Guid.NewGuid().ToString();
+            var lkAlbum = Guid.NewGuid().ToString();
 
             var albums = new List<Album>
             {
+                new Album
+                {
+                    Id = xsdqjAlbum,
+                    Name = "许嵩单曲集"
+                },
+                new Album
+                {
+                    Id = lkAlbum,
+                    Name ="乐酷"
+                },
                 new Album
                 {
                     Id = fhjdAlbum,
@@ -342,210 +237,216 @@ namespace WS.Music.Stores
                         Name = "飞驰于你",
                         Description = "敦煌作为古代丝绸之路的重要节点，东西方文化在这里汇聚碰撞，更拥有着莫高窟、阳关、月牙泉等古迹名胜，是世界级的文化名城。近日QQ飞车手游推出敦煌主题版本，邀请许嵩创作并演唱全新主题曲《飞驰于你》。\r\n\r\n《飞驰于你》由许嵩包揽词曲创作及制作。因敦煌在古时即传入了西域文化，许嵩在作曲中特意融入西域音乐元素，以富有异域风情的曲调展现敦煌的神秘；偶尔点缀的转音又带有甘肃敦煌当地的戏曲特色，契合了敦煌作为多民族文化荟萃之地的特质；民族音乐鼓点与摇滚乐新鲜搭配，以强劲的节奏感展现飞驰于敦煌奇景时的快意。\r\n\r\n词作方面，对意象进行精心拣选，寥寥数语即构建出敦煌秘境。在展现飞驰时的速度与激情之外，以“你”指代敦煌，抒发对敦煌厚重历史的感慨，令整首作品轻松潇洒而又不失余味。\r\n\r\n近年来许嵩为大量热门游戏创作主题音乐，每一次的创作都实现了既贴合主题气质、又淋漓尽致展现个人风格，并且始终坚持创新、诚意十足，不断给乐迷带来全新的听觉体验。",
                         ReleaseTime = DateTime.Parse("2018-09-07")
-                    },
-                    new Album
-                    {
-                        Id = xbyxAlbum,
-                        Name = "寻宝游戏",
-                        Description = "2018年许嵩最新作品《寻宝游戏》，许嵩第7张词曲全创作专辑。\r\n\r\n你我他她一生在世，寻寻觅觅各有所求，人人心中皆有秘密宝藏。许嵩在《寻宝游戏》中以松弛、真实的笔触书写对生活的体悟以及对世态的思考，寻访人心、玩味世情。\r\n\r\n《寻宝游戏》的语言系统中充满着多义与辨证，让读者在聆听的过程中不知不觉沉浸于许嵩构建的这一场头脑游戏，富有诗性与灵气的文字挑战歌词创作新高度。他的文字里时而带着严谨理性的刚硬质地，但细听之下又可体会他的幽默与柔软——这份既刚又柔、亦庄亦谐的矛盾感形成了某种难以言喻的、专属于许嵩的艺术效果。\r\n\r\n在《寻宝游戏》里许嵩以极致复古的音乐语言带领听者回到20世纪60-80年代，融合Blues-Rock、Country-Rock、Folk-Rock、Electronic-Rock、Jazz等根源性音乐风格，加以最新锐的制作理念打造当代音乐精品，既复古，又超前。他旧时明月般的老灵魂，总是能找到极其鲜活的表达方式来完成情感与观点的输出。整张专辑音乐类型多元化却又统一于许嵩强大的音乐制作和统筹功力，在听觉层面达到了惊人的一体性。许嵩以松弛自然的演唱方式唱出独属于他的腔调与态度，无可拷贝。音乐里精心设置的诸多细节伏笔也有待听者去开掘玩味，这是《寻宝游戏》所引发的寻宝游戏。\r\n\r\n《寻宝游戏》的平面相片及音乐录影带拍摄于美国纽约及美国西海岸地区。二十余人团队同许嵩一起出发，海外拍摄花费长达半个月的时间。专辑封面相片拍摄于美国西海岸地区1号公路，牛仔青年，开启寻宝之旅。以橙色为主色的美式唱片装帧，在复古中加入摩登元素，设计考究。专辑曲目《老古董》、《大千世界》、《如约而至》的音乐录影带摄于纽约，由台湾著名MV导演比尔贾执导，影像画面寓意丰富，余味悠长。\r\n\r\n《寻宝游戏》专辑概念由许嵩一手打造，并且每首曲目的词曲创作、音乐制作均由许嵩独自完成。至今为止许嵩已一人作词、作曲、演唱、制作、策划7张个人专辑，这份成绩与其全方位的音乐才华在华语乐坛是独树一帜的。2018年是许嵩进入公众视野的第十二年，成功发行7张词曲全创作专辑以及近40首原创单曲，勤勉专注于音乐创作；屡获国内外各大华语音乐颁奖典礼奖项，拥有突破十亿次的数字音乐下载量，影响力强大；2017年开启万人巡演，场场爆满座无虚席，从头至尾全程万人大合唱；在斐然的成绩面前，许嵩始终远离喧嚣保持低调姿态，只靠作品说话，在《寻宝游戏》里进一步展现了广阔的音乐视野与深厚的人文积淀。",
-                        ReleaseTime = DateTime.Parse("2018-07-12")
-                    },
-                    new Album
-                    {
-                        Id = wlyAlbum ,
-                        Name = "我乐意",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2018-04-19")
-                    },
-                    new Album
-                    {
-                        Id = hddsjAlbum,
-                        Name = "蝴蝶的时间",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2017-11-30")
-                    },
-                    new Album
-                    {
-                        Id = tgAlbum,
-                        Name = "通关",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2017-06-30")
-                    },
-                    new Album
-                    {
-                        Id = sysdAlbum,
-                        Name = "深夜书店",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2017-03-14")
-                    },
-                    new Album
-                    {
-                        Id = jnyAlbum,
-                        Name = "今年勇",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2016-12-22")
-                    },
-                    new Album
-                    {
-                        Id = jhAlbum,
-                        Name = "江湖",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2016-08-31")
-                    },
-                    new Album
-                    {
-                        Id = qnwbAlbum,
-                        Name = "青年晚报",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2016-06-27")
-                    },
-                    new Album
-                    {
-                        Id = byAlbum,
-                        Name = "不语",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2016-03-03")
-                    },
-                    new Album
-                    {
-                        Id = sxnhAlbum,
-                        Name = "书香年华",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2016-02-25")
-                    },
-                    new Album
-                    {
-                        Id = qgAlbum,
-                        Name = "千古",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2015-08-20")
-                    },
-                    new Album
-                    {
-                        Id = brccqAlbum,
-                        Name = "不如吃茶去",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2014-08-23")
-                    },
-                    new Album
-                    {
-                        Id = sszjAlbum,
-                        Name = "山水之间",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2014-07-15")
-                    },
-                    new Album
-                    {
-                        Id = wzdwAlbum,
-                        Name = "违章动物",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2013-08-22")
-                    },
-                    new Album
-                    {
-                        Id = xfnmsmdblAlbum,
-                        Name = "小烦恼没什么大不了",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2013-05-21")
-                    },
-                    new Album
-                    {
-                        Id = myjAlbum,
-                        Name = "梦游记",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2012-07-11")
-                    },
-                    new Album
-                    {
-                        Id = tlbbAlbum,
-                        Name = "天龙八部之宿敌",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2011-09-2")
-                    },
-                    new Album
-                    {
-                        Id = sglmydAlbum,
-                        Name = "苏格拉没有底",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2011-04-01")
-                    },
-                    new Album
-                    {
-                        Id = syAlbum,
-                        Name = "素颜",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2010-08-18")
-                    },
-                    new Album
-                    {
-                        Id = bcysAlbum,
-                        Name = "半城烟沙",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2010-04-11")
-                    },
-                    new Album
-                    {
-                        Id = xwqsAlbum,
-                        Name = "寻雾启示",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2010-01-06")
-                    },
-                    new Album
-                    {
-                        Id = zdyAlbum,
-                        Name = "自定义",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2009-01-10")
-                    },
-                    new Album
-                    {
-                        Id = wxqndsAlbumm,
-                        Name = "我想牵你的手",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2008-04-22")
-                    },
-                    new Album
-                    {
-                        Id = qlzAlbum,
-                        Name = "情侣装",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2008-01-15")
-                    },
-                    new Album
-                    {
-                        Id = dqcxAlbum,
-                        Name = "断桥残雪",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2007-12-28")
-                    },
-                    new Album
-                    {
-                        Id = snddbAlbum,
-                        Name = "送你的独白",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2007-12-04")
-                    },
-                    new Album
-                    {
-                        Id = xhyAlbum,
-                        Name = "雪花谣",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2007-11-28")
-                    },
-                    new Album
-                    {
-                        Id = vAlbum,
-                        Name = "V",
-                        Description = "",
-                        ReleaseTime = DateTime.Parse("2007-05-24")
-                    }
-                };
+                },
+                new Album
+                {
+                    Id = xbyxAlbum,
+                    Name = "寻宝游戏",
+                    Description = "2018年许嵩最新作品《寻宝游戏》，许嵩第7张词曲全创作专辑。\r\n\r\n你我他她一生在世，寻寻觅觅各有所求，人人心中皆有秘密宝藏。许嵩在《寻宝游戏》中以松弛、真实的笔触书写对生活的体悟以及对世态的思考，寻访人心、玩味世情。\r\n\r\n《寻宝游戏》的语言系统中充满着多义与辨证，让读者在聆听的过程中不知不觉沉浸于许嵩构建的这一场头脑游戏，富有诗性与灵气的文字挑战歌词创作新高度。他的文字里时而带着严谨理性的刚硬质地，但细听之下又可体会他的幽默与柔软——这份既刚又柔、亦庄亦谐的矛盾感形成了某种难以言喻的、专属于许嵩的艺术效果。\r\n\r\n在《寻宝游戏》里许嵩以极致复古的音乐语言带领听者回到20世纪60-80年代，融合Blues-Rock、Country-Rock、Folk-Rock、Electronic-Rock、Jazz等根源性音乐风格，加以最新锐的制作理念打造当代音乐精品，既复古，又超前。他旧时明月般的老灵魂，总是能找到极其鲜活的表达方式来完成情感与观点的输出。整张专辑音乐类型多元化却又统一于许嵩强大的音乐制作和统筹功力，在听觉层面达到了惊人的一体性。许嵩以松弛自然的演唱方式唱出独属于他的腔调与态度，无可拷贝。音乐里精心设置的诸多细节伏笔也有待听者去开掘玩味，这是《寻宝游戏》所引发的寻宝游戏。\r\n\r\n《寻宝游戏》的平面相片及音乐录影带拍摄于美国纽约及美国西海岸地区。二十余人团队同许嵩一起出发，海外拍摄花费长达半个月的时间。专辑封面相片拍摄于美国西海岸地区1号公路，牛仔青年，开启寻宝之旅。以橙色为主色的美式唱片装帧，在复古中加入摩登元素，设计考究。专辑曲目《老古董》、《大千世界》、《如约而至》的音乐录影带摄于纽约，由台湾著名MV导演比尔贾执导，影像画面寓意丰富，余味悠长。\r\n\r\n《寻宝游戏》专辑概念由许嵩一手打造，并且每首曲目的词曲创作、音乐制作均由许嵩独自完成。至今为止许嵩已一人作词、作曲、演唱、制作、策划7张个人专辑，这份成绩与其全方位的音乐才华在华语乐坛是独树一帜的。2018年是许嵩进入公众视野的第十二年，成功发行7张词曲全创作专辑以及近40首原创单曲，勤勉专注于音乐创作；屡获国内外各大华语音乐颁奖典礼奖项，拥有突破十亿次的数字音乐下载量，影响力强大；2017年开启万人巡演，场场爆满座无虚席，从头至尾全程万人大合唱；在斐然的成绩面前，许嵩始终远离喧嚣保持低调姿态，只靠作品说话，在《寻宝游戏》里进一步展现了广阔的音乐视野与深厚的人文积淀。",
+                    ReleaseTime = DateTime.Parse("2018-07-12")
+                },
+                new Album
+                {
+                    Id = wlyAlbum ,
+                    Name = "我乐意",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2018-04-19")
+                },
+                new Album
+                {
+                    Id = hddsjAlbum,
+                    Name = "蝴蝶的时间",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2017-11-30")
+                },
+                new Album
+                {
+                    Id = tgAlbum,
+                    Name = "通关",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2017-06-30")
+                },
+                new Album
+                {
+                    Id = sysdAlbum,
+                    Name = "深夜书店",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2017-03-14")
+                },
+                new Album
+                {
+                    Id = jnyAlbum,
+                    Name = "今年勇",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2016-12-22")
+                },
+                new Album
+                {
+                    Id = jhAlbum,
+                    Name = "江湖",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2016-08-31")
+                },
+                new Album
+                {
+                    Id = qnwbAlbum,
+                    Name = "青年晚报",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2016-06-27")
+                },
+                new Album
+                {
+                    Id = byAlbum,
+                    Name = "不语",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2016-03-03")
+                },
+                new Album
+                {
+                    Id = sxnhAlbum,
+                    Name = "书香年华",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2016-02-25")
+                },
+                new Album
+                {
+                    Id = qgAlbum,
+                    Name = "千古",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2015-08-20")
+                },
+                new Album
+                {
+                    Id = brccqAlbum,
+                    Name = "不如吃茶去",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2014-08-23")
+                },
+                new Album
+                {
+                    Id = sszjAlbum,
+                    Name = "山水之间",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2014-07-15")
+                },
+                new Album
+                {
+                    Id = wzdwAlbum,
+                    Name = "违章动物",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2013-08-22")
+                },
+                new Album
+                {
+                    Id = xfnmsmdblAlbum,
+                    Name = "小烦恼没什么大不了",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2013-05-21")
+                },
+                new Album
+                {
+                    Id = myjAlbum,
+                    Name = "梦游记",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2012-07-11")
+                },
+                new Album
+                {
+                    Id = tlbbAlbum,
+                    Name = "天龙八部之宿敌",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2011-09-2")
+                },
+                new Album
+                {
+                    Id = sglmydAlbum,
+                    Name = "苏格拉没有底",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2011-04-01")
+                },
+                new Album
+                {
+                    Id = syAlbum,
+                    Name = "素颜",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2010-08-18")
+                },
+                new Album
+                {
+                    Id = bcysAlbum,
+                    Name = "半城烟沙",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2010-04-11")
+                },
+                new Album
+                {
+                    Id = xwqsAlbum,
+                    Name = "寻雾启示",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2010-01-06")
+                },
+                new Album
+                {
+                    Id = zdyAlbum,
+                    Name = "自定义",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2009-01-10")
+                },
+                new Album
+                {
+                    Id = wxqndsAlbumm,
+                    Name = "我想牵你的手",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2008-04-22")
+                },
+                new Album
+                {
+                    Id = qlzAlbum,
+                    Name = "情侣装",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2008-01-15")
+                },
+                new Album
+                {
+                    Id = dqcxAlbum,
+                    Name = "断桥残雪",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2007-12-28")
+                },
+                new Album
+                {
+                    Id = snddbAlbum,
+                    Name = "送你的独白",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2007-12-04")
+                },
+                new Album
+                {
+                    Id = xhyAlbum,
+                    Name = "雪花谣",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2007-11-28")
+                },
+                new Album
+                {
+                    Id = vAlbum,
+                    Name = "V",
+                    Description = "",
+                    ReleaseTime = DateTime.Parse("2007-05-24")
+                }
+            };
             context.AddRange(albums);
             #endregion
 
             // 艺人专辑
             var relArtistAlbums = new List<RelArtistAlbum>
             {
+                new RelArtistAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    ArtistId =xsArtist,
+                    AlbumId = lkAlbum
+                },
                 new RelArtistAlbum
                 {
                     Id = Guid.NewGuid().ToString(),
@@ -734,11 +635,236 @@ namespace WS.Music.Stores
                 }
             };
             context.AddRange(relArtistAlbums);
+
+            #region 歌曲
+            var yhbkSong = Guid.NewGuid().ToString();
+            var ysgsSong = Guid.NewGuid().ToString();
+            var jhymSong = Guid.NewGuid().ToString();
+            var sySong = Guid.NewGuid().ToString();//
+            var htSong = Guid.NewGuid().ToString();//
+            var rgdsSong = Guid.NewGuid().ToString();//
+            var qmysSong = Guid.NewGuid().ToString();//
+            var nrcfSong = Guid.NewGuid().ToString();//
+            var lzySong = Guid.NewGuid().ToString();//
+            var dqcxSong = Guid.NewGuid().ToString();//
+            var hstxSong = Guid.NewGuid().ToString();//
+            var mghdzlSong = Guid.NewGuid().ToString();//
+            var bcysSong = Guid.NewGuid().ToString();//
+            var cfSong = Guid.NewGuid().ToString();//
+            var qgSong = Guid.NewGuid().ToString();//
+            var hsdhSong = Guid.NewGuid().ToString();//
+            var xzssSong = Guid.NewGuid().ToString();//
+            var qbdSong = Guid.NewGuid().ToString();//
+
+            var songs = new List<Song>
+            {
+                new Song
+                {
+                    Id = yhbkSong,
+                    Name = "有何不可"
+                },
+                new Song
+                {
+                    Id = ysgsSong,
+                    Name = "雅俗共赏"
+                },
+                new Song
+                {
+                    Id = jhymSong,
+                    Name = "惊鸿一面"
+                },
+                new Song
+                {
+                    Id = sySong,
+                    Name ="素颜"
+                },
+                new Song
+                {
+                    Id = htSong,
+                    Name = "幻听"
+                },
+                new Song
+                {
+                    Id = rgdsSong,
+                    Name = "如果当时"
+                },
+                new Song
+                {
+                    Id = qmysSong,
+                    Name = "清明雨上"
+                },
+                new Song
+                {
+                    Id = nrcfSong ,
+                    Name = "你若成风"
+                },
+                new Song
+                {
+                    Id = lzySong,
+                    Name = "庐州月"
+                },
+                new Song
+                {
+                    Id = dqcxSong,
+                    Name = "断桥残雪"
+                },
+                new Song
+                {
+                    Id = hstxSong,
+                    Name = "灰色头像"
+                },
+                new Song
+                {
+                    Id = mghdzlSong,
+                    Name = "玫瑰花的葬礼"
+                },
+                new Song
+                {
+                    Id = bcysSong,
+                    Name = "半城烟沙"
+                },
+                new Song
+                {
+                    Id = cfSong,
+                    Name = "城府"
+                },
+                new Song
+                {
+                    Id = qbdSong,
+                    Name ="千百度"
+                },
+                new Song
+                {
+                    Id = qgSong,
+                    Name = "千古"
+                },
+                new Song
+                {
+                    Id = hsdhSong,
+                    Name ="河山大好"
+                },
+                new Song
+                {
+                    Id = xzssSong,
+                    Name = "星座书上"
+                }
+            };
+            context.AddRange(songs);
+            #endregion
+
             // 歌曲专辑 关联
             var relSongAlbums = new List<RelSongAlbum>
             {
-
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = yhbkSong,
+                    AlbumId = zdyAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = ysgsSong,
+                    AlbumId = qnwbAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = jhymSong,
+                    AlbumId = brccqAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = sySong,
+                    AlbumId = syAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = htSong,
+                    AlbumId = myjAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = rgdsSong,
+                    AlbumId = zdyAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = qmysSong,
+                    AlbumId = zdyAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = nrcfSong,
+                    AlbumId = lkAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = lzySong,
+                    AlbumId = xwqsAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = dqcxSong,
+                    AlbumId = dqcxAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = hstxSong,
+                    AlbumId = xwqsAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = mghdzlSong,
+                    AlbumId = xsdqjAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = bcysSong,
+                    AlbumId = bcysAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = cfSong,
+                    AlbumId = zdyAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = qgSong,
+                    AlbumId = qgAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = hsdhSong,
+                    AlbumId = sglmydAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = xzssSong,
+                    AlbumId = zdyAlbum
+                },
+                new RelSongAlbum
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    SongId = qbdSong,
+                    AlbumId = sglmydAlbum
+                }
             };
+            context.AddRange(relSongAlbums);
 
             context.SaveChanges();
         }

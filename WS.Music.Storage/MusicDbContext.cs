@@ -54,6 +54,11 @@ namespace WS.Music.Stores
 
         public DbSet<RelArtistAlbum> RelArtistAlbums { get; set; }
 
+        /// <summary>
+        /// 歌曲专辑关联
+        /// </summary>
+        public DbSet<RelSongAlbum> RelSongAlbums { get; set; }
+
         ///// <summary>
         ///// 模型创建
         ///// </summary>

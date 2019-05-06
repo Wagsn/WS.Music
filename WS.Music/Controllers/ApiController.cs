@@ -161,7 +161,17 @@ namespace WS.Music.Controllers
                 {
                     query = query.Where(a => request.Ids.Contains(a.Id));
                 }
-                response.Data = query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();
+                var albums = query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();
+                foreach(var album in albums)
+                {
+                    // 根据专辑ID找艺人ID，根据艺人ID找艺人名称
+                    var rel = MusicStore.Set<RelArtistAlbum>().Where(a => a.AlbumId.Equals(album.Id)).SingleOrDefault();
+                    if(rel != null)
+                    {
+                        album.ArtistName = MusicStore.Set<Artist>().Find(rel.ArtistId)?.Name;
+                    }
+                }
+                response.Data = albums;
                 response.PageSize = request.PageSize;
                 response.PageIndex = request.PageIndex;
                 response.TotalCount = query.Count();
@@ -271,7 +281,24 @@ namespace WS.Music.Controllers
                 {
                     query = query.Where(a => request.Ids.Contains(a.Id));
                 }
-                response.Data = query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();
+                var songs = query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();
+                foreach (var song in songs)
+                {
+                    // 根据歌曲ID找专辑ID，根据专辑ID找专辑名称
+                    var relSongAlbum = MusicStore.Set<RelSongAlbum>().Where(a => a.SongId.Equals(song.Id)).SingleOrDefault();
+                    if (relSongAlbum != null)
+                    {
+                        song.AlbumName = MusicStore.Set<Album>().Find(relSongAlbum.AlbumId)?.Name;
+                        // 根据专辑ID找艺人ID，根据艺人ID找艺人名称
+                        var rel = MusicStore.Set<RelArtistAlbum>().Where(a => a.AlbumId.Equals(relSongAlbum.AlbumId)).SingleOrDefault();
+                        if (rel != null)
+                        {
+                            song.ArtistName = MusicStore.Set<Artist>().Find(rel.ArtistId).Name;
+                        }
+                    }
+                }
+
+                response.Data = songs;
                 response.PageSize = request.PageSize;
                 response.PageIndex = request.PageIndex;
                 response.TotalCount = query.Count();
