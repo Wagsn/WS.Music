@@ -113,7 +113,7 @@ namespace FileServer
         public async Task<IActionResult> Index()
         {
             FormValueProvider formModel;
-            formModel = await Request.StreamFiles(@"D:\UploadingFiles");
+            formModel = await Request.StreamFiles(@"E:\WS\UploadFiles");
 
             //var viewModel = new MyViewModel();
 
