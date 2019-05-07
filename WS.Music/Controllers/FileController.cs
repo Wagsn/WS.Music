@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WS.Music.Entities;
 using WS.Music.Filters;
+using WS.Music.Stores;
 using WS.Text;
 
 namespace FileServer
@@ -14,12 +15,14 @@ namespace FileServer
     [Route("[controller]/[action]")]
     public class FileController : Controller
     {
-        private readonly FileServerConfig _config = null;
         private readonly WS.Log.ILogger _logger = WS.Log.LoggerManager.GetLogger<FileController>();
+        private readonly FileServerConfig _config = null;
+        private readonly IMusicStore _musicStore = null;
 
-        public FileController(FileServerConfig config)
+        public FileController(FileServerConfig config, IMusicStore musicStore)
         {
             _config = config;
+            _musicStore = musicStore;
         }
         
         /// <summary>
@@ -104,11 +107,17 @@ namespace FileServer
                     
                     // 添加描述文件
                     WS.IO.File.WriteAllText(System.IO.Path.ChangeExtension(fi.Path, ".json"), WS.Text.JsonUtil.ToJson(fi));
+                    // 保存数据
+
                 }
             }
             return new JsonResult(fileinfos);
         }
 
+        /// <summary>
+        /// 大文件上传
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [DisableFormValueModelBinding]
         public async Task<ActionResult> Index()
@@ -118,6 +127,7 @@ namespace FileServer
 
             var fileInfoStr = formModel.GetValue("FileInfo").FirstValue;
             var fileInfo = JsonUtil.ToObject<FileInfo>(fileInfoStr);
+            _musicStore.AddAll(fileInfo);
             Console.WriteLine($"[File] [Index] fileInfo: {JsonUtil.ToJson(fileInfo)}");
 
             //var fileInfo = new FileInfo(); 
