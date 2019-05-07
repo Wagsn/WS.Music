@@ -28,6 +28,12 @@ namespace WS.Music.Entities
         public string PassWord { get; set; }
 
         /// <summary>
+        /// 头像 URL
+        /// </summary>
+        [MaxLength(511)]
+        public string Avatar { get; set; }
+
+        /// <summary>
         /// 电子邮箱
         /// </summary>
         [MaxLength(320, ErrorMessage = "邮箱地址不能超过最长320个字符限制")]
