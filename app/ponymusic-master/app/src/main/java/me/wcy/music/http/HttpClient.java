@@ -16,6 +16,7 @@ import me.wcy.music.model.DownloadInfo;
 import me.wcy.music.model.Lrc;
 import me.wcy.music.model.OnlineMusicList;
 import me.wcy.music.model.SearchMusic;
+import me.wcy.music.model.SheetInfo;
 import me.wcy.music.model.Song;
 import me.wcy.music.model.Splash;
 import okhttp3.Call;
@@ -65,7 +66,8 @@ public class HttpClient {
     }
 
     /**
-     * 获取启动页
+     * 获取启动页<br/>
+     * 未使用
      * @param callback
      */
     public static void getSplash(@NonNull final HttpCallback<Splash> callback) {
@@ -123,6 +125,14 @@ public class HttpClient {
                         }
                     }
                 });
+    }
+
+    /**
+     * 获取歌单概要信息列表
+     * @param callback
+     */
+    public static void getSheetInfoList(@Nullable final HttpCallback<SheetInfo> callback){
+        //
     }
 
     /**

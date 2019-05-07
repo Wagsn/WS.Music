@@ -39,6 +39,8 @@ public class SettingActivity extends BaseActivity {
         private Preference mSoundEffect;
         private Preference mFilterSize;
         private Preference mFilterTime;
+        private Preference mServerHost;
+        private Preference mServerPort;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class SettingActivity extends BaseActivity {
             mSoundEffect = findPreference(getString(R.string.setting_key_sound_effect));
             mFilterSize = findPreference(getString(R.string.setting_key_filter_size));
             mFilterTime = findPreference(getString(R.string.setting_key_filter_time));
+            mServerHost = findPreference(getString(R.string.setting_key_server_host));
+            mServerPort = findPreference(getString(R.string.setting_key_server_port));
             mSoundEffect.setOnPreferenceClickListener(this);
             mFilterSize.setOnPreferenceChangeListener(this);
             mFilterTime.setOnPreferenceChangeListener(this);
@@ -67,6 +71,9 @@ public class SettingActivity extends BaseActivity {
             return false;
         }
 
+        /**
+         * 播放 - 音效调节
+         */
         private void startEqualizer() {
             if (MusicUtils.isAudioControlPanelAvailable(getActivity())) {
                 Intent intent = new Intent();

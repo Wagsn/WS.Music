@@ -44,7 +44,7 @@ import me.wcy.music.widget.AlbumCoverView;
 import me.wcy.music.widget.IndicatorLayout;
 
 /**
- * 正在播放界面
+ * 播放界面
  * Created by wcy on 2015/11/27.
  */
 public class PlayFragment extends BaseFragment implements View.OnClickListener,

@@ -31,6 +31,10 @@ public class SheetAdapter extends BaseAdapter {
     private Context mContext;
     private List<SheetInfo> mData;
 
+    /**
+     * 数据初始化
+     * @param data
+     */
     public SheetAdapter(List<SheetInfo> data) {
         mData = data;
     }
@@ -50,11 +54,21 @@ public class SheetAdapter extends BaseAdapter {
         return position;
     }
 
+    /**
+     * 是否可以点击
+     * @param position
+     * @return
+     */
     @Override
     public boolean isEnabled(int position) {
         return getItemViewType(position) == TYPE_MUSIC_LIST;
     }
 
+    /**
+     * 获取列表项视图类型
+     * @param position
+     * @return
+     */
     @Override
     public int getItemViewType(int position) {
         if (mData.get(position).getType().equals("#")) {
@@ -64,11 +78,22 @@ public class SheetAdapter extends BaseAdapter {
         }
     }
 
+    /**
+     * 获取列表项视图类型数量
+     * @return
+     */
     @Override
     public int getViewTypeCount() {
         return 2;
     }
 
+    /**
+     * 获取指定位置列表项视图
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         mContext = parent.getContext();
@@ -102,10 +127,20 @@ public class SheetAdapter extends BaseAdapter {
         return convertView;
     }
 
+    /**
+     * 是否显示分割线
+     * @param position
+     * @return
+     */
     private boolean isShowDivider(int position) {
         return position != mData.size() - 1;
     }
 
+    /**
+     * 获取歌单（榜单）信息
+     * @param sheetInfo
+     * @param holderMusicList
+     */
     private void getMusicListInfo(final SheetInfo sheetInfo, final ViewHolderMusicList holderMusicList) {
         if (sheetInfo.getCoverUrl() == null) {
             holderMusicList.tvMusic1.setTag(sheetInfo.getTitle());
@@ -136,6 +171,11 @@ public class SheetAdapter extends BaseAdapter {
         }
     }
 
+    /**
+     * 将响应的歌单信息解析成榜单项（榜单列表的列表项）
+     * @param response
+     * @param sheetInfo
+     */
     private void parse(OnlineMusicList response, SheetInfo sheetInfo) {
         List<OnlineMusic> onlineMusics = response.getSong_list();
         sheetInfo.setCoverUrl(response.getBillboard().getPic_s260());
@@ -159,6 +199,11 @@ public class SheetAdapter extends BaseAdapter {
         }
     }
 
+    /**
+     * 将榜单信息的数据刷新到界面上去
+     * @param sheetInfo
+     * @param holderMusicList
+     */
     private void setData(SheetInfo sheetInfo, ViewHolderMusicList holderMusicList) {
         holderMusicList.tvMusic1.setText(sheetInfo.getMusic1());
         holderMusicList.tvMusic2.setText(sheetInfo.getMusic2());
@@ -170,6 +215,9 @@ public class SheetAdapter extends BaseAdapter {
                 .into(holderMusicList.ivCover);
     }
 
+    /**
+     * 榜单分类视图持有器
+     */
     private static class ViewHolderProfile {
         @Bind(R.id.tv_profile)
         private TextView tvProfile;
@@ -179,6 +227,9 @@ public class SheetAdapter extends BaseAdapter {
         }
     }
 
+    /**
+     * 榜单项视图持有器
+     */
     private static class ViewHolderMusicList {
         @Bind(R.id.iv_cover)
         private ImageView ivCover;

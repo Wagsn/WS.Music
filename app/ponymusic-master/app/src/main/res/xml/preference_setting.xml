@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/network">
 
@@ -40,5 +41,20 @@
             android:key="@string/setting_key_filter_time"
             android:summary="不过滤"
             android:title="按时长过滤" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="服务器">
+
+        <EditTextPreference
+            android:defaultValue="music.wagsn.net"
+            android:key="server_host"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="主机设置" />
+        <EditTextPreference
+            android:defaultValue="5001"
+            android:key="server_port"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="端口设置" />
     </PreferenceCategory>
 </PreferenceScreen>

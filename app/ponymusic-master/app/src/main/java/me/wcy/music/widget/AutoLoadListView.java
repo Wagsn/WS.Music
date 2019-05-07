@@ -11,7 +11,8 @@ import android.widget.ListView;
 import me.wcy.music.R;
 
 /**
- * 自动加载更多ListView
+ * 自动加载更多ListView<br/>
+ * 用于在线音乐 - 榜单内部
  * Created by hzwangchenyan on 2016/1/7.
  */
 public class AutoLoadListView extends ListView implements AbsListView.OnScrollListener {

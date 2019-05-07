@@ -45,7 +45,7 @@ import me.wcy.music.utils.binding.Bind;
 import me.wcy.music.widget.AutoLoadListView;
 
 /**
- * 在线音乐列表界面
+ * 在线音乐列表 - (在线音乐-榜单列表进入)
  */
 public class OnlineMusicActivity extends BaseActivity implements OnItemClickListener
         , OnMoreClickListener, AutoLoadListView.OnLoadListener {
@@ -73,12 +73,16 @@ public class OnlineMusicActivity extends BaseActivity implements OnItemClickList
     @Override
     protected void onServiceBound() {
         mListInfo = (SheetInfo) getIntent().getSerializableExtra(Extras.MUSIC_LIST_TYPE);
+        // 设置页面标题
         setTitle(mListInfo.getTitle());
 
         initView();
         onLoad();
     }
 
+    /**
+     * 初始化页面
+     */
     private void initView() {
         vHeader = LayoutInflater.from(this).inflate(R.layout.activity_online_music_list_header, null);
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ScreenUtils.dp2px(150));

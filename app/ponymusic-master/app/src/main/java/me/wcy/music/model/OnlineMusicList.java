@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * 在线音乐列表
+ * 在线音乐列表（歌单/榜单）
  * JavaBean
  * Created by wcy on 2015/12/20.
  */
@@ -31,13 +31,26 @@ public class OnlineMusicList {
         this.billboard = billboard;
     }
 
+    /**
+     * 榜单头部广告牌
+     */
     public static class Billboard {
+        /**
+         * 更新时间
+         */
         @SerializedName("update_date")
         private String update_date;
+        /**
+         * 榜单名
+         */
         @SerializedName("name")
         private String name;
+        /**
+         * 描述，说明，介绍，评论
+         */
         @SerializedName("comment")
         private String comment;
+
         @SerializedName("pic_s640")
         private String pic_s640;
         @SerializedName("pic_s444")

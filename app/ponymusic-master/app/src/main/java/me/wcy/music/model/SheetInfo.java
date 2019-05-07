@@ -3,10 +3,13 @@ package me.wcy.music.model;
 import java.io.Serializable;
 
 /**
- * 歌单信息
+ * 歌单概要信息（榜单信息）
  * Created by wcy on 2015/12/20.
  */
 public class SheetInfo implements Serializable {
+    /**
+     * 榜单名
+     */
     private String title;
     /**
      * #主打榜单
@@ -27,6 +30,9 @@ public class SheetInfo implements Serializable {
      * 7.叱咤歌曲榜
      */
     private String type;
+    /**
+     * 封面URL
+     */
     private String coverUrl;
     private String music1;
     private String music2;

@@ -88,6 +88,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         parseIntent();
     }
 
+    /**
+     *
+     */
     private void setupView() {
         // add navigation header
         vNavigationHeader = LayoutInflater.from(this).inflate(R.layout.navigation_header, navigationView, false);
@@ -149,19 +152,19 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_menu:
+            case R.id.iv_menu: // 抽屉菜单
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
-            case R.id.iv_search:
+            case R.id.iv_search: // 搜索
                 startActivity(new Intent(this, SearchMusicActivity.class));
                 break;
-            case R.id.tv_local_music:
+            case R.id.tv_local_music: // 本地音乐
                 mViewPager.setCurrentItem(0);
                 break;
-            case R.id.tv_online_music:
+            case R.id.tv_online_music:  // 在线音乐
                 mViewPager.setCurrentItem(1);
                 break;
-            case R.id.fl_play_bar:
+            case R.id.fl_play_bar:  // 播放界面
                 showPlayingFragment();
                 break;
         }

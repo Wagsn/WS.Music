@@ -65,6 +65,9 @@ public class AppCache {
         return mSheetList;
     }
 
+    /**
+     * 清理Activity栈
+     */
     public void clearStack() {
         List<Activity> activityStack = mActivityStack;
         for (int i = activityStack.size() - 1; i >= 0; i--) {
@@ -91,6 +94,11 @@ public class AppCache {
     private class ActivityLifecycle implements Application.ActivityLifecycleCallbacks {
         private static final String TAG = "Activity";
 
+        /**
+         * 当Activity被创建时，将其添加进栈中
+         * @param activity
+         * @param savedInstanceState
+         */
         @Override
         public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
             Log.i(TAG, "onCreate: " + activity.getClass().getSimpleName());
@@ -117,6 +125,10 @@ public class AppCache {
         public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
         }
 
+        /**
+         * 当Activity被销毁时，将其从栈中移出
+         * @param activity
+         */
         @Override
         public void onActivityDestroyed(Activity activity) {
             Log.i(TAG, "onDestroy: " + activity.getClass().getSimpleName());

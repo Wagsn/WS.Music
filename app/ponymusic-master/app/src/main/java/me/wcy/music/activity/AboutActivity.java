@@ -9,6 +9,9 @@ import android.preference.PreferenceFragment;
 import me.wcy.music.BuildConfig;
 import me.wcy.music.R;
 
+/**
+ * 关于界面
+ */
 public class AboutActivity extends BaseActivity {
 
     @Override

@@ -6,7 +6,8 @@ import android.view.View;
 import java.lang.reflect.Field;
 
 /**
- * View 绑定器
+ * View 绑定器<br/>
+ * 实例化注释了 Bind 的视图对象
  */
 public class ViewBinder {
 

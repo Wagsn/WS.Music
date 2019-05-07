@@ -21,10 +21,12 @@ import me.wcy.music.model.SheetInfo;
 import me.wcy.music.utils.binding.Bind;
 
 /**
- * 在线音乐
+ * 在线音乐（榜单列表）<br/>
+ *
  * Created by wcy on 2015/11/26.
  */
 public class SheetListFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+
     @Bind(R.id.lv_sheet)
     private ListView lvPlaylist;
 
@@ -36,11 +38,17 @@ public class SheetListFragment extends BaseFragment implements AdapterView.OnIte
         return inflater.inflate(R.layout.fragment_sheet_list, container, false);
     }
 
+    /**
+     * 当Activity被创建
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        // 首先访问缓存
         mSongLists = AppCache.get().getSheetList();
+        // 首次数据加载 - 改成从网络加载数据
         if (mSongLists.isEmpty()) {
             String[] titles = getResources().getStringArray(R.array.online_music_list_title);
             String[] types = getResources().getStringArray(R.array.online_music_list_type);
@@ -55,11 +63,21 @@ public class SheetListFragment extends BaseFragment implements AdapterView.OnIte
         lvPlaylist.setAdapter(adapter);
     }
 
+    /**
+     * 设置监听器
+     */
     @Override
     protected void setListener() {
         lvPlaylist.setOnItemClickListener(this);
     }
 
+    /**
+     * 列表项点击回调
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         SheetInfo sheetInfo = mSongLists.get(position);
@@ -68,6 +86,10 @@ public class SheetListFragment extends BaseFragment implements AdapterView.OnIte
         startActivity(intent);
     }
 
+    /**
+     *
+     * @param outState
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         int position = lvPlaylist.getFirstVisiblePosition();
@@ -76,6 +98,10 @@ public class SheetListFragment extends BaseFragment implements AdapterView.OnIte
         outState.putInt(Keys.PLAYLIST_OFFSET, offset);
     }
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     public void onRestoreInstanceState(final Bundle savedInstanceState) {
         lvPlaylist.post(() -> {
             int position = savedInstanceState.getInt(Keys.PLAYLIST_POSITION);

@@ -16,11 +16,46 @@ public class Preferences {
     private static final String PLAY_MODE = "play_mode";
     private static final String SPLASH_URL = "splash_url";
     private static final String NIGHT_MODE = "night_mode";
+    private static final String SERVER_HOST = "server_host";
+    private static final String SERVER_PORT = "server_port";
 
     private static Context sContext;
 
     public static void init(Context context) {
         sContext = context.getApplicationContext();
+    }
+
+    /**
+     * 获取服务器主机</>
+     * ip or domain
+     * @return
+     */
+    public static String getHost(){
+        return getString(sContext.getString(R.string.setting_key_server_host), "music.wagsn.net");
+    }
+
+    /**
+     * 保存服务器主机
+     * @param host
+     */
+    public  static void saveHost(String host){
+        saveString(sContext.getString(R.string.setting_key_server_host), host);
+    }
+
+    /**
+     * 获取服务器端口
+     * @return
+     */
+    public static String getPort(){
+        return getString(sContext.getString(R.string.setting_key_server_port), "5001");
+    }
+
+    /**
+     * 保存服务器端口
+     * @param port
+     */
+    public static void savePort(String port){
+        saveString(sContext.getString(R.string.setting_key_server_port), port);
     }
 
     public static int getPlayPosition() {
