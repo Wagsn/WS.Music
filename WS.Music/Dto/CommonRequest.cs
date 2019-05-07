@@ -11,6 +11,9 @@ namespace WS.Music.Dto
     /// </summary>
     public class CommonRequest
     {
+        /// <summary>
+        /// 用户信息
+        /// </summary>
         public User User { get; set; }
 
         public List<User> Users { get; set; }
@@ -26,5 +29,10 @@ namespace WS.Music.Dto
         public Artist Artist { get; set; }
 
         public List<Artist> Artists { get; set; }
+
+        /// <summary>
+        /// 文件
+        /// </summary>
+        public List<FileInfo> Files { get; set; }
     }
 }

@@ -30,6 +30,12 @@ namespace WS.Music.Entities
         [MaxLength(63)]
         public string Name { get; set; }
 
+        /// <summary>
+        /// 艺人ID
+        /// </summary>
+        [NotMapped]
+        public string ArtistId { get; set; }
+
         [NotMapped]
         public string ArtistName { get; set; }
 

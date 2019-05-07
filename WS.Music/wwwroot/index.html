@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>登陆 - 在线音乐系统</title>
+    <link rel="stylesheet" type="text/css" href="/lib/layui/css/layui.css" media="all">
+    <script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/lib/layui/layui.js"></script>
+    <script type="text/javascript">
+        layui.use(['form'], function () {
+            // 登陆
+            $("#saveform").click(function () {
+
+            })
+        })
+        //登陆
+        function signin_btn() {
+            // 输出一下表单数据
+            console.log(loadFormData())
+            // TODO: 进行表格输入格式验证
+            $.ajax({
+                type: "post", /* 提交方式 */
+                url: "sign/in", /* servlet 或者 url */
+                data: loadFormData(),
+                contentType: "application/json;charset=utf-8", /* 采用json格式数据 */
+                dateType: "json", /* 数据类型为json */
+                success: function (body) { /* 请求成功时被调用，result为服务器传来的数据 */
+                    /* 页面数据初始化 */
+                    console.log(body);
+                    if (body.code == "0") {
+                        console.log('登陆成功')
+                    }
+                    else {
+                        alert("用户名或者密码出错!")
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) { /* 请求错误时调用，errorThrown为错误数据 */
+                    alert("失败: " + errorThrown);
+                }
+            });
+        }
+        // 从表单中获取数据并生成请求jso
+        function loadFormData() {
+            return JSON.stringify({
+                // 获取用户名学号各种前端要传递给后端的数据
+                "username": $("#username").val(),  // 获取ID为username的值
+                "password": $("#password").val(),
+                //"rolecode": $("input[name='rolecode']:checked").val()
+            });
+        }
+    </script>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <section class="layui-body">
+            <div>
+                <div class="clearfix">
+                    <form class="layui-form">
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">用户名</label>
+                            <div class="layui-input-block">
+                                <input id="username" type="text" name="username" autocomplete="off" class="layui-input" value="" placeholder="请输入用户名">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">密码</label>
+                            <div class="layui-input-block">
+                                <input id="password" type="password" name="password" autocomplete="off" class="layui-input" value="" placeholder="请输入密码">
+                            </div>
+                        </div>
+                        <div class="layui-form-item change-submit">
+                            <div class="layui-input-block">
+                                <button id="saveform" class="layui-btn" lay-submit="" lay-filter="demo1" >登陆</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <div class="layui-footer">
+            <p>&copy;在线音乐系统</p>
+        </div>
+    </div>
+</body>
+</html>

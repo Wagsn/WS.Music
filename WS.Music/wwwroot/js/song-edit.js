@@ -42,7 +42,7 @@
         $(desc).val(data.description)
         $(dura).val(data.duration)
         $(time).val(data.releaseTime)
-        $(url).val(data.url)
+        //$(url).val(data.url)
         form.render()
     }
     // Load Form Data 加载表单数据

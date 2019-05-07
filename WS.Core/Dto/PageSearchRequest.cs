@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WS.Music.Entities;
 
 namespace WS.Core
 {
@@ -22,5 +23,10 @@ namespace WS.Core
         /// ID组
         /// </summary>
         public List<string> Ids { get; set; }
+
+        /// <summary>
+        /// 专辑组
+        /// </summary>
+        public List<Album> Albums { get; set; }
     }
 }

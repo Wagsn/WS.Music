@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WS.Music.Entities;
 using WS.Music.Filters;
+using WS.Text;
 
 namespace FileServer
 {
@@ -110,15 +111,24 @@ namespace FileServer
 
         [HttpPost]
         [DisableFormValueModelBinding]
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult> Index()
         {
             FormValueProvider formModel;
-            formModel = await Request.StreamFiles(@"E:\WS\UploadFiles");
+            formModel = await Request.StreamFiles(_config.Root.LocalPath);
 
-            //var viewModel = new MyViewModel();
+            var fileInfoStr = formModel.GetValue("FileInfo").FirstValue;
+            var fileInfo = JsonUtil.ToObject<FileInfo>(fileInfoStr);
+            Console.WriteLine($"[File] [Index] fileInfo: {JsonUtil.ToJson(fileInfo)}");
 
-            //var bindingSuccessful = await TryUpdateModelAsync(viewModel, prefix: "",
+            //var fileInfo = new FileInfo(); 
+
+            //var bindingSuccessful = await TryUpdateModelAsync(fileInfo, prefix: "",
             //    valueProvider: formModel);
+
+            //if (bindingSuccessful)
+            //{
+            //    Console.WriteLine($"fileInfo: {JsonUtil.ToJson(fileInfo)}");
+            //}
 
             //if (!bindingSuccessful)
             //{
@@ -129,7 +139,16 @@ namespace FileServer
             //}
 
             //return Ok(viewModel);
-            return Ok();
+            return new JsonResult(new
+            {
+                Code = "0",
+                Data = fileInfo
+            });
         }
+    }
+
+    public class UserInfo
+    {
+        public string UserName { get; set; }
     }
 }

@@ -39,7 +39,14 @@ namespace WS.Music.Controllers
             Console.WriteLine($"[{nameof(AlbumList)}] 艺人 信息 列表 开始\r\n请求体：{JsonUtil.ToJson(request)}");
             var response = new PagingResponseMessage<Artist>();
 
-            if (request != null && request.KeyWord == null)
+            if(request == null)
+            {
+                response.Code = ResponseCodeDefines.ArgumentNullError;
+                response.Message = "参数错误";
+                return response;
+            }
+
+            if (request.KeyWord == null)
             {
                 request.KeyWord = "";
             }
@@ -54,6 +61,13 @@ namespace WS.Music.Controllers
                 if(request.Ids != null && request.Ids.Count > 0)
                 {
                     query = query.Where(a => request.Ids.Contains(a.Id));
+                }
+                // 根据专辑查艺人
+                if(request.Albums != null)
+                {
+                    var albIds = request.Albums.Select(a => a.Id);
+                    var artIds = MusicStore.Set<RelArtistAlbum>().Where(a => albIds.Contains(a.AlbumId)).Select(a => a.ArtistId).ToList();
+                    query = query.Where(a => artIds.Contains(a.Id));
                 }
                 response.Data = query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();
                 response.PageSize = request.PageSize;
@@ -76,6 +90,7 @@ namespace WS.Music.Controllers
         public ResponseMessage ArtistDelete([FromForm]CommonRequest request)
         {
             Console.WriteLine($"[{nameof(AlbumDelete)}] 艺人 信息 删除 开始\r\n请求体：{JsonUtil.ToJson(request)}");
+            Console.WriteLine("Form: " + JsonUtil.ToJson(Request.Form));
             var response = new ResponseMessage();
 
             try
@@ -172,7 +187,9 @@ namespace WS.Music.Controllers
                     var rel = MusicStore.Set<RelArtistAlbum>().Where(a => a.AlbumId.Equals(album.Id)).SingleOrDefault();
                     if(rel != null)
                     {
-                        album.ArtistName = MusicStore.Set<Artist>().Find(rel.ArtistId)?.Name;
+                        var art = MusicStore.Set<Artist>().Find(rel.ArtistId);
+                        album.ArtistId = art?.Id;
+                        album.ArtistName = art?.Name;
                     }
                 }
                 response.Data = albums;
@@ -235,6 +252,16 @@ namespace WS.Music.Controllers
                 if (string.IsNullOrWhiteSpace(request.Album.Id))
                 {
                     request.Album.Id = Guid.NewGuid().ToString();
+                    if (request.Album.ArtistId != null)
+                    {
+                        // 创建关联
+                        MusicStore.AddAll(new RelArtistAlbum
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            ArtistId = request.Album.ArtistId,
+                            AlbumId = request.Album.Id
+                        });
+                    }
                     MusicStore.AddAll(request.Album);
                 }
                 else
@@ -246,6 +273,37 @@ namespace WS.Music.Controllers
                         entity.ArtistName = request.Album.ArtistName;
                         entity.Description = request.Album.Description;
                         entity.ReleaseTime = request.Album.ReleaseTime;
+                        if (request.Album.ArtistId != null)
+                        {
+                            // 删除原关联
+                            var oldRel = MusicStore.Set<RelArtistAlbum>().Where(a => a.AlbumId.Equals(entity.Id)).SingleOrDefault();
+                            if(oldRel == null)
+                            {
+                                // 原关联不存在 创建新关联
+                                MusicStore.AddAll(new RelArtistAlbum
+                                {
+                                    Id = Guid.NewGuid().ToString(),
+                                    ArtistId = request.Album.ArtistId,
+                                    AlbumId = request.Album.Id
+                                });
+                            }
+                            else
+                            {
+                                if (!oldRel.ArtistId.Equals(request.Album.ArtistId))
+                                {
+                                    // 更改艺人 删除原关联
+                                    MusicStore.DeleteAll(oldRel);
+                                    // 创建新关联
+                                    MusicStore.AddAll(new RelArtistAlbum
+                                    {
+                                        Id = Guid.NewGuid().ToString(),
+                                        ArtistId = request.Album.ArtistId,
+                                        AlbumId = request.Album.Id
+                                    });
+                                }
+                            }
+                            
+                        }
                         MusicStore.UpdateAll(entity);
                     }
                 }
@@ -267,6 +325,7 @@ namespace WS.Music.Controllers
         public PagingResponseMessage<Song> SongSearch([FromForm]PageSearchRequest request)
         {
             Console.WriteLine($"[{nameof(SongSearch)}] 歌曲搜索开始\r\n请求体：{JsonUtil.ToJson(request)}");
+
             var response = new PagingResponseMessage<Song>();
 
             if (request != null && request.KeyWord == null)
@@ -392,14 +451,9 @@ namespace WS.Music.Controllers
             try
             {
                 // 根据name属性获取值
-                var file = Request.Form.Files["file"];
                 if (string.IsNullOrWhiteSpace(request.Song.Id))
                 {
                     request.Song.Id = Guid.NewGuid().ToString();
-                    if (file != null)
-                    {
-                        request.Song.Url = (await SaveSongFile(file, request.Song))?.Url;
-                    }
                     MusicStore.AddAll(request.Song);
                 }
                 else
@@ -412,11 +466,7 @@ namespace WS.Music.Controllers
                         entity.ArtistName = request.Song.ArtistName;
                         entity.Description = request.Song.Description;
                         entity.ReleaseTime = request.Song.ReleaseTime;
-                        entity.Url = (await SaveSongFile(file, request.Song))?.Url;
-                        if (file != null)
-                        {
-                            entity.Url = (await SaveSongFile(file, request.Song))?.Url;
-                        }
+                        entity.Url = request.Song.Url;
                         // audio - song
                         MusicStore.UpdateAll(entity);
                     }

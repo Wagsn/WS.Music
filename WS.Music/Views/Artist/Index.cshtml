@@ -21,7 +21,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.BirthTime)
             </th>
-            <th></th>
+            <th>
+                操作
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -37,9 +39,9 @@
                 @Html.DisplayFor(modelItem => item.BirthTime)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">编辑</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-default">详情</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-default">删除</a>
             </td>
         </tr>
 }

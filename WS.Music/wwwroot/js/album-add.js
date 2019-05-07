@@ -5,6 +5,7 @@
     // Net Data Url
     let saveUrl = '/api/album/save'
     //let listUrl = '/api/album/list'
+    let artList = '/api/artist/list'
 
     // Local Store Key
     //let key_edit = 'album-edit'
@@ -23,9 +24,10 @@
         return {
             //id: $('.id').val() || '',
             name: $(".name").val(),
+            artistId: $('.artist-select').find("option:selected").val(),
             artistName: $(".artist-name").val(),
             description: $(".desc").val(),
-            birthTime: $(".time").val()
+            releaseTime: $(".time").val()
         }
     }
     // Page Init 页面初始化
@@ -36,24 +38,24 @@
         //        store.load(key_edit).id
         //    ]
         //})
+        // 加载下拉框
+        // loadSelect(album)
+        $.post(
+            artList,
+            {
+                pageIndex: 0,
+                pageSize: 1000
+            },
+            function (resbody) {
+                if (resbody.code == "0") {
+                    renderSelect('.artist-select', resbody.data, 'id', 'name')
+                }
+                else {
+                    console.log('查询失败：' + resbody)
+                }
+            }
+        )
     })
-    //// Load Form 加载表单
-    //function loadForm(query = { pageIndex: 0, pageSize: 5 }) {
-    //    console.log('Loading Query:', query)
-    //    $.post(
-    //        listUrl,
-    //        query,
-    //        function (resbody) {
-    //            console.log('Response Body:', resbody)
-    //            if (resbody.data.length > 0) {
-    //                renderForm(resbody.data[0])
-    //            }
-    //            else {
-    //                alert('没有数据')
-    //            }
-    //        }
-    //    )
-    //}
     // Save Click 点击保存
     $("#saveform").click(function () {
         console.log("saveform clicked");
@@ -68,7 +70,7 @@
             //刷新父页面
             parent.location.reload();
         }, 1000);
-        return true;
+        return false;
     })
     // Save Item 添加提交
     function saveItem() {
@@ -86,5 +88,16 @@
                     alert('保存失败');
                 }
             })
+    }
+    // 通用的选择器渲染
+    function renderSelect(selector, data, value, text) {
+        console.log("通用选择器渲染开始，数据为：", data)
+        let select = $(selector)
+        let select_html = ('<option value="">直接选择或搜索选择</option>');
+        for (let item of data) {
+            select_html += '<option value="' + item[value] + '">' + item[text] + '</option>';
+        }
+        select.html(select_html);
+        form.render();
     }
 });

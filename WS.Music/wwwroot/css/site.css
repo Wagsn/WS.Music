@@ -142,11 +142,11 @@ input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webki
     -webkit-appearance: none;
 }
 
-input, select {
+/*input, select {
     height: 20px;
     font-size: 12px;
     line-height: 20px;
-}
+}*/
 
 button::-moz-focus-inner, input::-moz-focus-inner {
     border: 0;

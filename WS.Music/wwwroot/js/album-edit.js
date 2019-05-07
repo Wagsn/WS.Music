@@ -5,6 +5,7 @@
     // Net Data Url
     let saveUrl = '/api/album/save'
     let listUrl = '/api/album/list'
+    let artistList = '/api/artist/list'
 
     // Local Store Key
     //let key_edit = 'album-edit'
@@ -24,9 +25,10 @@
         return {
             id: $('.id').val() || '',
             name: $(".name").val(),
+            artistId: $('.artist-select').find("option:selected").val(),
             artistName: $(".artist-name").val(),
             description: $(".desc").val(),
-            birthTime: $(".time").val()
+            releaseTime: $(".time").val()
         }
     }
     // Page Init 页面初始化
@@ -38,6 +40,26 @@
             ]
         })
     })
+    // 加载艺人下拉框
+    function loadArtistSelect() {
+        $.post(
+            artistList,
+            {
+                pageIndex: 0,
+                pageSize: 1000
+            },
+            function (resbody) {
+                if (resbody.code == "0") {
+                    renderSelect('.artist-select', resbody.data, 'id', 'name')
+                    $(".artist-select").find('option[value=' + store.load(key_edit).artistId + ']').attr('selected', 'selected')
+                    form.render()
+                }
+                else {
+                    console.log('查询失败：' + resbody)
+                }
+            }
+        )
+    }
     // Load Form 加载表单
     function loadForm(query = { pageIndex: 0, pageSize: 5 }) {
         console.log('Loading Query:', query)
@@ -47,7 +69,10 @@
             function (resbody) {
                 console.log('Response Body:', resbody)
                 if (resbody.data.length > 0) {
+                    store.save(key_edit, resbody.data[0])
                     renderForm(resbody.data[0])
+                    // 加载下拉框
+                    loadArtistSelect()
                 }
                 else {
                     alert('没有数据')
@@ -87,5 +112,16 @@
                     alert('保存失败');
                 }
             })
+    }
+    // 通用的选择器渲染
+    function renderSelect(selector, data, value, text) {
+        console.log("通用选择器渲染开始，数据为：", data)
+        let select = $(selector)
+        let select_html = ('<option value="">直接选择或搜索选择</option>');
+        for (let item of data) {
+            select_html += '<option value="' + item[value] + '">' + item[text] + '</option>';
+        }
+        select.html(select_html);
+        form.render();
     }
 });

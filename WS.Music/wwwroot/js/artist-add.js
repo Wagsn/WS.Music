@@ -22,7 +22,7 @@
             //刷新父页面
             parent.location.reload();
         }, 1000);
-        return true;
+        return false;
     })
     // 加载表单数据
     function loadFormData() {
@@ -59,27 +59,27 @@
     //    form.render()
     //}
     // 监听专业选择器的变化
-    form.on('select(major_select)', function (data) {
-        // 获取班级列表 class/list
-        $.ajax({
-            type: "get",
-            async: true,
-            url: "api/class/list/major/" + data.value,
-            contentType: 'application/json',
-            dataType: 'json',
-            success: function (body) {
-                //console.log(data);
-                if (body.code == '200') {
-                    renderSelect(".class_select", body.data, 'id', 'className');
-                } else {
-                    alert('班级列表获取失败');
-                }
-            },
-            error: function (e) {
-                alert("发生错误：" + e.status);
-            }
-        });
-    });
+    //form.on('select(major_select)', function (data) {
+    //    // 获取班级列表 class/list
+    //    $.ajax({
+    //        type: "get",
+    //        async: true,
+    //        url: "api/class/list/major/" + data.value,
+    //        contentType: 'application/json',
+    //        dataType: 'json',
+    //        success: function (body) {
+    //            //console.log(data);
+    //            if (body.code == '200') {
+    //                renderSelect(".class_select", body.data, 'id', 'className');
+    //            } else {
+    //                alert('班级列表获取失败');
+    //            }
+    //        },
+    //        error: function (e) {
+    //            alert("发生错误：" + e.status);
+    //        }
+    //    });
+    //});
     // 通用的选择器渲染
     function renderSelect(selector, data, value, text) {
         console.log("通用选择器渲染开始，数据为：", data)

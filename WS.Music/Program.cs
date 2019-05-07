@@ -19,6 +19,11 @@ namespace WS.Music
 
             var host = WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseKestrel(options =>
+                {
+                    // 所有的controller都不限制post的body大小
+                    options.Limits.MaxRequestBodySize = null;
+                })
                 // 设置端口（*表示使用本机IP地址）
                 .UseUrls($"http://*:{configuration["Port"]}")
                 .Build();

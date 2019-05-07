@@ -15,7 +15,7 @@
   "FileServer": {
     "Root": {
       "LocalPath": "F:\\WS\\Music\\Files",
-      "Url": "/files"
+      "Url": "/file"
     },
     "PathList": [
       {

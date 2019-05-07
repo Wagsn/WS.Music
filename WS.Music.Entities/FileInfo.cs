@@ -57,11 +57,20 @@ namespace WS.Music.Entities
         [MaxLength(511)]
         public string Url { get; set; }
 
-        //public DateTime? CreateTime { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime? CreateTime { get; set; }
 
-        //public DateTime? UpdateTime{ get; set; }
+        /// <summary>
+        /// 更新时间
+        /// </summary>
+        public DateTime? UpdateTime{ get; set; }
 
-        //public DateTime? VisitTime { get; set; }
+        /// <summary>
+        /// 访问时间
+        /// </summary>
+        public DateTime? VisitTime { get; set; }
 
     }
 }

@@ -56,9 +56,9 @@ layui.use(['form', 'table', 'layer', 'laypage', 'layedit', 'laydate', 'element']
             dataHtml += '<tr>' +
                 '<td><input name="checked" lay-skin="primary" lay-filter="choose" type="checkbox"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></td>' +
                 '<td>' + o.name + '</td>' +
-                '<td>' + (o.artistName || '暂无') + '</td>' +
+                '<td>' + (o.artistName || '未知') + '</td>' +
                 '<td>' + (o.description || '暂无') + '</td>' +
-                '<td>' + (o.releaseTime || '暂无') + '</td>' +
+                '<td>' + (o.releaseTime || '未知') + '</td>' +
                 '<td>' +
                 '<a class="layui-btn layui-btn-normal layui-btn-sm details-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe600;</i>详情</a>' +
                 '<a class="layui-btn layui-btn-normal layui-btn-sm edit-btn" data-id="' + o.id + '"><i class="layui-icon">&#xe600;</i>编辑</a>' +
