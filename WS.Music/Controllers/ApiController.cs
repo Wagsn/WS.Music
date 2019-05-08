@@ -27,6 +27,16 @@ namespace WS.Music.Controllers
         private IMusicStore MusicStore { get; set; }
         private FileServerConfig FileServerConfig { get; set; }
 
+        /// <summary>
+        /// 通用保存接口
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public ResponseMessage CommonSave(CommonRequest request)
+        {
+
+            return null;
+        }
 
         #region << Artist >>
         /// <summary>

@@ -14,38 +14,13 @@
   },
   "FileServer": {
     "Root": {
-      "LocalPath": "F:\\WS\\Music\\Files",
+      "LocalPath": "E:\\WS\\Music\\Files",
       "Url": "/file"
     },
     "PathList": [
       {
-        "LocalPath": "f:\\files\\all",
+        "LocalPath": "e:\\files\\all",
         "Url": "/files/all"
-      },
-      {
-        "LocalPath": "f:\\files\\images",
-        "Url": "/images",
-        "Exts": [
-          ".jpeg",
-          ".jpg",
-          ".png"
-        ]
-      },
-      {
-        "LocalPath": "f:\\files\\audios",
-        "Url": "/audios"
-      },
-      {
-        "LocalPath": "f:\\files\\videos",
-        "Url": "/videos"
-      },
-      {
-        "LocalPath": "f:\\files\\texts",
-        "Url": "/texts",
-        "Exts": [
-          ".txt",
-          ".md"
-        ]
       }
     ]
   },
