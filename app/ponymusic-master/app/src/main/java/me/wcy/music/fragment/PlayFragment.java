@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import net.wagsn.util.binding.Bind;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,6 @@ import me.wcy.music.utils.FileUtils;
 import me.wcy.music.utils.ScreenUtils;
 import me.wcy.music.utils.SystemUtils;
 import me.wcy.music.utils.ToastUtils;
-import me.wcy.music.utils.binding.Bind;
 import me.wcy.music.widget.AlbumCoverView;
 import me.wcy.music.widget.IndicatorLayout;
 

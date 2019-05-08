@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.wagsn.util.binding.Bind;
+
 import java.io.File;
 import java.util.Locale;
 
@@ -27,7 +29,6 @@ import me.wcy.music.utils.ImageUtils;
 import me.wcy.music.utils.PermissionReq;
 import me.wcy.music.utils.SystemUtils;
 import me.wcy.music.utils.ToastUtils;
-import me.wcy.music.utils.binding.Bind;
 import me.wcy.music.utils.id3.ID3TagUtils;
 import me.wcy.music.utils.id3.ID3Tags;
 

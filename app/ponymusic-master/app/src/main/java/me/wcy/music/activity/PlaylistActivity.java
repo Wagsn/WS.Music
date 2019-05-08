@@ -7,13 +7,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import net.wagsn.util.binding.Bind;
+
 import me.wcy.music.R;
 import me.wcy.music.adapter.OnMoreClickListener;
 import me.wcy.music.adapter.PlaylistAdapter;
 import me.wcy.music.model.Music;
 import me.wcy.music.service.AudioPlayer;
 import me.wcy.music.service.OnPlayerEventListener;
-import me.wcy.music.utils.binding.Bind;
 
 /**
  * 播放列表

@@ -9,8 +9,9 @@ import android.support.v4.app.Fragment;
 
 import com.hwangjr.rxbus.RxBus;
 
+import net.wagsn.util.binding.ViewBinder;
+
 import me.wcy.music.utils.PermissionReq;
-import me.wcy.music.utils.binding.ViewBinder;
 
 /**
  * 基类<br>

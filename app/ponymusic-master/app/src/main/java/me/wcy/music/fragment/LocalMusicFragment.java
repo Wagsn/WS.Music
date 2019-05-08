@@ -24,6 +24,8 @@ import android.widget.TextView;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 
+import net.wagsn.util.binding.Bind;
+
 import java.io.File;
 
 import me.wcy.music.R;
@@ -39,7 +41,6 @@ import me.wcy.music.model.Music;
 import me.wcy.music.service.AudioPlayer;
 import me.wcy.music.utils.PermissionReq;
 import me.wcy.music.utils.ToastUtils;
-import me.wcy.music.utils.binding.Bind;
 
 /**
  * 本地音乐列表

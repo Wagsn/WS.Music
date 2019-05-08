@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import net.wagsn.util.binding.Bind;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -31,7 +33,6 @@ import me.wcy.music.service.AudioPlayer;
 import me.wcy.music.utils.FileUtils;
 import me.wcy.music.utils.ToastUtils;
 import me.wcy.music.utils.ViewUtils;
-import me.wcy.music.utils.binding.Bind;
 
 /**
  * 搜索音乐界面

@@ -7,12 +7,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.wagsn.util.binding.Bind;
+import net.wagsn.util.binding.ViewBinder;
+
 import java.util.List;
 
 import me.wcy.music.R;
 import me.wcy.music.model.SearchMusic;
-import me.wcy.music.utils.binding.Bind;
-import me.wcy.music.utils.binding.ViewBinder;
 
 /**
  * 搜索结果适配器

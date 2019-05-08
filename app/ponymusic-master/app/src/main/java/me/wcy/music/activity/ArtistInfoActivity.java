@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.wagsn.util.binding.Bind;
+
 import me.wcy.music.R;
 import me.wcy.music.constants.Extras;
 import me.wcy.music.enums.LoadStateEnum;
@@ -26,7 +28,6 @@ import me.wcy.music.http.HttpCallback;
 import me.wcy.music.http.HttpClient;
 import me.wcy.music.model.ArtistInfo;
 import me.wcy.music.utils.ViewUtils;
-import me.wcy.music.utils.binding.Bind;
 
 /**
  * 艺人信息界面

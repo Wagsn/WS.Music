@@ -23,11 +23,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import net.wagsn.util.binding.ViewBinder;
+
 import me.wcy.music.R;
 import me.wcy.music.service.PlayService;
 import me.wcy.music.storage.preference.Preferences;
 import me.wcy.music.utils.PermissionReq;
-import me.wcy.music.utils.binding.ViewBinder;
 
 /**
  * 基类<br>

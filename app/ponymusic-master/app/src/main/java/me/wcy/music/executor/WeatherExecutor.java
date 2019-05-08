@@ -13,12 +13,13 @@ import com.amap.api.location.AMapLocalWeatherListener;
 import com.amap.api.location.AMapLocalWeatherLive;
 import com.amap.api.location.LocationManagerProxy;
 
+import net.wagsn.util.binding.Bind;
+import net.wagsn.util.binding.ViewBinder;
+
 import java.util.Calendar;
 
 import me.wcy.music.R;
 import me.wcy.music.application.AppCache;
-import me.wcy.music.utils.binding.Bind;
-import me.wcy.music.utils.binding.ViewBinder;
 
 /**
  * 更新天气

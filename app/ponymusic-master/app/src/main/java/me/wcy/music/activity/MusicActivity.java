@@ -17,6 +17,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.wagsn.util.binding.Bind;
+
 import me.wcy.music.R;
 import me.wcy.music.adapter.FragmentAdapter;
 import me.wcy.music.constants.Extras;
@@ -32,7 +34,6 @@ import me.wcy.music.service.QuitTimer;
 import me.wcy.music.utils.PermissionReq;
 import me.wcy.music.utils.SystemUtils;
 import me.wcy.music.utils.ToastUtils;
-import me.wcy.music.utils.binding.Bind;
 
 /**
  * APP主界面

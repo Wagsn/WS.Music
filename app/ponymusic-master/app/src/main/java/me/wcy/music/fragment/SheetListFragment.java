@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import net.wagsn.util.binding.Bind;
+
 import java.util.List;
 
 import me.wcy.music.R;
@@ -18,7 +20,6 @@ import me.wcy.music.application.AppCache;
 import me.wcy.music.constants.Extras;
 import me.wcy.music.constants.Keys;
 import me.wcy.music.model.SheetInfo;
-import me.wcy.music.utils.binding.Bind;
 
 /**
  * 在线音乐（榜单列表）<br/>

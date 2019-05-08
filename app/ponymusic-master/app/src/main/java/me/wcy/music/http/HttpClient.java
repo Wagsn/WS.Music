@@ -8,6 +8,8 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
+import net.wagsn.music.model.PlayListList;
+
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
@@ -16,14 +18,13 @@ import me.wcy.music.model.DownloadInfo;
 import me.wcy.music.model.Lrc;
 import me.wcy.music.model.OnlineMusicList;
 import me.wcy.music.model.SearchMusic;
-import me.wcy.music.model.SheetInfo;
 import me.wcy.music.model.Song;
 import me.wcy.music.model.Splash;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
 /**
- * HTTP客户端
+ * HTTP客户端<br/>
  * Created by hzwangchenyan on 2017/2/8.
  * Updated by Wagsn on 2019/4/23.
  */
@@ -43,8 +44,13 @@ public class HttpClient {
     private static final String PARAM_TING_UID = "tinguid";
     private static final String PARAM_QUERY = "query";
 
-    private static final String  WS_MUSIC_BASE_URL ="http://music.wagsn.net/api";
-    private static final String WS_SONG_INFO_URL = WS_MUSIC_BASE_URL+"song";
+    private static final String MUSIC_BASE_URL ="http://music.wagsn.net/api";
+    private static final String SONG_INFO_URL = MUSIC_BASE_URL +"/song/list";
+    private static final String PLAYLIST_LIST_URL = MUSIC_BASE_URL +"/playlist/list";
+    private static final String PAGE_SIZE = "pageSize";
+    private static final String PAGE_INDEX = "pageIndex";
+    private static final String KEY_WORD = "keyWord";
+
 
     static {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -58,7 +64,8 @@ public class HttpClient {
 
 
     /**
-     * 从Wagsn的服务器上下载音乐信息
+     * 获取音乐信息
+     * Created by Wagsn.
       * @param callback
      */
     public static void getSongInfo(@NonNull final HttpCallback<Song> callback){
@@ -128,11 +135,35 @@ public class HttpClient {
     }
 
     /**
-     * 获取歌单概要信息列表
-     * @param callback
+     * 获取歌单概要信息列表<br/>
+     * Created by Wagsn on 2019/5/8.
+     * @param pageIndex page index based zero.
+     * @param pageSize page size.
+     * @param callback http call back
+     * @param keyword keyword of song name for search song.
      */
-    public static void getSheetInfoList(@Nullable final HttpCallback<SheetInfo> callback){
-        //
+    public static void getSheetInfoList(int pageIndex, int pageSize, String keyword, @Nullable final HttpCallback<PlayListList> callback){
+        OkHttpUtils.post().url(PLAYLIST_LIST_URL)
+                .addParams(PAGE_INDEX, String.valueOf(pageIndex))
+                .addParams(PAGE_SIZE, String.valueOf(pageSize))
+                .addParams(KEY_WORD, keyword)
+                .build()
+                .execute(new JsonCallback<PlayListList>(PlayListList.class) {
+                    @Override
+                    public void onResponse(PlayListList response, int id) {
+                        callback.onSuccess(response);
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        callback.onFail(e);
+                    }
+
+                    @Override
+                    public void onAfter(int id) {
+                        callback.onFinish();
+                    }
+                });
     }
 
     /**

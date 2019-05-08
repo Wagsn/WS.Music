@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.wagsn.util.binding.Bind;
+import net.wagsn.util.binding.ViewBinder;
+
 import java.util.List;
 
 import me.wcy.music.R;
@@ -18,8 +21,6 @@ import me.wcy.music.http.HttpClient;
 import me.wcy.music.model.OnlineMusic;
 import me.wcy.music.model.OnlineMusicList;
 import me.wcy.music.model.SheetInfo;
-import me.wcy.music.utils.binding.Bind;
-import me.wcy.music.utils.binding.ViewBinder;
 
 /**
  * 歌单列表适配器

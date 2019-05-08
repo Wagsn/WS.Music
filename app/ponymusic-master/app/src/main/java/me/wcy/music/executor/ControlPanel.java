@@ -8,14 +8,15 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import net.wagsn.util.binding.Bind;
+import net.wagsn.util.binding.ViewBinder;
+
 import me.wcy.music.R;
 import me.wcy.music.activity.PlaylistActivity;
 import me.wcy.music.model.Music;
 import me.wcy.music.service.AudioPlayer;
 import me.wcy.music.service.OnPlayerEventListener;
 import me.wcy.music.utils.CoverLoader;
-import me.wcy.music.utils.binding.Bind;
-import me.wcy.music.utils.binding.ViewBinder;
 
 /**
  * 播放控制

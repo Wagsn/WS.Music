@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.wagsn.util.binding.Bind;
+import net.wagsn.util.binding.ViewBinder;
+
 import java.util.List;
 
 import me.wcy.music.R;
@@ -15,8 +18,6 @@ import me.wcy.music.model.Music;
 import me.wcy.music.service.AudioPlayer;
 import me.wcy.music.utils.CoverLoader;
 import me.wcy.music.utils.FileUtils;
-import me.wcy.music.utils.binding.Bind;
-import me.wcy.music.utils.binding.ViewBinder;
 
 /**
  * 本地音乐列表适配器

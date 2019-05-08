@@ -1,4 +1,4 @@
-package me.wcy.music.utils.binding;
+package net.wagsn.util.binding;
 
 import android.app.Activity;
 import android.view.View;

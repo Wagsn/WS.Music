@@ -17,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
+import net.wagsn.util.binding.Bind;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,6 @@ import me.wcy.music.utils.ImageUtils;
 import me.wcy.music.utils.ScreenUtils;
 import me.wcy.music.utils.ToastUtils;
 import me.wcy.music.utils.ViewUtils;
-import me.wcy.music.utils.binding.Bind;
 import me.wcy.music.widget.AutoLoadListView;
 
 /**
