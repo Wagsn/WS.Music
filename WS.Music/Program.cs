@@ -12,11 +12,13 @@ namespace WS.Music
     {
         public static void Main(string[] args)
         {
+            // 配置导入
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("config.json")
                 .AddEnvironmentVariables()
                 .Build();
 
+            // 创建主机
             var host = WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseKestrel(options =>
