@@ -40,7 +40,9 @@
     function saveFile(callback, index) {
         console.log('save file start:')
         let formData = new FormData()
-        formData.append('file', document.getElementById("file").files[0])
+        let file = document.getElementById("file").files[0];
+        formData.append('file', file)
+        
         $.ajax({
             url: '/File/Index',
             type: "POST",
