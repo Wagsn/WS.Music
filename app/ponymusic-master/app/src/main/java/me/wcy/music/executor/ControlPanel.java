@@ -19,7 +19,7 @@ import me.wcy.music.service.OnPlayerEventListener;
 import me.wcy.music.utils.CoverLoader;
 
 /**
- * 播放控制
+ * 通知栏的播放控制
  * Created by hzwangchenyan on 2018/1/26.
  */
 public class ControlPanel implements View.OnClickListener, OnPlayerEventListener {

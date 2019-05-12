@@ -15,7 +15,8 @@ import me.wcy.music.storage.preference.Preferences;
 import me.wcy.music.utils.ToastUtils;
 
 /**
- * 导航菜单执行器
+ * 导航菜单执行器<br/>
+ * 用来分离代码，以避免Activity代码冗余。<br/>
  * Created by hzwangchenyan on 2016/1/14.
  */
 public class NaviMenuExecutor {

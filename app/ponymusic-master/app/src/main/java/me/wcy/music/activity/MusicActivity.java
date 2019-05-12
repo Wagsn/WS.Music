@@ -29,6 +29,7 @@ import me.wcy.music.executor.WeatherExecutor;
 import me.wcy.music.fragment.LocalMusicFragment;
 import me.wcy.music.fragment.PlayFragment;
 import me.wcy.music.fragment.SheetListFragment;
+import me.wcy.music.http.HttpClient;
 import me.wcy.music.service.AudioPlayer;
 import me.wcy.music.service.QuitTimer;
 import me.wcy.music.utils.PermissionReq;
@@ -66,12 +67,21 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
     private MenuItem timerItem;
     private boolean isPlayFragmentShow;
 
+    /**
+     * 当创建时
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
+        // 检查服务器是否存在
+        HttpClient.checkServer();
     }
 
+    /**
+     * 服务绑定
+     */
     @Override
     protected void onServiceBound() {
         setupView();
@@ -83,6 +93,10 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         parseIntent();
     }
 
+    /**
+     *
+     * @param intent
+     */
     @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
@@ -90,7 +104,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
     }
 
     /**
-     *
+     * 视图配置
      */
     private void setupView() {
         // add navigation header
@@ -115,6 +129,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     * 更新天气
+     */
     private void updateWeather() {
         PermissionReq.with(this)
                 .permissions(Manifest.permission.ACCESS_FINE_LOCATION,

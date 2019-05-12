@@ -39,6 +39,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Handler handler;
     protected PlayService playService;
     private ServiceConnection serviceConnection;
+
+    /**
+     * 进度条
+     */
     private ProgressDialog progressDialog;
 
     @Override
@@ -150,6 +154,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 关闭进度条
+     */
     public void cancelProgress() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.cancel();

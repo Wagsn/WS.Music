@@ -2,13 +2,18 @@ package me.wcy.music.http;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
-import net.wagsn.music.model.PlayListList;
+import net.wagsn.http.JsonCallback;
+import net.wagsn.model.PageResponseMessage;
+import net.wagsn.model.ResponseMessage;
+import net.wagsn.music.model.CommonRequest;
+import net.wagsn.music.model.PlaylistListResponse;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -18,17 +23,22 @@ import me.wcy.music.model.DownloadInfo;
 import me.wcy.music.model.Lrc;
 import me.wcy.music.model.OnlineMusicList;
 import me.wcy.music.model.SearchMusic;
-import me.wcy.music.model.Song;
+import net.wagsn.music.model.Song;
+import net.wagsn.music.model.SongListResponse;
+
 import me.wcy.music.model.Splash;
+import me.wcy.music.storage.preference.Preferences;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
 /**
- * HTTP客户端<br/>
+ * HTTP 客户端<br/>
  * Created by hzwangchenyan on 2017/2/8.
- * Updated by Wagsn on 2019/4/23.
  */
 public class HttpClient {
+
+    private static final String TAG = "HttpClient";
+
     private static final String SPLASH_URL = "http://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1";
     private static final String BASE_URL = "http://tingapi.ting.baidu.com/v1/restserver/ting";
     private static final String METHOD_GET_MUSIC_LIST = "baidu.ting.billboard.billList";
@@ -44,13 +54,12 @@ public class HttpClient {
     private static final String PARAM_TING_UID = "tinguid";
     private static final String PARAM_QUERY = "query";
 
-    private static final String MUSIC_BASE_URL ="http://music.wagsn.net/api";
-    private static final String SONG_INFO_URL = MUSIC_BASE_URL +"/song/list";
-    private static final String PLAYLIST_LIST_URL = MUSIC_BASE_URL +"/playlist/list";
+    private static final String API_URL = Preferences.getBaseUrl() +"/api";  //"http://192.168.100.254:5001/api";
+    private static final String SONG_URL = API_URL +"/song/list";
+    private static final String PLAYLIST_LIST_URL = API_URL +"/playlist/list";
     private static final String PAGE_SIZE = "pageSize";
     private static final String PAGE_INDEX = "pageIndex";
     private static final String KEY_WORD = "keyWord";
-
 
     static {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -62,14 +71,50 @@ public class HttpClient {
         OkHttpUtils.initClient(okHttpClient);
     }
 
+    /**
+     * 检查服务器连接<br/>
+     * Created by Wagsn on 2019/5/12.
+     */
+    public static void checkServer(){
+        OkHttpUtils.get().url(API_URL +"/check").build()
+                .execute(new JsonCallback<ResponseMessage>() {
+                    @Override
+                    public void onResponse(ResponseMessage response, int id) {
+                        Log.d(TAG, "检查服务器是否在线: onResponse: "+new Gson().toJson(response));
+                    }
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                    }
+
+                    @Override
+                    public void onAfter(int id) {
+                    }
+                });
+    }
+
 
     /**
-     * 获取音乐信息
-     * Created by Wagsn.
+     * 获取音乐列表<br/>
+     * Created by Wagsn on 2019/5/12.
       * @param callback
      */
-    public static void getSongInfo(@NonNull final HttpCallback<Song> callback){
-
+    public static void getSongInfoList(CommonRequest request, @NonNull final HttpCallback<SongListResponse> callback){
+        OkHttpUtils.post().url(SONG_URL)
+                .addParams(PAGE_INDEX, String.valueOf(request.getPageIndex()))
+                .addParams(PAGE_SIZE, String.valueOf(request.getPageSize()))
+                .addParams(KEY_WORD, request.getKeyword())
+                .build()
+                .execute(new JsonCallback<SongListResponse>() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        callback.onFail(e);
+                    }
+                    @Override
+                    public void onResponse(SongListResponse response, int id) {
+                        callback.onSuccess(response);
+                    }
+                });
     }
 
     /**
@@ -98,13 +143,14 @@ public class HttpClient {
     }
 
     /**
-     * 下载文件
+     * 下载文件<br/>
+     * Updated by Wagsn on 2019/5/12.
      * @param url
      * @param destFileDir
      * @param destFileName
      * @param callback
      */
-    public static void downloadFile(String url, String destFileDir, String destFileName, @Nullable final HttpCallback<File> callback) {
+    public static void downloadFile(String url, String destFileDir, String destFileName, @NonNull final HttpCallback<File> callback) {
         OkHttpUtils.get().url(url).build()
                 .execute(new FileCallBack(destFileDir, destFileName) {
                     @Override
@@ -113,23 +159,17 @@ public class HttpClient {
 
                     @Override
                     public void onResponse(File file, int id) {
-                        if (callback != null) {
-                            callback.onSuccess(file);
-                        }
+                        if(file != null) callback.onSuccess(file);
                     }
 
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        if (callback != null) {
-                            callback.onFail(e);
-                        }
+                        callback.onFail(e);
                     }
 
                     @Override
                     public void onAfter(int id) {
-                        if (callback != null) {
-                            callback.onFinish();
-                        }
+                        callback.onFinish();
                     }
                 });
     }
@@ -142,15 +182,15 @@ public class HttpClient {
      * @param callback http call back
      * @param keyword keyword of song name for search song.
      */
-    public static void getSheetInfoList(int pageIndex, int pageSize, String keyword, @Nullable final HttpCallback<PlayListList> callback){
+    public static void getPlaylistInfoList(int pageIndex, int pageSize, String keyword, @NonNull final HttpCallback<PlaylistListResponse> callback){
         OkHttpUtils.post().url(PLAYLIST_LIST_URL)
                 .addParams(PAGE_INDEX, String.valueOf(pageIndex))
                 .addParams(PAGE_SIZE, String.valueOf(pageSize))
                 .addParams(KEY_WORD, keyword)
                 .build()
-                .execute(new JsonCallback<PlayListList>(PlayListList.class) {
+                .execute(new JsonCallback<PlaylistListResponse>() {
                     @Override
-                    public void onResponse(PlayListList response, int id) {
+                    public void onResponse(PlaylistListResponse response, int id) {
                         callback.onSuccess(response);
                     }
 
@@ -173,7 +213,7 @@ public class HttpClient {
      * @param offset
      * @param callback
      */
-    public static void getSongListInfo(String type, int size, int offset, @NonNull final HttpCallback<OnlineMusicList> callback) {
+    public static void getSongListInfoFromBaidu(String type, int size, int offset, @NonNull final HttpCallback<OnlineMusicList> callback) {
         OkHttpUtils.get().url(BASE_URL)
                 .addParams(PARAM_METHOD, METHOD_GET_MUSIC_LIST)
                 .addParams(PARAM_TYPE, type)
@@ -208,7 +248,7 @@ public class HttpClient {
                 .addParams(PARAM_METHOD, METHOD_DOWNLOAD_MUSIC)
                 .addParams(PARAM_SONG_ID, songId)
                 .build()
-                .execute(new JsonCallback<DownloadInfo>(DownloadInfo.class) {
+                .execute(new JsonCallback<DownloadInfo>() {
                     @Override
                     public void onResponse(DownloadInfo response, int id) {
                         callback.onSuccess(response);
@@ -289,7 +329,7 @@ public class HttpClient {
                 .addParams(PARAM_METHOD, METHOD_SEARCH_MUSIC)
                 .addParams(PARAM_QUERY, keyword)
                 .build()
-                .execute(new JsonCallback<SearchMusic>(SearchMusic.class) {
+                .execute(new JsonCallback<SearchMusic>() {
                     @Override
                     public void onResponse(SearchMusic response, int id) {
                         callback.onSuccess(response);

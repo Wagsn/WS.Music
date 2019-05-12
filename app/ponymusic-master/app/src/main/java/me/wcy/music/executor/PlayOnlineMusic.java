@@ -24,6 +24,9 @@ public abstract class PlayOnlineMusic extends PlayMusic {
         mOnlineMusic = onlineMusic;
     }
 
+    /**
+     * 获取播放信息
+     */
     @Override
     protected void getPlayInfo() {
         String artist = mOnlineMusic.getArtist_name();
@@ -35,7 +38,7 @@ public abstract class PlayOnlineMusic extends PlayMusic {
         music.setArtist(artist);
         music.setAlbum(mOnlineMusic.getAlbum_title());
 
-        // 下载歌词
+        // 加载歌词
         String lrcFileName = FileUtils.getLrcFileName(artist, title);
         File lrcFile = new File(FileUtils.getLrcDir() + lrcFileName);
         if (!lrcFile.exists() && !TextUtils.isEmpty(mOnlineMusic.getLrclink())) {
@@ -44,15 +47,16 @@ public abstract class PlayOnlineMusic extends PlayMusic {
             mCounter++;
         }
 
-        // 下载封面
+        // 加载封面
         String albumFileName = FileUtils.getAlbumFileName(artist, title);
         File albumFile = new File(FileUtils.getAlbumDir(), albumFileName);
+        // 封面URL
         String picUrl = mOnlineMusic.getPic_big();
         if (TextUtils.isEmpty(picUrl)) {
             picUrl = mOnlineMusic.getPic_small();
         }
         if (!albumFile.exists() && !TextUtils.isEmpty(picUrl)) {
-            downloadAlbum(picUrl, albumFileName);
+            downloadAlbumCover(picUrl, albumFileName);
         } else {
             mCounter++;
         }
@@ -67,6 +71,7 @@ public abstract class PlayOnlineMusic extends PlayMusic {
                     return;
                 }
 
+                // 播放在线音乐的时候是直接将URL作为路径
                 music.setPath(response.getBitrate().getFile_link());
                 music.setDuration(response.getBitrate().getFile_duration() * 1000);
                 checkCounter();
@@ -79,6 +84,11 @@ public abstract class PlayOnlineMusic extends PlayMusic {
         });
     }
 
+    /**
+     * 下载歌词
+     * @param url
+     * @param fileName
+     */
     private void downloadLrc(String url, String fileName) {
         HttpClient.downloadFile(url, FileUtils.getLrcDir(), fileName, new HttpCallback<File>() {
             @Override
@@ -96,7 +106,12 @@ public abstract class PlayOnlineMusic extends PlayMusic {
         });
     }
 
-    private void downloadAlbum(String picUrl, String fileName) {
+    /**
+     * 下载专辑封面
+     * @param picUrl
+     * @param fileName
+     */
+    private void downloadAlbumCover(String picUrl, String fileName) {
         HttpClient.downloadFile(picUrl, FileUtils.getAlbumDir(), fileName, new HttpCallback<File>() {
             @Override
             public void onSuccess(File file) {

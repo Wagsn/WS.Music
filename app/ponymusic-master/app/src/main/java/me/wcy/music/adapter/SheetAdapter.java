@@ -20,7 +20,7 @@ import me.wcy.music.http.HttpCallback;
 import me.wcy.music.http.HttpClient;
 import me.wcy.music.model.OnlineMusic;
 import me.wcy.music.model.OnlineMusicList;
-import me.wcy.music.model.SheetInfo;
+import me.wcy.music.model.Playlist;
 
 /**
  * 歌单列表适配器
@@ -30,13 +30,13 @@ public class SheetAdapter extends BaseAdapter {
     private static final int TYPE_PROFILE = 0;
     private static final int TYPE_MUSIC_LIST = 1;
     private Context mContext;
-    private List<SheetInfo> mData;
+    private List<Playlist> mData;
 
     /**
      * 数据初始化
      * @param data
      */
-    public SheetAdapter(List<SheetInfo> data) {
+    public SheetAdapter(List<Playlist> data) {
         mData = data;
     }
 
@@ -72,7 +72,7 @@ public class SheetAdapter extends BaseAdapter {
      */
     @Override
     public int getItemViewType(int position) {
-        if (mData.get(position).getType().equals("#")) {
+        if (mData.get(position).getId().equals("#")) {
             return TYPE_PROFILE;
         } else {
             return TYPE_MUSIC_LIST;
@@ -100,10 +100,10 @@ public class SheetAdapter extends BaseAdapter {
         mContext = parent.getContext();
         ViewHolderProfile holderProfile;
         ViewHolderMusicList holderMusicList;
-        SheetInfo sheetInfo = mData.get(position);
+        Playlist playlist = mData.get(position);
         int itemViewType = getItemViewType(position);
         switch (itemViewType) {
-            case TYPE_PROFILE:
+            case TYPE_PROFILE: // 分类信息
                 if (convertView == null) {
                     convertView = LayoutInflater.from(mContext).inflate(R.layout.view_holder_sheet_profile, parent, false);
                     holderProfile = new ViewHolderProfile(convertView);
@@ -111,9 +111,9 @@ public class SheetAdapter extends BaseAdapter {
                 } else {
                     holderProfile = (ViewHolderProfile) convertView.getTag();
                 }
-                holderProfile.tvProfile.setText(sheetInfo.getTitle());
+                holderProfile.tvProfile.setText(playlist.getName());
                 break;
-            case TYPE_MUSIC_LIST:
+            case TYPE_MUSIC_LIST:  // 歌单信息
                 if (convertView == null) {
                     convertView = LayoutInflater.from(mContext).inflate(R.layout.view_holder_sheet, parent, false);
                     holderMusicList = new ViewHolderMusicList(convertView);
@@ -121,7 +121,7 @@ public class SheetAdapter extends BaseAdapter {
                 } else {
                     holderMusicList = (ViewHolderMusicList) convertView.getTag();
                 }
-                getMusicListInfo(sheetInfo, holderMusicList);
+                getPlaylistInfo(playlist, holderMusicList);
                 holderMusicList.vDivider.setVisibility(isShowDivider(position) ? View.VISIBLE : View.GONE);
                 break;
         }
@@ -138,28 +138,29 @@ public class SheetAdapter extends BaseAdapter {
     }
 
     /**
-     * 获取歌单（榜单）信息
-     * @param sheetInfo
+     * 获取歌单（榜单）信息<br/>
+     * Rename by Wagsn on 2019/5/12.
+     * @param playlist
      * @param holderMusicList
      */
-    private void getMusicListInfo(final SheetInfo sheetInfo, final ViewHolderMusicList holderMusicList) {
-        if (sheetInfo.getCoverUrl() == null) {
-            holderMusicList.tvMusic1.setTag(sheetInfo.getTitle());
+    private void getPlaylistInfo(final Playlist playlist, final ViewHolderMusicList holderMusicList) {
+        if (playlist.getCoverUrl() == null) {
+            holderMusicList.tvMusic1.setTag(playlist.getName());
             holderMusicList.ivCover.setImageResource(R.drawable.default_cover);
             holderMusicList.tvMusic1.setText("1.加载中…");
             holderMusicList.tvMusic2.setText("2.加载中…");
             holderMusicList.tvMusic3.setText("3.加载中…");
-            HttpClient.getSongListInfo(sheetInfo.getType(), 3, 0, new HttpCallback<OnlineMusicList>() {
+            HttpClient.getSongListInfoFromBaidu(playlist.getId(), 3, 0, new HttpCallback<OnlineMusicList>() {
                 @Override
                 public void onSuccess(OnlineMusicList response) {
                     if (response == null || response.getSong_list() == null) {
                         return;
                     }
-                    if (!sheetInfo.getTitle().equals(holderMusicList.tvMusic1.getTag())) {
+                    if (!playlist.getName().equals(holderMusicList.tvMusic1.getTag())) {
                         return;
                     }
-                    parse(response, sheetInfo);
-                    setData(sheetInfo, holderMusicList);
+                    parse(response, playlist);
+                    setData(playlist, holderMusicList);
                 }
 
                 @Override
@@ -168,49 +169,49 @@ public class SheetAdapter extends BaseAdapter {
             });
         } else {
             holderMusicList.tvMusic1.setTag(null);
-            setData(sheetInfo, holderMusicList);
+            setData(playlist, holderMusicList);
         }
     }
 
     /**
      * 将响应的歌单信息解析成榜单项（榜单列表的列表项）
      * @param response
-     * @param sheetInfo
+     * @param playlist
      */
-    private void parse(OnlineMusicList response, SheetInfo sheetInfo) {
+    private void parse(OnlineMusicList response, Playlist playlist) {
         List<OnlineMusic> onlineMusics = response.getSong_list();
-        sheetInfo.setCoverUrl(response.getBillboard().getPic_s260());
+        playlist.setCoverUrl(response.getBillboard().getPic_s260());
         if (onlineMusics.size() >= 1) {
-            sheetInfo.setMusic1(mContext.getString(R.string.song_list_item_title_1,
+            playlist.setMusic1(mContext.getString(R.string.song_list_item_title_1,
                     onlineMusics.get(0).getTitle(), onlineMusics.get(0).getArtist_name()));
         } else {
-            sheetInfo.setMusic1("");
+            playlist.setMusic1("");
         }
         if (onlineMusics.size() >= 2) {
-            sheetInfo.setMusic2(mContext.getString(R.string.song_list_item_title_2,
+            playlist.setMusic2(mContext.getString(R.string.song_list_item_title_2,
                     onlineMusics.get(1).getTitle(), onlineMusics.get(1).getArtist_name()));
         } else {
-            sheetInfo.setMusic2("");
+            playlist.setMusic2("");
         }
         if (onlineMusics.size() >= 3) {
-            sheetInfo.setMusic3(mContext.getString(R.string.song_list_item_title_3,
+            playlist.setMusic3(mContext.getString(R.string.song_list_item_title_3,
                     onlineMusics.get(2).getTitle(), onlineMusics.get(2).getArtist_name()));
         } else {
-            sheetInfo.setMusic3("");
+            playlist.setMusic3("");
         }
     }
 
     /**
      * 将榜单信息的数据刷新到界面上去
-     * @param sheetInfo
+     * @param playlist
      * @param holderMusicList
      */
-    private void setData(SheetInfo sheetInfo, ViewHolderMusicList holderMusicList) {
-        holderMusicList.tvMusic1.setText(sheetInfo.getMusic1());
-        holderMusicList.tvMusic2.setText(sheetInfo.getMusic2());
-        holderMusicList.tvMusic3.setText(sheetInfo.getMusic3());
+    private void setData(Playlist playlist, ViewHolderMusicList holderMusicList) {
+        holderMusicList.tvMusic1.setText(playlist.getMusic1());
+        holderMusicList.tvMusic2.setText(playlist.getMusic2());
+        holderMusicList.tvMusic3.setText(playlist.getMusic3());
         Glide.with(mContext)
-                .load(sheetInfo.getCoverUrl())
+                .load(playlist.getCoverUrl())
                 .placeholder(R.drawable.default_cover)
                 .error(R.drawable.default_cover)
                 .into(holderMusicList.ivCover);

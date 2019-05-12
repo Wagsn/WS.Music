@@ -30,7 +30,7 @@ public class AboutActivity extends BaseActivity {
         private Preference mShare;
         private Preference mStar;
         private Preference mWeibo;
-        private Preference mJianshu;
+        private Preference mCsdn;
         private Preference mGithub;
 
         /**
@@ -45,8 +45,8 @@ public class AboutActivity extends BaseActivity {
             mVersion = findPreference("version");
             mShare = findPreference("share");
             mStar = findPreference("star");
-            mWeibo = findPreference("weibo");
-            mJianshu = findPreference("jianshu");
+//            mWeibo = findPreference("weibo");
+            mCsdn = findPreference("csdn");
             mGithub = findPreference("github");
 
             mVersion.setSummary("v " + BuildConfig.VERSION_NAME);
@@ -59,8 +59,8 @@ public class AboutActivity extends BaseActivity {
         private void setListener() {
             mShare.setOnPreferenceClickListener(this);
             mStar.setOnPreferenceClickListener(this);
-            mWeibo.setOnPreferenceClickListener(this);
-            mJianshu.setOnPreferenceClickListener(this);
+//            mWeibo.setOnPreferenceClickListener(this);
+            mCsdn.setOnPreferenceClickListener(this);
             mGithub.setOnPreferenceClickListener(this);
         }
 
@@ -77,7 +77,7 @@ public class AboutActivity extends BaseActivity {
             } else if (preference == mStar) {
                 openUrl(getString(R.string.about_project_url));
                 return true;
-            } else if (preference == mWeibo || preference == mJianshu || preference == mGithub) {
+            } else if (preference == mCsdn || preference == mGithub) {
                 openUrl(preference.getSummary().toString());
                 return true;
             }

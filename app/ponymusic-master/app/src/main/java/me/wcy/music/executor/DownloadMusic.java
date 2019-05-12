@@ -16,7 +16,7 @@ import me.wcy.music.utils.NetworkUtils;
 import me.wcy.music.utils.ToastUtils;
 
 /**
- * 音乐下载
+ * 音乐下载执行器抽象类<br/>
  * Created by hzwangchenyan on 2017/1/20.
  */
 public abstract class DownloadMusic implements IExecutor<Void> {
@@ -26,11 +26,17 @@ public abstract class DownloadMusic implements IExecutor<Void> {
         mActivity = activity;
     }
 
+    /**
+     * 开始执行
+     */
     @Override
     public void execute() {
         checkNetwork();
     }
 
+    /**
+     * 检查网络
+     */
     private void checkNetwork() {
         boolean mobileNetworkDownload = Preferences.enableMobileNetworkDownload();
         if (NetworkUtils.isActiveNetworkMobile(mActivity) && !mobileNetworkDownload) {
@@ -47,6 +53,9 @@ public abstract class DownloadMusic implements IExecutor<Void> {
         }
     }
 
+    /**
+     * 开始下载
+     */
     private void downloadWrapper() {
         onPrepare();
         download();
@@ -54,6 +63,13 @@ public abstract class DownloadMusic implements IExecutor<Void> {
 
     protected abstract void download();
 
+    /**
+     * 下载在线音乐
+     * @param url
+     * @param artist
+     * @param title 歌名，不包含艺人名等
+     * @param coverPath
+     */
     protected void downloadMusic(String url, String artist, String title, String coverPath) {
         try {
             String fileName = FileUtils.getMp3FileName(artist, title);
@@ -66,6 +82,7 @@ public abstract class DownloadMusic implements IExecutor<Void> {
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
             request.setAllowedOverRoaming(false); // 不允许漫游
             DownloadManager downloadManager = (DownloadManager) AppCache.get().getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+            assert downloadManager != null;
             long id = downloadManager.enqueue(request);
             String musicAbsPath = FileUtils.getMusicDir().concat(fileName);
             DownloadMusicInfo downloadMusicInfo = new DownloadMusicInfo(title, musicAbsPath, coverPath);

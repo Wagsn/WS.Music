@@ -45,13 +45,15 @@
     <PreferenceCategory android:title="服务器">
 
         <EditTextPreference
-            android:defaultValue="music.wagsn.net"
+            android:defaultValue="http://192.168.100.254"
+            android:inputType="text"
             android:key="server_host"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="主机设置" />
         <EditTextPreference
             android:defaultValue="5001"
+            android:inputType="text"
             android:key="server_port"
             android:selectAllOnFocus="true"
             android:singleLine="true"

@@ -1,6 +1,7 @@
 package me.wcy.music.http;
 
 /**
+ * HTTP 请求回调<br/>
  * Created by hzwangchenyan on 2017/2/8.
  */
 public abstract class HttpCallback<T> {

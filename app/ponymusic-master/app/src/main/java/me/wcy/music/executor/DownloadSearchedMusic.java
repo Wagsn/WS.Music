@@ -24,6 +24,9 @@ public abstract class DownloadSearchedMusic extends DownloadMusic {
         mSong = song;
     }
 
+    /**
+     * 开始下载
+     */
     @Override
     protected void download() {
         final String artist = mSong.getArtistname();

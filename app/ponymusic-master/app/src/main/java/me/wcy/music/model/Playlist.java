@@ -5,12 +5,9 @@ import java.io.Serializable;
 /**
  * 歌单概要信息（榜单信息）
  * Created by wcy on 2015/12/20.
+ * Rename by Wagsn on 2019/5/12.
  */
-public class SheetInfo implements Serializable {
-    /**
-     * 榜单名
-     */
-    private String title;
+public class Playlist implements Serializable {
     /**
      * #主打榜单
      * 1.新歌榜
@@ -29,7 +26,11 @@ public class SheetInfo implements Serializable {
      * 18.Hito中文榜
      * 7.叱咤歌曲榜
      */
-    private String type;
+    private String id;
+    /**
+     * 榜单名
+     */
+    private String name;
     /**
      * 封面URL
      */
@@ -38,20 +39,20 @@ public class SheetInfo implements Serializable {
     private String music2;
     private String music3;
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String title) {
+        this.name = title;
     }
 
-    public String getType() {
-        return type;
+    public String getId() {
+        return id;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setId(String type) {
+        this.id = type;
     }
 
     public String getCoverUrl() {

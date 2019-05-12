@@ -11,7 +11,7 @@ import me.wcy.music.utils.NetworkUtils;
 import me.wcy.music.storage.preference.Preferences;
 
 /**
- * 播放音乐
+ * 播放音乐执行器<br/>
  * Created by hzwangchenyan on 2017/1/20.
  */
 public abstract class PlayMusic implements IExecutor<Music> {

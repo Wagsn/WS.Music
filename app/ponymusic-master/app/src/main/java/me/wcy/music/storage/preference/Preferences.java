@@ -26,12 +26,22 @@ public class Preferences {
     }
 
     /**
-     * 获取服务器主机</>
-     * ip or domain
+     * 获取基础URL<br/>
+     * Created by Wagsn on 2019/5/12.
+     * @return
+     */
+    public static String getBaseUrl(){
+        return getHost()+":"+getPort();
+    }
+
+    /**
+     * 获取服务器主机<br/>
+     * ip or domain<br/>
+     * Created by Wagsn.
      * @return
      */
     public static String getHost(){
-        return getString(sContext.getString(R.string.setting_key_server_host), "music.wagsn.net");
+        return getString(sContext.getString(R.string.setting_key_server_host), "http://music.wagsn.net");
     }
 
     /**

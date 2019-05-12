@@ -7,7 +7,8 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "me.wcy.music"
+//        applicationId "me.wcy.music"
+        applicationId "net.wagsn.music"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
@@ -60,9 +61,11 @@ def getLocalValue(String key, boolean quot) {
     return value
 }
 
+// greendao Build 脚本
 greendao {
     schemaVersion 1
     targetGenDir 'src/main/java'
+    // dao 生成包
     daoPackage "${android.defaultConfig.applicationId}.storage.db.greendao"
 }
 

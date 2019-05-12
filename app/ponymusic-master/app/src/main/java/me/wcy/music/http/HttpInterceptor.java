@@ -9,6 +9,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
+ * HTTP 请求拦截器<br/>
+ * 注入HTTP请求头信息<br/>
  * Created by hzwangchenyan on 2017/3/30.
  */
 public class HttpInterceptor implements Interceptor {
@@ -23,6 +25,10 @@ public class HttpInterceptor implements Interceptor {
         return chain.proceed(request);
     }
 
+    /**
+     * User-Agent
+     * @return
+     */
     private String makeUA() {
         return Build.BRAND + "/" + Build.MODEL + "/" + Build.VERSION.RELEASE;
     }

@@ -1,16 +1,16 @@
-package me.wcy.music.storage.db;
+package net.wagsn.music.storage;
 
 import android.content.Context;
 
 import org.greenrobot.greendao.database.Database;
 
-import me.wcy.music.storage.db.greendao.DaoMaster;
-import me.wcy.music.storage.db.greendao.DaoSession;
-import me.wcy.music.storage.db.greendao.MusicDao;
+import net.wagsn.music.storage.db.greendao.DaoMaster;
+import net.wagsn.music.storage.db.greendao.DaoSession;
+import net.wagsn.music.storage.db.greendao.MusicDao;
 
 /**
- * 数据库管理
- * Created by wcy on 2018/1/27.
+ * 数据库管理<br/>
+ * Created by wcy on 2019/5/12.
  */
 public class DBManager {
     private static final String DB_NAME = "database";

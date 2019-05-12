@@ -78,6 +78,10 @@ public class OnlineMusicAdapter extends BaseAdapter {
         return position != mData.size() - 1;
     }
 
+    /**
+     * 更多按钮监听器
+     * @param listener
+     */
     public void setOnMoreClickListener(OnMoreClickListener listener) {
         mListener = listener;
     }

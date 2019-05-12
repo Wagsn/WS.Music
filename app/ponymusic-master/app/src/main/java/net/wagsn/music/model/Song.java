@@ -1,10 +1,11 @@
-package me.wcy.music.model;
+package net.wagsn.music.model;
 
 import java.io.Serializable;
 import java.sql.Time;
 
 /**
- * 歌曲信息
+ * 歌曲信息<br/>
+ * Created by Wagsn on 2019/5/12.
  */
 public class Song implements Serializable {
 

@@ -3,12 +3,16 @@ package me.wcy.music.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+
+import net.wagsn.music.model.PlaylistListResponse;
 import net.wagsn.util.binding.Bind;
 
 import java.util.List;
@@ -19,7 +23,9 @@ import me.wcy.music.adapter.SheetAdapter;
 import me.wcy.music.application.AppCache;
 import me.wcy.music.constants.Extras;
 import me.wcy.music.constants.Keys;
-import me.wcy.music.model.SheetInfo;
+import me.wcy.music.http.HttpCallback;
+import me.wcy.music.http.HttpClient;
+import me.wcy.music.model.Playlist;
 
 /**
  * 在线音乐（榜单列表）<br/>
@@ -28,10 +34,15 @@ import me.wcy.music.model.SheetInfo;
  */
 public class SheetListFragment extends BaseFragment implements AdapterView.OnItemClickListener {
 
+    private static final String TAG ="SheetListFragment";
+
     @Bind(R.id.lv_sheet)
     private ListView lvPlaylist;
 
-    private List<SheetInfo> mSongLists;
+    /**
+     * 歌单列表
+     */
+    private List<Playlist> mPlaylists;
 
     @Nullable
     @Override
@@ -48,20 +59,43 @@ public class SheetListFragment extends BaseFragment implements AdapterView.OnIte
         super.onActivityCreated(savedInstanceState);
 
         // 首先访问缓存
-        mSongLists = AppCache.get().getSheetList();
+        mPlaylists = AppCache.get().getSheetList();
         // 首次数据加载 - 改成从网络加载数据
-        if (mSongLists.isEmpty()) {
-            String[] titles = getResources().getStringArray(R.array.online_music_list_title);
-            String[] types = getResources().getStringArray(R.array.online_music_list_type);
-            for (int i = 0; i < titles.length; i++) {
-                SheetInfo info = new SheetInfo();
-                info.setTitle(titles[i]);
-                info.setType(types[i]);
-                mSongLists.add(info);
-            }
+        if (mPlaylists.isEmpty()) {
+            loadPlaylist();
         }
-        SheetAdapter adapter = new SheetAdapter(mSongLists);
-        lvPlaylist.setAdapter(adapter);
+    }
+
+    /**
+     * 加载歌单列表<br/>
+     * Created by Wagsn on 2019/5/12.
+     */
+    public void loadPlaylist(){
+        HttpClient.getPlaylistInfoList(0, 100, "", new HttpCallback<PlaylistListResponse>() {
+            @Override
+            public void onSuccess(PlaylistListResponse response) {
+                List<Playlist> playlists = response.getData();
+                Log.d(TAG, "onSuccess: 获取歌单列表成功："+ new Gson().toJson(response));
+                Log.d(TAG, "onActivityCreated: playlist list: "+new Gson().toJson(mPlaylists));
+                mPlaylists.addAll(playlists);
+                SheetAdapter adapter = new SheetAdapter(mPlaylists);
+                lvPlaylist.setAdapter(adapter);
+            }
+            @Override
+            public void onFail(Exception e) {
+                Log.e(TAG, "onFail: 获取歌单列表失败：", e);
+            }
+        });
+        // 从资源文件中加载 - 被遗弃的
+//        String[] titles = getResources().getStringArray(R.array.online_music_list_title);
+//        String[] types = getResources().getStringArray(R.array.online_music_list_type);
+//        for (int i = 0; i < titles.length; i++) {
+//            Playlist info = new Playlist();
+//            info.setName(titles[i]);
+//            info.setId(types[i]);
+//            mPlaylists.add(info);
+//        }
+        //Log.d(TAG, "onActivityCreated: playlist list: "+new Gson().toJson(mPlaylists));
     }
 
     /**
@@ -81,9 +115,9 @@ public class SheetListFragment extends BaseFragment implements AdapterView.OnIte
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        SheetInfo sheetInfo = mSongLists.get(position);
+        Playlist playlist = mPlaylists.get(position);
         Intent intent = new Intent(getContext(), OnlineMusicActivity.class);
-        intent.putExtra(Extras.MUSIC_LIST_TYPE, sheetInfo);
+        intent.putExtra(Extras.MUSIC_LIST_TYPE, playlist);
         startActivity(intent);
     }
 

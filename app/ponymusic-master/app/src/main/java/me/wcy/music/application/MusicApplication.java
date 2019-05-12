@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 
 import me.wcy.music.service.PlayService;
-import me.wcy.music.storage.db.DBManager;
+import net.wagsn.music.storage.DBManager;
 
 /**
  * 自定义Application
