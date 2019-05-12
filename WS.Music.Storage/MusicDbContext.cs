@@ -50,7 +50,7 @@ namespace WS.Music.Stores
         /// <summary>
         /// 歌单
         /// </summary>
-        public DbSet<PlayList> PlayLists { get; set; }
+        public DbSet<Playlist> PlayLists { get; set; }
 
         /// <summary>
         /// 歌单歌曲关联

@@ -28,6 +28,37 @@ namespace WS.Music.Controllers
         private FileServerConfig FileServerConfig { get; set; }
 
         /// <summary>
+        /// 检查服务器是否运行
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("check")]
+        public ResponseMessage Check()
+        {
+            return new ResponseMessage
+            {
+                Code ="0",
+                Message = "It's work!"
+            };
+        }
+
+        /// <summary>
+        /// 返回歌单列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("playlist/list")]
+        public PagingResponseMessage<Playlist> PlaylistSearch([FromForm]CommonRequest request)
+        {
+            var query = MusicStore.Set<Playlist>().AsQueryable();
+
+            return new PagingResponseMessage<Playlist>
+            {
+                Code = "0",
+                Data = query.ToList()
+            };
+        }
+
+        /// <summary>
         /// 通用保存接口
         /// </summary>
         /// <param name="request"></param>
@@ -56,17 +87,17 @@ namespace WS.Music.Controllers
                 return response;
             }
 
-            if (request.KeyWord == null)
+            if (request.Keyword == null)
             {
-                request.KeyWord = "";
+                request.Keyword = "";
             }
 
             try
             {
                 var query = MusicStore.Set<Artist>().AsQueryable();
-                if (!string.IsNullOrWhiteSpace(request.KeyWord))
+                if (!string.IsNullOrWhiteSpace(request.Keyword))
                 {
-                    query = query.Where(a => a.Name.Contains(request.KeyWord));
+                    query = query.Where(a => a.Name.Contains(request.Keyword));
                 }
                 if(request.Ids != null && request.Ids.Count > 0)
                 {
@@ -174,17 +205,17 @@ namespace WS.Music.Controllers
             Console.WriteLine($"[{nameof(AlbumList)}] 专辑 信息 列表 开始\r\n请求体：{JsonUtil.ToJson(request)}");
             var response = new PagingResponseMessage<Album>();
 
-            if (request != null && request.KeyWord == null)
+            if (request != null && request.Keyword == null)
             {
-                request.KeyWord = "";
+                request.Keyword = "";
             }
 
             try
             {
                 var query = MusicStore.Set<Album>().AsQueryable();
-                if (!string.IsNullOrWhiteSpace(request.KeyWord))
+                if (!string.IsNullOrWhiteSpace(request.Keyword))
                 {
-                    query = query.Where(a => a.Name.Contains(request.KeyWord));
+                    query = query.Where(a => a.Name.Contains(request.Keyword));
                 }
                 if (request.Ids != null && request.Ids.Count > 0)
                 {
@@ -338,22 +369,34 @@ namespace WS.Music.Controllers
 
             var response = new PagingResponseMessage<Song>();
 
-            if (request != null && request.KeyWord == null)
+            if (request == null)
             {
-                request.KeyWord = "";
+                request = new PageSearchRequest
+                {
+                    PageIndex = 0,
+                    PageSize = 10
+                };
             }
 
             try
             {
                 var query = MusicStore.Set<Song>().AsQueryable();
-                if (!string.IsNullOrWhiteSpace(request.KeyWord))
+
+                if (!string.IsNullOrWhiteSpace(request.Keyword))
                 {
-                    query = query.Where(a => a.Name.Contains(request.KeyWord));
+                    query = query.Where(a => a.Name.Contains(request.Keyword));
                 }
                 if (request.Ids != null && request.Ids.Count > 0)
                 {
                     query = query.Where(a => request.Ids.Contains(a.Id));
                 }
+                if(request.Playlists != null && request.Playlists.Count > 0)
+                {
+                    var plIds = request.Playlists.Select(a => a.Id).ToList();
+                    var sIds = MusicStore.Set<RelPlayListSong>().Where(a => plIds.Contains(a.PlayListId)).Select(a => a.SongId).ToList();
+                    query = query.Where(a => sIds.Contains(a.Id));
+                }
+
                 var songs = query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize).ToList();
                 foreach (var song in songs)
                 {

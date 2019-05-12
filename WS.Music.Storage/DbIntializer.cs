@@ -866,6 +866,77 @@ namespace WS.Music.Stores
             };
             context.AddRange(relSongAlbums);
 
+            // 歌单
+            var playlists = new List<Playlist>
+            {
+                new Playlist
+                {
+                    Id = "1",
+                    Name = "百度新歌榜",
+                },
+                new Playlist
+                {
+                    Id = "2",
+                    Name = "百度热歌榜",
+                },
+                new Playlist
+                {
+                    Id = "6",
+                    Name = "KTV热歌榜",
+                },
+                new Playlist
+                {
+                    Id = "7",
+                    Name = "叱咤歌曲榜",
+                },
+                new Playlist
+                {
+                    Id = "8",
+                    Name = "Billboard",
+                },
+                new Playlist
+                {
+                    Id = "11",
+                    Name = "摇滚榜",
+                },
+                new Playlist
+                {
+                    Id = "18",
+                    Name = "Hito中文榜",
+                },
+                new Playlist
+                {
+                    Id = "20",
+                    Name = "华语金曲榜",
+                },
+                new Playlist
+                {
+                    Id = "21",
+                    Name = "欧美金曲榜",
+                },
+                new Playlist
+                {
+                    Id = "22",
+                    Name = "经典老歌榜",
+                },
+                new Playlist
+                {
+                    Id = "23",
+                    Name = "情歌对唱榜"
+                },
+                new Playlist
+                {
+                    Id = "24",
+                    Name = "影视金曲榜",
+                },
+                new Playlist
+                {
+                    Id = "25",
+                    Name = "网络歌曲榜",
+                }
+            };
+            context.AddRange(playlists);
+
             context.SaveChanges();
         }
     }

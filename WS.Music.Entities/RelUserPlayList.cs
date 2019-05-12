@@ -39,6 +39,6 @@ namespace WS.Music.Entities
         /// <summary>
         /// 歌单
         /// </summary>
-        public PlayList PlayList { get; set; }
+        public Playlist PlayList { get; set; }
     }
 }

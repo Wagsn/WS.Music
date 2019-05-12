@@ -9,7 +9,7 @@ namespace WS.Music.Entities
     /// <summary>
     /// 歌单（独立实体，不产生外键关联，关联由关联实体来做），（播放列表是歌单的特殊形式）,用户查询喜欢的歌曲时其实没有查询到PlayList这个表，而是UserPlayList中找PlayListId，再PlayListSong找SongId
     /// </summary>
-    public class PlayList
+    public class Playlist
     {
         /// <summary>
         /// 歌单ID
@@ -22,6 +22,30 @@ namespace WS.Music.Entities
         /// </summary>
         [MaxLength(63)]
         public string Name { get; set; }
+
+        /// <summary>
+        /// 与Name相同
+        /// </summary>
+        [NotMapped]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// 与ID相同
+        /// </summary>
+        [NotMapped]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// 封面URL
+        /// </summary>
+        [NotMapped]
+        public string CoverUrl { get; set; }
+
+        /// <summary>
+        /// 榜单第一首歌
+        /// </summary>
+        [NotMapped]
+        public string Music1 { get; set; }
 
         /// <summary>
         /// 描述介绍，可空(Empty=Blank>Null)

@@ -13,11 +13,11 @@ namespace WS.Core
         /// <summary>
         /// 从0开始
         /// </summary>
-        public int PageIndex { get; set; }
+        public int PageIndex { get; set; } = 0;
 
         public int PageSize { get; set; } = 10;
 
-        public string KeyWord { get; set; }
+        public string Keyword { get; set; }
 
         /// <summary>
         /// ID组
@@ -28,5 +28,10 @@ namespace WS.Core
         /// 专辑组
         /// </summary>
         public List<Album> Albums { get; set; }
+
+        /// <summary>
+        /// 歌单组
+        /// </summary>
+        public List<Playlist> Playlists { get; set; }
     }
 }
