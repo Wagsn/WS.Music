@@ -43,7 +43,7 @@ import me.wcy.music.utils.PermissionReq;
 import me.wcy.music.utils.ToastUtils;
 
 /**
- * 本地音乐列表
+ * 本地音乐列表<br/>
  * Created by wcy on 2015/11/26.
  */
 public class LocalMusicFragment extends BaseFragment implements AdapterView.OnItemClickListener, OnMoreClickListener {
@@ -72,9 +72,13 @@ public class LocalMusicFragment extends BaseFragment implements AdapterView.OnIt
         loadMusic();
     }
 
+    /**
+     * 加载本地音乐
+     */
     private void loadMusic() {
         lvLocalMusic.setVisibility(View.GONE);
         vSearching.setVisibility(View.VISIBLE);
+        // 申请外部存储权限
         PermissionReq.with(this)
                 .permissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .result(new PermissionReq.Result() {
@@ -93,6 +97,9 @@ public class LocalMusicFragment extends BaseFragment implements AdapterView.OnIt
                 .request();
     }
 
+    /**
+     * 初始化加载器
+     */
     private void initLoader() {
         loader = getActivity().getLoaderManager().initLoader(0, null, new MusicLoaderCallback(getContext(), value -> {
             AppCache.get().getLocalMusicList().clear();
@@ -115,6 +122,13 @@ public class LocalMusicFragment extends BaseFragment implements AdapterView.OnIt
         lvLocalMusic.setOnItemClickListener(this);
     }
 
+    /**
+     * 点击列表项
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Music music = AppCache.get().getLocalMusicList().get(position);
@@ -122,6 +136,10 @@ public class LocalMusicFragment extends BaseFragment implements AdapterView.OnIt
         ToastUtils.show("已添加到播放列表");
     }
 
+    /**
+     * 点击更多
+     * @param position
+     */
     @Override
     public void onMoreClick(final int position) {
         Music music = AppCache.get().getLocalMusicList().get(position);
@@ -157,6 +175,10 @@ public class LocalMusicFragment extends BaseFragment implements AdapterView.OnIt
         startActivity(Intent.createChooser(intent, getString(R.string.share)));
     }
 
+    /**
+     * 设置铃声
+     * @param music
+     */
     private void requestSetRingtone(final Music music) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.System.canWrite(getContext())) {
             ToastUtils.show(R.string.no_permission_setting);
@@ -197,6 +219,10 @@ public class LocalMusicFragment extends BaseFragment implements AdapterView.OnIt
         cursor.close();
     }
 
+    /**
+     * 删除音乐
+     * @param music
+     */
     private void deleteMusic(final Music music) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
         String title = music.getTitle();
@@ -215,6 +241,12 @@ public class LocalMusicFragment extends BaseFragment implements AdapterView.OnIt
         dialog.show();
     }
 
+    /**
+     * 获取设置铃声权限
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -225,6 +257,10 @@ public class LocalMusicFragment extends BaseFragment implements AdapterView.OnIt
         }
     }
 
+    /**
+     * 保存状态数据
+     * @param outState
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         int position = lvLocalMusic.getFirstVisiblePosition();
@@ -233,6 +269,10 @@ public class LocalMusicFragment extends BaseFragment implements AdapterView.OnIt
         outState.putInt(Keys.LOCAL_MUSIC_OFFSET, offset);
     }
 
+    /**
+     * 还原状态数据
+     * @param savedInstanceState
+     */
     public void onRestoreInstanceState(final Bundle savedInstanceState) {
         lvLocalMusic.post(() -> {
             int position = savedInstanceState.getInt(Keys.LOCAL_MUSIC_POSITION);

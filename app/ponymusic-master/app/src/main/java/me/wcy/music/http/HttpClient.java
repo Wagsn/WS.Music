@@ -10,7 +10,6 @@ import com.zhy.http.okhttp.callback.BitmapCallback;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
 import net.wagsn.http.JsonCallback;
-import net.wagsn.model.PageResponseMessage;
 import net.wagsn.model.ResponseMessage;
 import net.wagsn.music.model.CommonRequest;
 import net.wagsn.music.model.PlaylistListResponse;
@@ -21,9 +20,9 @@ import java.util.concurrent.TimeUnit;
 import me.wcy.music.model.ArtistInfo;
 import me.wcy.music.model.DownloadInfo;
 import me.wcy.music.model.Lrc;
-import me.wcy.music.model.OnlineMusicList;
+import me.wcy.music.model.OnlinePlaylist;
 import me.wcy.music.model.SearchMusic;
-import net.wagsn.music.model.Song;
+
 import net.wagsn.music.model.SongListResponse;
 
 import me.wcy.music.model.Splash;
@@ -213,16 +212,16 @@ public class HttpClient {
      * @param offset
      * @param callback
      */
-    public static void getSongListInfoFromBaidu(String type, int size, int offset, @NonNull final HttpCallback<OnlineMusicList> callback) {
+    public static void getSongListInfoFromBaidu(String type, int size, int offset, @NonNull final HttpCallback<OnlinePlaylist> callback) {
         OkHttpUtils.get().url(BASE_URL)
                 .addParams(PARAM_METHOD, METHOD_GET_MUSIC_LIST)
                 .addParams(PARAM_TYPE, type)
                 .addParams(PARAM_SIZE, String.valueOf(size))
                 .addParams(PARAM_OFFSET, String.valueOf(offset))
                 .build()
-                .execute(new JsonCallback<OnlineMusicList>(OnlineMusicList.class) {
+                .execute(new JsonCallback<OnlinePlaylist>(OnlinePlaylist.class) {
                     @Override
-                    public void onResponse(OnlineMusicList response, int id) {
+                    public void onResponse(OnlinePlaylist response, int id) {
                         callback.onSuccess(response);
                     }
 

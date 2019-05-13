@@ -9,7 +9,7 @@ import java.util.List;
  * JavaBean
  * Created by wcy on 2015/12/20.
  */
-public class OnlineMusicList {
+public class OnlinePlaylist {
     @SerializedName("song_list")
     private List<OnlineMusic> song_list;
     @SerializedName("billboard")

@@ -19,9 +19,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
 
-import net.wagsn.model.PageResponseMessage;
 import net.wagsn.music.model.CommonRequest;
-import net.wagsn.music.model.Song;
 import net.wagsn.music.model.SongListResponse;
 import net.wagsn.util.binding.Bind;
 
@@ -41,7 +39,7 @@ import me.wcy.music.http.HttpCallback;
 import me.wcy.music.http.HttpClient;
 import me.wcy.music.model.Music;
 import me.wcy.music.model.OnlineMusic;
-import me.wcy.music.model.OnlineMusicList;
+import me.wcy.music.model.OnlinePlaylist;
 import me.wcy.music.model.Playlist;
 import me.wcy.music.service.AudioPlayer;
 import me.wcy.music.utils.FileUtils;
@@ -59,18 +57,45 @@ public class OnlineMusicActivity extends BaseActivity implements OnItemClickList
 
     public static final String TAG = "OnlineMusicActivity";
 
+    /**
+     * 音乐分页大小
+     */
     private static final int MUSIC_LIST_SIZE = 20;
 
+    /**
+     * 自动加载列表视图
+     */
     @Bind(R.id.lv_online_music_list)
     private AutoLoadListView lvOnlineMusic;
+    /**
+     * 加载中视图
+     */
     @Bind(R.id.ll_loading)
     private LinearLayout llLoading;
+    /**
+     * 失败加载视图
+     */
     @Bind(R.id.ll_load_fail)
     private LinearLayout llLoadFail;
+    /**
+     * 头部视图
+     */
     private View vHeader;
-    private Playlist mListInfo;
-    private OnlineMusicList mOnlineMusicList;
+    /**
+     * 歌单信息
+     */
+    private Playlist mPlaylistInfo;
+    /**
+     * 在线歌单信息
+     */
+    private OnlinePlaylist mOnlinePlaylistInfo;
+    /**
+     * 在线音乐列表
+     */
     private List<OnlineMusic> mMusicList = new ArrayList<>();
+    /**
+     * 在线音乐列表适配器
+     */
     private OnlineMusicAdapter mAdapter = new OnlineMusicAdapter(mMusicList);
     /**
      * 分页索引，pageIndex
@@ -81,14 +106,13 @@ public class OnlineMusicActivity extends BaseActivity implements OnItemClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_music);
-
     }
 
     @Override
     protected void onServiceBound() {
-        mListInfo = (Playlist) getIntent().getSerializableExtra(Extras.MUSIC_LIST_TYPE);
+        mPlaylistInfo = (Playlist) getIntent().getSerializableExtra(Extras.MUSIC_LIST_TYPE);
         // 设置页面标题
-        setTitle(mListInfo.getName());
+        setTitle(mPlaylistInfo.getName());
 
         initView();
         onLoad();
@@ -115,11 +139,11 @@ public class OnlineMusicActivity extends BaseActivity implements OnItemClickList
      * @param offset
      */
     private void getMusic(final int offset) {
-        HttpClient.getSongListInfoFromBaidu(mListInfo.getId(), MUSIC_LIST_SIZE, offset, new HttpCallback<OnlineMusicList>() {
+        HttpClient.getSongListInfoFromBaidu(mPlaylistInfo.getId(), MUSIC_LIST_SIZE, offset, new HttpCallback<OnlinePlaylist>() {
             @Override
-            public void onSuccess(OnlineMusicList response) {
+            public void onSuccess(OnlinePlaylist response) {
                 lvOnlineMusic.onLoadComplete();
-                mOnlineMusicList = response;
+                mOnlinePlaylistInfo = response;
                 if (offset == 0 && response == null) {
                     ViewUtils.changeViewState(lvOnlineMusic, llLoading, llLoadFail, LoadStateEnum.LOAD_FAIL);
                     return;
@@ -131,6 +155,7 @@ public class OnlineMusicActivity extends BaseActivity implements OnItemClickList
                     lvOnlineMusic.setEnable(false);
                     return;
                 }
+                Log.d(TAG, "onSuccess: 本次加载的音乐列表："+new Gson().toJson(response));
                 mOffset += MUSIC_LIST_SIZE;
                 mMusicList.addAll(response.getSong_list());
                 mAdapter.notifyDataSetChanged();
@@ -226,11 +251,11 @@ public class OnlineMusicActivity extends BaseActivity implements OnItemClickList
         TextView tvTitle = vHeader.findViewById(R.id.tv_title);
         TextView tvUpdateDate = vHeader.findViewById(R.id.tv_update_date);
         TextView tvComment = vHeader.findViewById(R.id.tv_comment);
-        tvTitle.setText(mOnlineMusicList.getBillboard().getName());
-        tvUpdateDate.setText(getString(R.string.recent_update, mOnlineMusicList.getBillboard().getUpdate_date()));
-        tvComment.setText(mOnlineMusicList.getBillboard().getComment());
+        tvTitle.setText(mOnlinePlaylistInfo.getBillboard().getName());
+        tvUpdateDate.setText(getString(R.string.recent_update, mOnlinePlaylistInfo.getBillboard().getUpdate_date()));
+        tvComment.setText(mOnlinePlaylistInfo.getBillboard().getComment());
         Glide.with(this)
-                .load(mOnlineMusicList.getBillboard().getPic_s640())
+                .load(mOnlinePlaylistInfo.getBillboard().getPic_s640())
                 .asBitmap()
                 .placeholder(R.drawable.default_cover)
                 .error(R.drawable.default_cover)

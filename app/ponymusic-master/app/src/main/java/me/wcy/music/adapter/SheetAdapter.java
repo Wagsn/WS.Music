@@ -19,7 +19,7 @@ import me.wcy.music.R;
 import me.wcy.music.http.HttpCallback;
 import me.wcy.music.http.HttpClient;
 import me.wcy.music.model.OnlineMusic;
-import me.wcy.music.model.OnlineMusicList;
+import me.wcy.music.model.OnlinePlaylist;
 import me.wcy.music.model.Playlist;
 
 /**
@@ -150,9 +150,10 @@ public class SheetAdapter extends BaseAdapter {
             holderMusicList.tvMusic1.setText("1.加载中…");
             holderMusicList.tvMusic2.setText("2.加载中…");
             holderMusicList.tvMusic3.setText("3.加载中…");
-            HttpClient.getSongListInfoFromBaidu(playlist.getId(), 3, 0, new HttpCallback<OnlineMusicList>() {
+            // 根据歌单ID，获取前三个音乐信息
+            HttpClient.getSongListInfoFromBaidu(playlist.getId(), 3, 0, new HttpCallback<OnlinePlaylist>() {
                 @Override
-                public void onSuccess(OnlineMusicList response) {
+                public void onSuccess(OnlinePlaylist response) {
                     if (response == null || response.getSong_list() == null) {
                         return;
                     }
@@ -178,7 +179,7 @@ public class SheetAdapter extends BaseAdapter {
      * @param response
      * @param playlist
      */
-    private void parse(OnlineMusicList response, Playlist playlist) {
+    private void parse(OnlinePlaylist response, Playlist playlist) {
         List<OnlineMusic> onlineMusics = response.getSong_list();
         playlist.setCoverUrl(response.getBillboard().getPic_s260());
         if (onlineMusics.size() >= 1) {

@@ -39,11 +39,20 @@ public class SystemUtils {
         return false;
     }
 
+    /**
+     * 是否是Flyme系统
+     * @return
+     */
     public static boolean isFlyme() {
         String flymeFlag = getSystemProperty("ro.build.display.id");
         return !TextUtils.isEmpty(flymeFlag) && flymeFlag.toLowerCase().contains("flyme");
     }
 
+    /**
+     * 获取系统属性
+     * @param key
+     * @return
+     */
     private static String getSystemProperty(String key) {
         try {
             Class<?> classType = Class.forName("android.os.SystemProperties");
@@ -55,6 +64,12 @@ public class SystemUtils {
         return null;
     }
 
+    /**
+     * 将Long类型转化成时间字符串
+     * @param pattern
+     * @param milli
+     * @return
+     */
     public static String formatTime(String pattern, long milli) {
         int m = (int) (milli / DateUtils.MINUTE_IN_MILLIS);
         int s = (int) ((milli / DateUtils.SECOND_IN_MILLIS) % 60);
