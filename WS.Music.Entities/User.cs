@@ -62,6 +62,15 @@ namespace WS.Music.Entities
         public bool? Sex { get; set; }
 
         /// <summary>
+        /// 性别
+        /// </summary>
+        public class SexEnum
+        {
+            public static readonly bool Male = true;
+            public static readonly bool Female = false;
+        }
+
+        /// <summary>
         /// 用户唯一码，用以标识自然人、组织等
         /// </summary>
         [MaxLength(36)]

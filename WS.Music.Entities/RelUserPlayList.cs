@@ -8,7 +8,7 @@ namespace WS.Music.Entities
     /// <summary>
     /// 用户与歌单的关联实体，（多对多）
     /// </summary>
-    public class RelUserPlayList
+    public class RelUserPlaylist
     {
         [MaxLength(36)]
         public string Id { get; set; }
@@ -31,14 +31,28 @@ namespace WS.Music.Entities
         [MaxLength(63)]
         public string Type { get; set; }
 
-        /// <summary>
-        /// 用户
-        /// </summary>
-        public User User { get; set; }
-
-        /// <summary>
-        /// 歌单
-        /// </summary>
-        public Playlist PlayList { get; set; }
+        public class TypeEnum
+        {
+            /// <summary>
+            /// 收藏
+            /// </summary>
+            public static readonly string Collection = "Collection";
+            /// <summary>
+            /// 推荐
+            /// </summary>
+            public static readonly string Recommend = "Recommend";
+            /// <summary>
+            /// 创建
+            /// </summary>
+            public static readonly string Create = "Create";
+            /// <summary>
+            /// 喜欢
+            /// </summary>
+            public static readonly string Like = "Like";
+            /// <summary>
+            /// 播放历史
+            /// </summary>
+            public static readonly string History = "History";
+        }
     }
 }

@@ -39,4 +39,7 @@
 - 音乐推荐
   - 根据播放歌曲标签集统计数据来推荐音乐
 
-END
+
+## License
+
+    Copyright(c) 2019 Wangsen

@@ -36,16 +36,16 @@ namespace WS.Music.Entities
         public string Type { get; set; }
 
         /// <summary>
-        /// 封面URL
+        /// 封面URL（当不存在的时候可以采用第一首歌的封面）
         /// </summary>
         [NotMapped]
         public string CoverUrl { get; set; }
 
         /// <summary>
-        /// 榜单第一首歌
+        /// 来源
+        /// （如：BaiduMusic等，默认：Wagsn）
         /// </summary>
-        [NotMapped]
-        public string Music1 { get; set; }
+        public string Source { get; set; }
 
         /// <summary>
         /// 描述介绍，可空(Empty=Blank>Null)

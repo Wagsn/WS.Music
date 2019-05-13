@@ -38,12 +38,19 @@ namespace WS.Music.Stores
         public DbSet<Organization> Organizations { get; set; }
 
         /// <summary>
+        /// 权限
+        /// </summary>
+        public DbSet<Permission> Permissions { get; set; }
+
+        //public DbSet<>
+
+        /// <summary>
         /// 文件信息
         /// </summary>
         public DbSet<FileInfo> FileInfos { get; set; }
 
         /// <summary>
-        /// 歌曲信息保存
+        /// 歌曲文件信息保存
         /// </summary>
         public DbSet<SongFile> SongFiles { get; set; }
 
@@ -53,10 +60,18 @@ namespace WS.Music.Stores
         public DbSet<Playlist> PlayLists { get; set; }
 
         /// <summary>
+        /// 用户歌单关联
+        /// </summary>
+        public DbSet<RelUserPlaylist> RelUserPlaylists { get; set; }
+
+        /// <summary>
         /// 歌单歌曲关联
         /// </summary>
         public DbSet<RelPlayListSong> RelPlayListSongs { get; set; }
 
+        /// <summary>
+        /// 艺人专辑关联
+        /// </summary>
         public DbSet<RelArtistAlbum> RelArtistAlbums { get; set; }
 
         /// <summary>
@@ -73,7 +88,7 @@ namespace WS.Music.Stores
         //}
 
         ///// <summary>
-        ///// 数据库配置 -迁移到Startup.cs -生成基架时取消注释
+        ///// 数据库配置 -迁移到Startup.cs中 -生成基架时取消注释
         ///// </summary>
         ///// <param name = "builder" > 数据库上下文选项创建器 </ param >
         //protected override void OnConfiguring(DbContextOptionsBuilder builder)

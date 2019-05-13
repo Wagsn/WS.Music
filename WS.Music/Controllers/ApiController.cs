@@ -388,12 +388,12 @@ namespace WS.Music.Controllers
                 }
                 if (request.Ids != null && request.Ids.Count > 0)
                 {
-                    query = query.Where(a => request.Ids.Contains(a.Id));
+                    query = query.Where(a => a.Id != null && request.Ids.Contains(a.Id));
                 }
                 if(request.Playlists != null && request.Playlists.Count > 0)
                 {
                     var plIds = request.Playlists.Select(a => a.Id).ToList();
-                    var sIds = MusicStore.Set<RelPlayListSong>().Where(a => plIds.Contains(a.PlayListId)).Select(a => a.SongId).ToList();
+                    var sIds = MusicStore.Set<RelPlayListSong>().Where(a => a.PlayListId != null && plIds.Contains(a.PlayListId)).Select(a => a.SongId).ToList();
                     query = query.Where(a => sIds.Contains(a.Id));
                 }
 

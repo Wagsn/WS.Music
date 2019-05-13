@@ -7,6 +7,8 @@ namespace WS.Music.Stores
 {
     /// <summary>
     /// 数据库初始化器
+    /// 主要用于测试或原始数据的产生
+    /// Craeted by Wagsn on 2019/4/19.
     /// </summary>
     public class DbIntializer
     {
@@ -23,6 +25,37 @@ namespace WS.Music.Stores
             {
                 return;
             }
+
+            #region 用户
+            var wagsnId = Guid.NewGuid().ToString();
+            var rootId = Guid.NewGuid().ToString();
+            var adminId = Guid.NewGuid().ToString();
+
+            var users = new List<User>
+            {
+                new User
+                {
+                    Id = wagsnId,
+                    Name = "Wagsn",
+                    PassWord = "123456",
+                    Email = "wagsn@foxmail.com",
+                    Sex = User.SexEnum.Male
+                },
+                new User
+                {
+                    Id = rootId,
+                    Name = "Root",
+                    PassWord = "123456"
+                },
+                new User
+                {
+                    Id = adminId,
+                    Name = "Admin",
+                    PassWord = "123456"
+                }
+            };
+            context.AddRange(users);
+            #endregion
 
             #region 艺人
             var xsArtist = Guid.NewGuid().ToString();
@@ -866,6 +899,15 @@ namespace WS.Music.Stores
             };
             context.AddRange(relSongAlbums);
 
+            #region 歌单
+            // 官方推荐歌单/榜单
+            var gfRecPl = Guid.NewGuid().ToString();
+            // wagsn 的 like 歌单
+            var wagsnLikePl = Guid.NewGuid().ToString();
+            // 推荐
+            var wagsnRecoPl = Guid.NewGuid().ToString();
+            // 收藏
+            var wagsnCollPl = Guid.NewGuid().ToString();
             // 歌单
             var playlists = new List<Playlist>
             {
@@ -933,9 +975,112 @@ namespace WS.Music.Stores
                 {
                     Id = "25",
                     Name = "网络歌曲榜",
+                },
+                new Playlist
+                {
+                    Id = gfRecPl,
+                    Name = "官方推荐歌单"
+                },
+                new Playlist
+                {
+                    Id = wagsnCollPl,
+                    Name = "Wagsn 的收集歌单"
+                },
+                new Playlist
+                {
+                    Id = wagsnLikePl,
+                    Name = "Wagsn 的喜欢歌单"
+                },
+                new Playlist
+                {
+                    Id = wagsnRecoPl,
+                    Name = "Wagsn 的专属推荐歌单"
                 }
             };
             context.AddRange(playlists);
+            #endregion
+
+            // 用户歌单关联
+            var relUserPls = new List<RelUserPlaylist>
+            {
+                new RelUserPlaylist
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserId = wagsnId,
+                    PlayListId = wagsnCollPl,
+                    Type = RelUserPlaylist.TypeEnum.Collection
+                },
+                new RelUserPlaylist
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserId = wagsnId,
+                    PlayListId = wagsnLikePl,
+                    Type = RelUserPlaylist.TypeEnum.Like,
+                },
+                new RelUserPlaylist
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserId = wagsnId,
+                    PlayListId = wagsnRecoPl,
+                    Type = RelUserPlaylist.TypeEnum.Recommend
+                }
+            };
+            context.AddRange(relUserPls);
+            // 歌单歌曲关联
+            var relPlaylistSongs = new List<RelPlayListSong>
+            {
+                // 收藏歌单
+                new RelPlayListSong
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    PlayListId = wagsnCollPl,
+                    SongId = xzssSong
+                },
+                new RelPlayListSong
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    PlayListId = wagsnCollPl,
+                    SongId = sySong
+                },
+                new RelPlayListSong
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    PlayListId = wagsnCollPl,
+                    SongId = yhbkSong
+                },
+                new RelPlayListSong
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    PlayListId = wagsnLikePl,
+                    SongId = ysgsSong
+                },
+                // 喜欢歌单
+                new RelPlayListSong
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    PlayListId = wagsnLikePl,
+                    SongId = rgdsSong
+                },
+                new RelPlayListSong
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    PlayListId = wagsnLikePl,
+                    SongId = sySong
+                },
+                new RelPlayListSong
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    PlayListId = wagsnLikePl,
+                    SongId = xzssSong
+                },
+                new RelPlayListSong
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    PlayListId = wagsnLikePl,
+                    SongId = qgSong
+                }
+            };
+            context.AddRange(relPlaylistSongs);
 
             context.SaveChanges();
         }

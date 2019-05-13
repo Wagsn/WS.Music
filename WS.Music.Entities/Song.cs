@@ -58,7 +58,12 @@ namespace WS.Music.Entities
         [MaxLength(511)]
         public string Url { get; set; }
 
-        // 还有个来源Link，比如来源（ID+Type：id=156&type=songlist）于专辑，歌单、排行榜、分享，这个主要是标注播放时的来源问题，方便跳转过去
+        /// <summary>
+        /// 来源
+        /// （如：BaiduMusic，默认：Wagsn）
+        /// </summary>
+        [MaxLength(511)]
+        public string Source { get; set; }
 
         ///// <summary>
         ///// 艺人
