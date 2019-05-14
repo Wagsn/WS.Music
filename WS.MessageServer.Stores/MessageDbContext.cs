@@ -6,10 +6,10 @@ using WS.MessageServer.Entities;
 
 namespace WS.MessageServer.Stores
 {
-    public class MessageServerDbContext : DbContext
+    public class MessageDbContext : DbContext
     {
 
-        public MessageServerDbContext(DbContextOptions<MessageServerDbContext> options)
+        public MessageDbContext(DbContextOptions<MessageDbContext> options)
             : base(options) { }
 
         public DbSet<SendStatus> SendStatus { get; set; }

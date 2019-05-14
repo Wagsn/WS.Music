@@ -14,19 +14,20 @@
   },
   "FileServer": {
     "Root": {
-      "LocalPath": "E:\\WS\\Music\\Files",
+      "LocalPath": ".\\Files",
       "Url": "/file"
     },
     "PathList": [
       {
-        "LocalPath": "e:\\files\\all",
+        "LocalPath": ".\\Files\\All",
         "Url": "/files/all"
       }
     ]
   },
   "Data": {
     "DefaultConnection": {
-      "ConnectionString": "server=localhost;database=ws_music;user=admin;password=123456;"
+      "ConnectionString": "server=localhost;database=ws_music;user=admin;password=123456;",
+      "MessageConnection": "server=localhost;database=ws_message;user=admin;password=123456;"
     }
   },
   "Port": 5001

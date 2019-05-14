@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WS.Core\WS.Core.csproj" />
     <ProjectReference Include="..\WS.MessageServer.Entities\WS.MessageServer.Entities.csproj" />
   </ItemGroup>
 

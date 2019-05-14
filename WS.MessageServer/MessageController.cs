@@ -24,12 +24,23 @@ namespace WS.MessageServer
             Sender = messageSender;
         }
 
+        [HttpGet("check")]
+        public IActionResult Check()
+        {
+            return new JsonResult(new
+            {
+                Code = "0",
+                Message = "Its work!"
+            });
+        }
+
         /// <summary>
         /// 消息发送
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<ResponseMessage> SendMessage([FromBody] SendMessageRequest request)
+        [HttpPost("send")]
+        public async Task<ResponseMessage> SendMessage([FromForm] SendMessageRequest request)
         {
             Logger.Trace($"[{nameof(SendMessage)}] 发送消息 开始：{JsonUtil.ToJson(request)}");
             var response = new ResponseMessage();

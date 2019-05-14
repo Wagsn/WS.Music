@@ -15,6 +15,13 @@
         /// </summary>
         public int Code { get; set; }
 
+        public enum CodeEnum
+        {
+            Private = 1,
+            Square = 2,
+            Group = 3
+        }
+
         /// <summary>
         /// 正文（字符串与JSON对象）
         /// </summary>

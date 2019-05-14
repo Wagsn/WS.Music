@@ -4,8 +4,7 @@ using System.Text;
 
 namespace WS.Music.Stores
 {
-    public interface IMusicStore : IStore
+    public interface IMusicStore : WS.Core.IStore
     {
-
     }
 }

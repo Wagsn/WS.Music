@@ -25,6 +25,14 @@
         /// </summary>
         public int ReceiveUserType { get; set; }
 
+        public enum ReceiveUserTypeEnum
+        {
+            Private = 1,
+            Group = 2,
+            Home = 3,
+            Square = 4
+        }
+
         /// <summary>
         /// 消息ID
         /// </summary>

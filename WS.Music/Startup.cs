@@ -65,6 +65,7 @@ namespace WS.Music
                 //it.UseMySql("server=localhost;database=ws_music;user=admin;password=123456;");
             });
 
+            // 依赖注入
             services.AddScoped<IMusicStore, MusicStore>();
 
             // 依赖注入
@@ -118,9 +119,10 @@ namespace WS.Music
 
                 foreach (PathItem pi in pathList)
                 {
+                    Console.WriteLine("Full Path: " + System.IO.Path.GetFullPath(pi.LocalPath));
                     app.UseStaticFiles(new StaticFileOptions()
                     {
-                        FileProvider = new PhysicalFileProvider(pi.LocalPath),
+                        FileProvider = new PhysicalFileProvider(System.IO.Path.GetFullPath(pi.LocalPath)),
                         RequestPath = pi.Url
                     });
                     Console.WriteLine("路径映射：{0}-->{1}", pi.LocalPath, pi.Url);

@@ -21,13 +21,25 @@ namespace WS.MessageServer
                     .AddEnvironmentVariables()
                     .Build();
 
-            services.AddDbContext<MessageServerDbContext>(it =>
+            services.AddDbContext<MessageDbContext>(it =>
             {
-                it.UseMySql(configuration["Data:DefaultConnection:ConnectionString"]);
+                it.UseMySql(configuration["Data:DefaultConnection:MessageConnection"]);
                 //it.UseMySql("server=localhost;database=ws_music;user=admin;password=123456;");
             });
 
             services.AddScoped<IMessageSender, AppPusher>();
+            services.AddScoped<IMessageStore, MessageStore>();
+        }
+
+        /// <summary>
+        /// 数据库初始化
+        /// </summary>
+        /// <param name="services"></param>
+        public static void DbInitialize(IServiceProvider services)
+        {
+            var context = services.GetRequiredService<MessageDbContext>();
+
+            context.Database.EnsureCreated();
         }
     }
 }

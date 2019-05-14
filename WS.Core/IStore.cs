@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace WS.Music.Stores
+namespace WS.Core
 {
     public interface IStore
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WS.Music.Entities;
@@ -10,14 +11,17 @@ namespace WS.Music.Stores
     /// 主要用于测试或原始数据的产生
     /// Craeted by Wagsn on 2019/4/19.
     /// </summary>
-    public class DbIntializer
+    public class MusicDbInitializer
     {
         /// <summary>
-        /// 库初始化
+        /// 数据库初始化
         /// </summary>
         /// <param name="context"></param>
-        public static void Initialize(MusicDbContext context)
+        public static void Initialize(IServiceProvider services)
         {
+            var context = services.GetRequiredService<MusicDbContext>();
+
+            // 这个只会创建这个DbContext的DbSet属性
             context.Database.EnsureCreated();
 
             // 初始化数据
