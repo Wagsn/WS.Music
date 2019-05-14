@@ -33,5 +33,10 @@ namespace WS.Core
         /// 歌单组
         /// </summary>
         public List<Playlist> Playlists { get; set; }
+
+        /// <summary>
+        /// 接收人ID集
+        /// </summary>
+        public List<string> ReceiveUserIds { get; set; }
     }
 }

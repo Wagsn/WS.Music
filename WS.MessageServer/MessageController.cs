@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using WS.Core;
 using WS.Log;
+using WS.MessageServer.Stores;
 using WS.Text;
 
 namespace WS.MessageServer
@@ -18,10 +19,12 @@ namespace WS.MessageServer
         private readonly ILogger Logger = LoggerManager.GetLogger<MessageController>();
 
         private readonly IMessageSender Sender;
+        private readonly MessageDbContext Context;
 
-        public MessageController(IMessageSender messageSender)
+        public MessageController(IMessageSender messageSender, MessageDbContext context)
         {
             Sender = messageSender;
+            Context = context;
         }
 
         [HttpGet("check")]
@@ -72,6 +75,18 @@ namespace WS.MessageServer
                 Logger.Error($"发送消息，服务器发生错误：\r\n{e.ToString()}");
             }
             return response;
+        }
+
+        /// <summary>
+        /// 获取消息列表
+        /// </summary>
+        /// <returns></returns>
+        public PagingResponseMessage<SendMessage> MessageList(PageSearchRequest request)
+        {
+            var query = Context.SendRecord.
+
+
+            return null;
         }
     }
 }
