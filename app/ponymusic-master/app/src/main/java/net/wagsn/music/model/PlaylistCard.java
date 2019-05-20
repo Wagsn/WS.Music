@@ -1,13 +1,9 @@
-package me.wcy.music.model;
-
-import java.io.Serializable;
+package net.wagsn.music.model;
 
 /**
- * 歌单概要信息（榜单信息）
- * Created by wcy on 2015/12/20.
- * Rename by Wagsn on 2019/5/12.
+ * 封装歌单View需要的数据
  */
-public class Playlist implements Serializable {
+public class PlaylistCard {
     /**
      * 歌单ID
      */

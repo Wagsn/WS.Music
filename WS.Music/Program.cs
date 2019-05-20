@@ -27,7 +27,7 @@ namespace WS.Music
                     options.Limits.MaxRequestBodySize = null;
                 })
                 // 设置端口（*表示使用本机IP地址）
-                //.UseUrls($"http://*:{configuration["Port"]}")
+                .UseUrls($"http://*:{configuration["Port"]}")
                 .Build();
 
             // 数据库初始化

@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import net.wagsn.music.model.CommonRequest;
+import net.wagsn.music.model.PlaylistListResponse;
+import net.wagsn.music.model.Song;
+import net.wagsn.music.model.SongListResponse;
 import net.wagsn.util.binding.Bind;
 import net.wagsn.util.binding.ViewBinder;
 
@@ -21,6 +25,7 @@ import me.wcy.music.http.HttpClient;
 import me.wcy.music.model.OnlineMusic;
 import me.wcy.music.model.OnlinePlaylist;
 import me.wcy.music.model.Playlist;
+import me.wcy.music.utils.ToastUtils;
 
 /**
  * 歌单列表适配器
@@ -138,7 +143,7 @@ public class SheetAdapter extends BaseAdapter {
     }
 
     /**
-     * 获取歌单（榜单）信息<br/>
+     * 获取歌单（榜单）概要信息<br/>
      * Rename by Wagsn on 2019/5/12.
      * @param playlist
      * @param holderMusicList
@@ -150,24 +155,49 @@ public class SheetAdapter extends BaseAdapter {
             holderMusicList.tvMusic1.setText("1.加载中…");
             holderMusicList.tvMusic2.setText("2.加载中…");
             holderMusicList.tvMusic3.setText("3.加载中…");
-            // 根据歌单ID，获取前三个音乐信息
-            HttpClient.getSongListInfoFromBaidu(playlist.getId(), 3, 0, new HttpCallback<OnlinePlaylist>() {
-                @Override
-                public void onSuccess(OnlinePlaylist response) {
-                    if (response == null || response.getSong_list() == null) {
-                        return;
+            if(playlist.getSource().toLowerCase().equals("baidu") ){
+                // 根据歌单ID，获取前三个音乐信息
+                HttpClient.getSongListInfoFromBaidu(playlist.getId(), 3, 0, new HttpCallback<OnlinePlaylist>() {
+                    @Override
+                    public void onSuccess(OnlinePlaylist response) {
+                        if (response == null || response.getSong_list() == null) {
+                            return;
+                        }
+                        if (!playlist.getName().equals(holderMusicList.tvMusic1.getTag())) {
+                            return;
+                        }
+                        parseBaidu(response, playlist);
+                        setData(playlist, holderMusicList);
                     }
-                    if (!playlist.getName().equals(holderMusicList.tvMusic1.getTag())) {
-                        return;
-                    }
-                    parse(response, playlist);
-                    setData(playlist, holderMusicList);
-                }
 
-                @Override
-                public void onFail(Exception e) {
-                }
-            });
+                    @Override
+                    public void onFail(Exception e) {
+                        ToastUtils.show(playlist.getName()+" 歌单信息加载失败");
+                    }
+                });
+            }
+            else {
+                CommonRequest request = new CommonRequest();
+                HttpClient.getSongInfoList(request, new HttpCallback<SongListResponse>() {
+                    @Override
+                    public void onSuccess(SongListResponse response) {
+                        if (response == null || response.getData() == null) {
+                            return;
+                        }
+                        if (!playlist.getName().equals(holderMusicList.tvMusic1.getTag())) {
+                            return;
+                        }
+                        parse(response, playlist);
+                        setData(playlist, holderMusicList);
+                    }
+
+                    @Override
+                    public void onFail(Exception e) {
+                        ToastUtils.show(playlist.getName()+" 歌单信息加载失败");
+                    }
+                });
+            }
+
         } else {
             holderMusicList.tvMusic1.setTag(null);
             setData(playlist, holderMusicList);
@@ -175,11 +205,41 @@ public class SheetAdapter extends BaseAdapter {
     }
 
     /**
+     * 解析Wagsn响应体数据
+     * @param response
+     */
+    private void parse(SongListResponse response, Playlist playlist){
+        if(response==null || response.getData()==null){
+            return;
+        }
+        List<Song> onlineMusics = response.getData();
+        if (onlineMusics.size() >= 1) {
+            playlist.setMusic1(mContext.getString(R.string.song_list_item_title_1,
+                    onlineMusics.get(0).getName(), onlineMusics.get(0).getArtistName()));
+        } else {
+            playlist.setMusic1("");
+        }
+        if (onlineMusics.size() >= 2) {
+            playlist.setMusic2(mContext.getString(R.string.song_list_item_title_2,
+                    onlineMusics.get(1).getName(), onlineMusics.get(1).getArtistName()));
+        } else {
+            playlist.setMusic2("");
+        }
+        if (onlineMusics.size() >= 3) {
+            playlist.setMusic3(mContext.getString(R.string.song_list_item_title_3,
+                    onlineMusics.get(2).getName(), onlineMusics.get(2).getArtistName()));
+        } else {
+            playlist.setMusic3("");
+        }
+    }
+
+    /**
      * 将响应的歌单信息解析成榜单项（榜单列表的列表项）
+     * 解析百度数据
      * @param response
      * @param playlist
      */
-    private void parse(OnlinePlaylist response, Playlist playlist) {
+    private void parseBaidu(OnlinePlaylist response, Playlist playlist) {
         List<OnlineMusic> onlineMusics = response.getSong_list();
         playlist.setCoverUrl(response.getBillboard().getPic_s260());
         if (onlineMusics.size() >= 1) {

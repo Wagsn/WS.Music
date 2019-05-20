@@ -139,43 +139,62 @@ public class OnlineMusicActivity extends BaseActivity implements OnItemClickList
      * @param offset
      */
     private void getMusic(final int offset) {
-        HttpClient.getSongListInfoFromBaidu(mPlaylistInfo.getId(), MUSIC_LIST_SIZE, offset, new HttpCallback<OnlinePlaylist>() {
-            @Override
-            public void onSuccess(OnlinePlaylist response) {
-                lvOnlineMusic.onLoadComplete();
-                mOnlinePlaylistInfo = response;
-                if (offset == 0 && response == null) {
-                    ViewUtils.changeViewState(lvOnlineMusic, llLoading, llLoadFail, LoadStateEnum.LOAD_FAIL);
-                    return;
-                } else if (offset == 0) {
-                    initHeader();
-                    ViewUtils.changeViewState(lvOnlineMusic, llLoading, llLoadFail, LoadStateEnum.LOAD_SUCCESS);
+        if(mPlaylistInfo.getSource().toLowerCase().equals("baidu")){
+            HttpClient.getSongListInfoFromBaidu(mPlaylistInfo.getId(), MUSIC_LIST_SIZE, offset, new HttpCallback<OnlinePlaylist>() {
+                @Override
+                public void onSuccess(OnlinePlaylist response) {
+                    lvOnlineMusic.onLoadComplete();
+                    mOnlinePlaylistInfo = response;
+                    if (offset == 0 && response == null) {
+                        ViewUtils.changeViewState(lvOnlineMusic, llLoading, llLoadFail, LoadStateEnum.LOAD_FAIL);
+                        return;
+                    } else if (offset == 0) {
+                        initHeader();
+                        ViewUtils.changeViewState(lvOnlineMusic, llLoading, llLoadFail, LoadStateEnum.LOAD_SUCCESS);
+                    }
+                    if (response == null || response.getSong_list() == null || response.getSong_list().size() == 0) {
+                        lvOnlineMusic.setEnable(false);
+                        return;
+                    }
+                    Log.d(TAG, "onSuccess: 本次加载的音乐列表："+new Gson().toJson(response));
+                    mOffset += MUSIC_LIST_SIZE;
+                    mMusicList.addAll(response.getSong_list());
+                    mAdapter.notifyDataSetChanged();
                 }
-                if (response == null || response.getSong_list() == null || response.getSong_list().size() == 0) {
-                    lvOnlineMusic.setEnable(false);
-                    return;
-                }
-                Log.d(TAG, "onSuccess: 本次加载的音乐列表："+new Gson().toJson(response));
-                mOffset += MUSIC_LIST_SIZE;
-                mMusicList.addAll(response.getSong_list());
-                mAdapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onFail(Exception e) {
-                lvOnlineMusic.onLoadComplete();
-                if (e instanceof RuntimeException) {
-                    // 歌曲全部加载完成
-                    lvOnlineMusic.setEnable(false);
-                    return;
+                @Override
+                public void onFail(Exception e) {
+                    lvOnlineMusic.onLoadComplete();
+                    if (e instanceof RuntimeException) {
+                        // 歌曲全部加载完成
+                        lvOnlineMusic.setEnable(false);
+                        return;
+                    }
+                    if (offset == 0) {
+                        ViewUtils.changeViewState(lvOnlineMusic, llLoading, llLoadFail, LoadStateEnum.LOAD_FAIL);
+                    } else {
+                        ToastUtils.show(R.string.load_fail);
+                    }
                 }
-                if (offset == 0) {
+            });
+        }
+        else {
+            CommonRequest request = new CommonRequest();
+            // 测试歌曲列表数据加载
+            HttpClient.getSongInfoList(request, new HttpCallback<SongListResponse>(){
+
+                @Override
+                public void onSuccess(SongListResponse response) {
+                    Log.d(TAG, "onSuccess: 歌曲列表响应：" + new Gson().toJson(response));
                     ViewUtils.changeViewState(lvOnlineMusic, llLoading, llLoadFail, LoadStateEnum.LOAD_FAIL);
-                } else {
-                    ToastUtils.show(R.string.load_fail);
                 }
-            }
-        });
+
+                @Override
+                public void onFail(Exception e) {
+                    Log.e(TAG, "onFail: 加载歌曲列表失败：", e);
+                }
+            });
+        }
     }
 
     /**
@@ -184,21 +203,6 @@ public class OnlineMusicActivity extends BaseActivity implements OnItemClickList
     @Override
     public void onLoad() {
         getMusic(mOffset);
-
-        CommonRequest request = new CommonRequest();
-        // 测试歌曲列表数据加载
-        HttpClient.getSongInfoList(request, new HttpCallback<SongListResponse>(){
-
-            @Override
-            public void onSuccess(SongListResponse response) {
-                Log.d(TAG, "onSuccess: 歌曲列表响应：" + new Gson().toJson(response));
-            }
-
-            @Override
-            public void onFail(Exception e) {
-                Log.e(TAG, "onFail: 加载歌曲列表失败：", e);
-            }
-        });
     }
 
     /**

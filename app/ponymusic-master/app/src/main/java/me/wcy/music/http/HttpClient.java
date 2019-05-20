@@ -1,5 +1,6 @@
 package me.wcy.music.http;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -53,9 +54,9 @@ public class HttpClient {
     private static final String PARAM_TING_UID = "tinguid";
     private static final String PARAM_QUERY = "query";
 
-    private static final String API_URL = Preferences.getBaseUrl() +"/api";  //"http://192.168.100.254:5001/api";
-    private static final String SONG_URL = API_URL +"/song/list";
-    private static final String PLAYLIST_LIST_URL = API_URL +"/playlist/list";
+//    private static final String API_URL = Preferences.getBaseUrl() +"/api";  //"http://192.168.100.254:5001/api";
+//    private static final String SONG_URL = API_URL +"/song/list";
+//    private static final String PLAYLIST_LIST_URL = API_URL +"/playlist/list";
     private static final String PAGE_SIZE = "pageSize";
     private static final String PAGE_INDEX = "pageIndex";
     private static final String KEY_WORD = "keyWord";
@@ -70,12 +71,24 @@ public class HttpClient {
         OkHttpUtils.initClient(okHttpClient);
     }
 
+    public static String getApiUrl() {
+        return Preferences.getBaseUrl() +"/api";
+    }
+
+    public static String getSongListUrl(){
+        return getApiUrl() +"/song/list";
+    }
+
+    public static String getPlaylistUrl(){
+        return getApiUrl() +"/playlist/list";
+    }
+
     /**
      * 检查服务器连接<br/>
      * Created by Wagsn on 2019/5/12.
      */
     public static void checkServer(){
-        OkHttpUtils.get().url(API_URL +"/check").build()
+        OkHttpUtils.get().url(getApiUrl() +"/check").build()
                 .execute(new JsonCallback<ResponseMessage>() {
                     @Override
                     public void onResponse(ResponseMessage response, int id) {
@@ -99,7 +112,7 @@ public class HttpClient {
       * @param callback
      */
     public static void getSongInfoList(CommonRequest request, @NonNull final HttpCallback<SongListResponse> callback){
-        OkHttpUtils.post().url(SONG_URL)
+        OkHttpUtils.post().url(getSongListUrl())
                 .addParams(PAGE_INDEX, String.valueOf(request.getPageIndex()))
                 .addParams(PAGE_SIZE, String.valueOf(request.getPageSize()))
                 .addParams(KEY_WORD, request.getKeyword())
@@ -182,7 +195,7 @@ public class HttpClient {
      * @param keyword keyword of song name for search song.
      */
     public static void getPlaylistInfoList(int pageIndex, int pageSize, String keyword, @NonNull final HttpCallback<PlaylistListResponse> callback){
-        OkHttpUtils.post().url(PLAYLIST_LIST_URL)
+        OkHttpUtils.post().url(getPlaylistUrl())
                 .addParams(PAGE_INDEX, String.valueOf(pageIndex))
                 .addParams(PAGE_SIZE, String.valueOf(pageSize))
                 .addParams(KEY_WORD, keyword)

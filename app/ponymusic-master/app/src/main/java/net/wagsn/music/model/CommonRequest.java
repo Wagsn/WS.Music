@@ -10,6 +10,9 @@ public class CommonRequest {
     private int pageSize = 20;
     private String keyword = "";
 
+    // 添加其它条件
+
+
     public int getPageIndex() {
         return pageIndex;
     }

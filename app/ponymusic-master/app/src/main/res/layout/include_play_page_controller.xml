@@ -48,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:contentDescription="@string/play_mode"
             android:src="@drawable/play_mode_level_list" />
 
         <ImageView
@@ -56,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/iv_play"
+            android:contentDescription="@string/play_prev"
             android:src="@drawable/play_btn_prev_selector" />
 
         <ImageView
@@ -63,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:contentDescription="@string/play_or_pause"
             android:src="@drawable/play_btn_play_pause_selector" />
 
         <ImageView
@@ -71,6 +74,17 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/iv_play"
+            android:contentDescription="@string/play_next"
             android:src="@drawable/play_btn_next_selector" />
+
+        <!--评论-->
+        <ImageView
+            android:id="@+id/iv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/song_comment"
+            android:src="@drawable/play_mode_level_list" />
     </RelativeLayout>
 </LinearLayout>

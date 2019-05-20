@@ -39,6 +39,11 @@ public class Song implements Serializable {
      */
     private String url;
 
+    private String artistName;
+
+    private String albumName;
+
+
     public String getId() {
         return id;
     }
@@ -47,6 +52,10 @@ public class Song implements Serializable {
         this.id = id;
     }
 
+    /**
+     * 获得歌曲名称
+     * @return
+     */
     public String getName() {
         return name;
     }
@@ -87,4 +96,19 @@ public class Song implements Serializable {
         this.url = url;
     }
 
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+
+    public String getAlbumName() {
+        return albumName;
+    }
+
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
+    }
 }
