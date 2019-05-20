@@ -35,20 +35,20 @@ public class GenericsUtil {
         Type genType = clazz.getGenericSuperclass();
 
         if (!(genType instanceof ParameterizedType)) {
-            Log.d(TAG, "getSuperClassGenricType: !(genType instanceof ParameterizedType)");
+//            Log.d(TAG, "getSuperClassGenricType: !(genType instanceof ParameterizedType)");
             return Object.class;
         }
 
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
 
         if (index >= params.length || index < 0) {
-            Log.d(TAG, "getSuperClassGenricType: index >= params.length || index < 0");
+//            Log.d(TAG, "getSuperClassGenricType: index >= params.length || index < 0");
             return Object.class;
         }
-        Log.d(TAG, "getSuperClassGenricType: params[index]: "+params[index]);
-        Log.d(TAG, "getSuperClassGenricType: params[index].getClass(): "+params[index].getClass());
+//        Log.d(TAG, "getSuperClassGenricType: params[index]: "+params[index]);
+//        Log.d(TAG, "getSuperClassGenricType: params[index].getClass(): "+params[index].getClass());
         if (!(params[index] instanceof Class)) {
-            Log.d(TAG, "getSuperClassGenricType: !(params[index] instanceof Class)");
+//            Log.d(TAG, "getSuperClassGenricType: !(params[index] instanceof Class)");
             return Object.class;
         }
         return (Class) params[index];

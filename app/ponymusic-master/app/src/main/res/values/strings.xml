@@ -75,4 +75,10 @@
     <string name="grant_permission_setting">授权成功，请在再次操作以设置铃声</string>
     <string name="no_permission_select_image">没有权限，无法选择图片！</string>
     <string name="activity_playlist">播放列表</string>
+    <string name="play_list">播放列表</string>
+    <string name="play_or_pause">播放或暂停</string>
+    <string name="play_mode">播放顺序</string>
+    <string name="play_prev">播放上一首</string>
+    <string name="play_next">播放下一首</string>
+    <string name="song_comment">歌曲评论</string>
 </resources>
