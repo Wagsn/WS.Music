@@ -83,7 +83,7 @@ namespace WS.MessageServer
         /// <returns></returns>
         public PagingResponseMessage<SendMessage> MessageList(PageSearchRequest request)
         {
-            var query = Context.SendRecord.
+            //var query = Context.SendRecord.
 
 
             return null;
