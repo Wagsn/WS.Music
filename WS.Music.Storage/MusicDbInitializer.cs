@@ -912,93 +912,112 @@ namespace WS.Music.Stores
             var wagsnRecoPl = Guid.NewGuid().ToString();
             // 收藏
             var wagsnCollPl = Guid.NewGuid().ToString();
+            var source = "Wagsn";
+            var baiduSource = "Baidu";
             // 歌单
             var playlists = new List<Playlist>
             {
                 new Playlist
                 {
                     Id = "1",
-                    Name = "百度新歌榜",
+                    Name = "新歌榜",
+                    Source = baiduSource
                 },
                 new Playlist
                 {
                     Id = "2",
-                    Name = "百度热歌榜",
+                    Name = "热歌榜",
+                    Source = baiduSource
                 },
                 new Playlist
                 {
                     Id = "6",
                     Name = "KTV热歌榜",
+                    Source = baiduSource
                 },
                 new Playlist
                 {
                     Id = "7",
                     Name = "叱咤歌曲榜",
+                    Source = baiduSource
                 },
                 new Playlist
                 {
                     Id = "8",
                     Name = "Billboard",
+                    Source = baiduSource
                 },
                 new Playlist
                 {
                     Id = "11",
                     Name = "摇滚榜",
+                    Source = baiduSource
                 },
                 new Playlist
                 {
                     Id = "18",
                     Name = "Hito中文榜",
+                    Source = baiduSource
                 },
                 new Playlist
                 {
                     Id = "20",
                     Name = "华语金曲榜",
+                    Source = baiduSource
                 },
                 new Playlist
                 {
                     Id = "21",
                     Name = "欧美金曲榜",
+                    Source = baiduSource
                 },
                 new Playlist
                 {
                     Id = "22",
                     Name = "经典老歌榜",
+                    Source = baiduSource
                 },
                 new Playlist
                 {
                     Id = "23",
-                    Name = "情歌对唱榜"
+                    Name = "情歌对唱榜",
+                    Source =baiduSource
                 },
                 new Playlist
                 {
                     Id = "24",
                     Name = "影视金曲榜",
+                    Source = baiduSource
                 },
                 new Playlist
                 {
                     Id = "25",
                     Name = "网络歌曲榜",
+                    Source = baiduSource
                 },
                 new Playlist
                 {
                     Id = gfRecPl,
-                    Name = "官方推荐歌单"
+                    Name = "官方推荐歌单",
+                    Source = source
                 },
                 new Playlist
                 {
                     Id = wagsnCollPl,
-                    Name = "Wagsn 的收集歌单"
+                    Name = "Wagsn 的收集歌单",
+                    Source = source
                 },
                 new Playlist
                 {
                     Id = wagsnLikePl,
-                    Name = "Wagsn 的喜欢歌单"
+                    Name = "Wagsn 的喜欢歌单",
+                    Source = source
                 },
                 new Playlist
                 {
                     Id = wagsnRecoPl,
-                    Name = "Wagsn 的专属推荐歌单"
+                    Name = "Wagsn 的专属推荐歌单",
+                    Source = source
                 }
             };
             context.AddRange(playlists);

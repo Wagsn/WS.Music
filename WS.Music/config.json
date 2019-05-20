@@ -27,7 +27,8 @@
   "Data": {
     "DefaultConnection": {
       "ConnectionString": "server=localhost;database=ws_music;user=admin;password=123456;",
-      "MessageConnection": "server=localhost;database=ws_message;user=admin;password=123456;"
+      "MessageConnection": "server=localhost;database=ws_message;user=admin;password=123456;",
+      "AuthConnection": "server=localhost;database=ws_auth;user=admin;password=123456;"
     }
   },
   "Port": 5001
