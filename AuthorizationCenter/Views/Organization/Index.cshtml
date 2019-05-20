@@ -1,0 +1,179 @@
+﻿@model IEnumerable<OrganizationJson>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>组织管理</h2>
+
+<p>
+    <a asp-action="Create">新增组织</a>
+</p>
+<table class="table" border="1">
+    <thead>
+        <tr>
+            <th>
+                父组织名
+                @*@Html.DisplayNameFor(model => model.Parent.Name)*@
+            </th>
+            <th>
+                组织名称
+            </th>
+            <th>
+                组织描述
+            </th>
+            <th>可用操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Parent.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-action="Index" asp-controller="User" asp-route-orgId="@item.Id" title="User List">用户列表</a> |
+                    <a asp-action="Create" asp-controller="User" asp-route-orgId="@item.Id" title="Add User">添加用户</a> |
+                    <a asp-action="Index" asp-controller="Organization" asp-route-orgId="@item.Id" title="Organization List">组织列表</a> |
+                    <a asp-action="Create" asp-controller="Organization" asp-route-id="@item.Id" title="Add Organization">添加组织</a> |
+                    <a asp-route-id="@item.Id" title="Move Organization">移动组织(TODO)</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id" title="Edit Organization">编辑组织</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" title="Organization Details">组织详情</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" title="Delete Organization">删除组织</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@* 在这里创建一个组织显示树 *@
+<link rel="stylesheet" href="/css/bootstrapStyle.css" type="text/css">
+
+<h3>树状结构组织树</h3>
+<ul id="treeDemo" class="ztree">
+
+</ul>
+@section Scripts{
+    <script type="text/javascript">
+        // 创建一个zTree树
+        function createTree2(url, treeId) {
+            var zTree; //用于保存创建的树节点
+            var setting = { //设置
+                check: {
+                    enable: true
+                },
+                view: {
+                    showLine: true, //显示辅助线
+                    dblClickExpand: true,
+                },
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "parentId",
+                        rootPId: null
+                    }
+                }
+            };
+            $.ajax({ //请求数据,创建树
+                type: 'GET',
+                url: url,
+                dataType: "json", //返回的结果为json  
+                success: function (data) {
+                    zTree = $.fn.zTree.init($(treeId), setting, data); //创建树
+                },
+                error: function (data) {
+                    alert("创建树失败!" + data);
+                }
+            });
+        }
+        /**
+         * 创建一棵树
+         * @@param treeId HtmlDoc ID
+         */
+
+        function createTree(treeId) {
+            var setting = { //设置
+                check: {
+                    enable: true
+                },
+                view: {
+                    addHoverDom: addHoverDom,
+                    removeHoverDom: removeHoverDom,
+                    selectedMulti: false
+                },
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "parentId"
+                    }
+                },
+                edit: {
+                    enable: true
+                },
+                callback: {
+                    // 点击编辑按钮
+                    beforeEditName: function (treeId, treeNode) {
+                        console.log({
+                            event: "beforeEditName",
+                            treeId,
+                            orgid: treeNode.id
+                        });
+                        // 跳转到编辑按钮
+                        location.href = "/Organization/Edit/" + treeNode.id;
+                        return false;
+                    },
+                    // 修改节点的名称
+                    beforeRename: function (treeId, treeNode, newName) {
+                        // log.environment = "Development"
+                        // log({event: "beforeRename", treeId, orgid: treeNode.id, newName});
+                        console.log({
+                            event: "beforeRename",
+                            treeId,
+                            orgid: treeNode.id,  // the id is source data from server
+                            newName
+                        });
+                        // 向服务器请求修改名称-还是点击编辑按钮直接跳转到编辑界面
+                        return true;
+                    },
+                    // 移除节点
+                    beforeRemove: function (treeDocId, treeNode) {
+                        location.href = "/Organization/Delete/" + treeNode.id;
+                        return false;
+                    }
+                }
+            };
+            data = JSON.parse(`@Html.Raw(WS.Text.JsonUtil.ToJson(Model))`);
+            console.log(data);
+            $.fn.zTree.init($(treeId), setting, data);
+        }
+        
+        $(document).ready(function () {
+            createTree("#treeDemo");
+        });
+        
+        function addHoverDom(treeId, treeNode) {
+            var sObj = $("#" + treeNode.tId + "_span");
+            if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
+            var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+                + "'data-id='" + treeNode.id+"' title='add node' onfocus='this.blur();'></span>";
+            sObj.after(addStr);
+            var btn = $("#addBtn_" + treeNode.tId);
+            if (btn) btn.bind("click", function () {
+                location.href = "/Organization/Create/" + treeNode.id;
+                return false;
+            });
+        };
+        function removeHoverDom(treeId, treeNode) {
+            $("#addBtn_" + treeNode.tId).unbind().remove();
+        };
+
+    </script>
+}
