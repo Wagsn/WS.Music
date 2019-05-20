@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.156
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EDB3909B-B3B4-4A0B-8978-B61C8FDBEFBD}"
 	ProjectSection(SolutionItems) = preProject
@@ -32,17 +32,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.MessageServer", "WS.Mess
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.Core", "WS.Core\WS.Core.csproj", "{A6313F1A-088B-432D-A5D6-A3BBB3D1F450}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.Music.Entities", "WS.Music.Entities\WS.Music.Entities.csproj", "{791C8AE0-D955-4681-9736-2D49F26FDE03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.Music.Entities", "WS.Music.Entities\WS.Music.Entities.csproj", "{791C8AE0-D955-4681-9736-2D49F26FDE03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.Music.Stores", "WS.Music.Storage\WS.Music.Stores.csproj", "{C1DA2A15-C126-4D7F-A968-A18BB32FF82E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.Music.Stores", "WS.Music.Storage\WS.Music.Stores.csproj", "{C1DA2A15-C126-4D7F-A968-A18BB32FF82E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.Music.Defines", "WS.Music.Defines\WS.Music.Defines.csproj", "{6A490257-1E4B-4415-AD96-D3D8687759B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.Music.Defines", "WS.Music.Defines\WS.Music.Defines.csproj", "{6A490257-1E4B-4415-AD96-D3D8687759B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.MessageServer.Entities", "WS.MessageServer.Entities\WS.MessageServer.Entities.csproj", "{1CC7549F-3F5F-4300-8816-7944D1EB784A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.MessageServer.Entities", "WS.MessageServer.Entities\WS.MessageServer.Entities.csproj", "{1CC7549F-3F5F-4300-8816-7944D1EB784A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.PluginCore", "WS.PluginCore\WS.PluginCore.csproj", "{123851BB-23DA-4B88-A40F-C8E2943E1B87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.MessageServer.Stores", "WS.MessageServer.Stores\WS.MessageServer.Stores.csproj", "{94FB5BDD-0ACA-4532-832E-C7B1F8690FC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS.MessageServer.Stores", "WS.MessageServer.Stores\WS.MessageServer.Stores.csproj", "{94FB5BDD-0ACA-4532-832E-C7B1F8690FC5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthorizationCenter", "AuthorizationCenter\AuthorizationCenter.csproj", "{91AF3FBF-7AD4-4C3F-AFE4-F5F3C40CB0E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.Test", "WS.Test\WS.Test.csproj", "{729482B8-0F63-47E4-80F7-A09F0B52FC0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +106,14 @@ Global
 		{94FB5BDD-0ACA-4532-832E-C7B1F8690FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94FB5BDD-0ACA-4532-832E-C7B1F8690FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94FB5BDD-0ACA-4532-832E-C7B1F8690FC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91AF3FBF-7AD4-4C3F-AFE4-F5F3C40CB0E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91AF3FBF-7AD4-4C3F-AFE4-F5F3C40CB0E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91AF3FBF-7AD4-4C3F-AFE4-F5F3C40CB0E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91AF3FBF-7AD4-4C3F-AFE4-F5F3C40CB0E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{729482B8-0F63-47E4-80F7-A09F0B52FC0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{729482B8-0F63-47E4-80F7-A09F0B52FC0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{729482B8-0F63-47E4-80F7-A09F0B52FC0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{729482B8-0F63-47E4-80F7-A09F0B52FC0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

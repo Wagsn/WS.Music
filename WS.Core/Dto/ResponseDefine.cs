@@ -7,7 +7,7 @@ namespace WS.Core
     /// <summary>
     /// 响应码定义
     /// </summary>
-    public class ResponseCodeDefines
+    public class ResponseDefine
     {
         public static readonly string SuccessCode = "0";
 
@@ -15,6 +15,7 @@ namespace WS.Core
         public static readonly string ArgumentNullError = "101";
         public static readonly string ObjectAlreadyExists = "102";
 
+        public static readonly string BadRequset = "400";
         public static readonly string NotFound = "404";
         public static readonly string NotAllow = "403";
 

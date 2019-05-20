@@ -102,7 +102,7 @@ namespace WS.MessageServer
             }
             catch (Exception e)
             {
-                response.Code = ResponseCodeDefines.ServiceError;
+                response.Code = ResponseDefine.ServiceError;
                 response.Message = e.Message;
             }
             return response;

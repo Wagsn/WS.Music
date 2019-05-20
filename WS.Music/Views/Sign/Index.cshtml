@@ -28,6 +28,7 @@
                 <input asp-action="SignIn" asp-route-returnUrl="@(ViewData["returnUrl"])" type="submit" value="登陆" class="btn btn-default" />
                 <input asp-action="SignUp" asp-route-returnUrl="@(ViewData["returnUrl"])" type="submit" value="注册" class="btn btn-default" />
                 <a href="~/Sign/SetPassWord?returnUrl=@(ViewData["returnUrl"])" class="btn btn-default">修改密码</a>
+                <input asp-action="SignOff" asp-route-returnUrl="@(ViewData["returnUrl"])" type="submit" value="注销" class="btn btn-default" />
             </div>
         </form>
     </div>

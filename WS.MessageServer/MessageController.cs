@@ -50,13 +50,13 @@ namespace WS.MessageServer
 
             if(request == null)
             {
-                response.Code = ResponseCodeDefines.ArgumentNullError;
+                response.Code = ResponseDefine.ArgumentNullError;
                 response.Message = "请求体不能为空";
                 return response;
             }
             if (string.IsNullOrWhiteSpace(request.OsType))
             {
-                response.Code = ResponseCodeDefines.ArgumentNullError;
+                response.Code = ResponseDefine.ArgumentNullError;
                 response.Message = "系统类型不能为空";
                 return response;
             }
@@ -70,7 +70,7 @@ namespace WS.MessageServer
             }
             catch(Exception e)
             {
-                response.Code = ResponseCodeDefines.ServiceError;
+                response.Code = ResponseDefine.ServiceError;
                 response.Message = e.Message;
                 Logger.Error($"发送消息，服务器发生错误：\r\n{e.ToString()}");
             }
@@ -83,7 +83,7 @@ namespace WS.MessageServer
         /// <returns></returns>
         public PagingResponseMessage<SendMessage> MessageList(PageSearchRequest request)
         {
-            var query = Context.SendRecord.
+            //var query = Context.SendRecord.
 
 
             return null;

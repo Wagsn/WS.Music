@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WS.Music.Entities\WS.Music.Entities.csproj" />
+    <ProjectReference Include="..\WS.Text\WS.Text.csproj" />
   </ItemGroup>
 
   <ItemGroup>

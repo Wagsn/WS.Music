@@ -82,7 +82,7 @@ namespace WS.Music.Controllers
 
             if(request == null)
             {
-                response.Code = ResponseCodeDefines.ArgumentNullError;
+                response.Code = ResponseDefine.ArgumentNullError;
                 response.Message = "参数错误";
                 return response;
             }
@@ -162,7 +162,7 @@ namespace WS.Music.Controllers
             {
                 return new ResponseMessage
                 {
-                    Code = ResponseCodeDefines.ModelStateInvalid,
+                    Code = ResponseDefine.ModelStateInvalid,
                     Message = "模型验证失败"
                 };
             }
@@ -283,7 +283,7 @@ namespace WS.Music.Controllers
             {
                 return new ResponseMessage
                 {
-                    Code = ResponseCodeDefines.ModelStateInvalid,
+                    Code = ResponseDefine.ModelStateInvalid,
                     Message = "模型验证失败"
                 };
             }
@@ -495,7 +495,7 @@ namespace WS.Music.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("song/save")]
-        public async Task<ResponseMessage> SongSave([FromForm]CommonRequest request)
+        public ResponseMessage SongSave([FromForm]CommonRequest request)
         {
             Console.WriteLine($"[{nameof(SongSave)}] 歌曲 信息 保存 开始\r\n请求体：{JsonUtil.ToJson(request)}");
             Console.WriteLine($"Request Form: ${JsonUtil.ToJson(Request.Form)}");
