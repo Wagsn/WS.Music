@@ -147,17 +147,20 @@ public class LocalMusicFragment extends BaseFragment implements AdapterView.OnIt
         dialog.setTitle(music.getTitle());
         dialog.setItems(R.array.local_music_dialog, (dialog1, which) -> {
             switch (which) {
-                case 0:// 分享
+                case 0: // 分享
                     shareMusic(music);
                     break;
-                case 1:// 设为铃声
+                case 1: // 设为铃声
                     requestSetRingtone(music);
                     break;
-                case 2:// 查看歌曲信息
+                case 2: // 查看歌曲信息
                     MusicInfoActivity.start(getContext(), music);
                     break;
-                case 3:// 删除
+                case 3: // 删除
                     deleteMusic(music);
+                    break;
+                case 4: // 上传本地音乐
+                    ToastUtils.show("上传功能还未实现");
                     break;
             }
         });

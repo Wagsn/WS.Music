@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="无音乐"
+                android:text="@string/no_song"
                 android:textSize="@dimen/text_size_common" />
 
             <TextView

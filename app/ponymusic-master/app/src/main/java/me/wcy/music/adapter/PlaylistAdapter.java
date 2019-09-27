@@ -94,6 +94,7 @@ public class PlaylistAdapter extends BaseAdapter {
         private TextView tvTitle;
         @Bind(R.id.tv_artist)
         private TextView tvArtist;
+        // 更多操作按钮
         @Bind(R.id.iv_more)
         private ImageView ivMore;
         @Bind(R.id.v_divider)

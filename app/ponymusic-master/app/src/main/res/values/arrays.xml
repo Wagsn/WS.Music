@@ -5,6 +5,7 @@
         <item>设为铃声</item>
         <item>@string/music_info</item>
         <item>删除</item>
+        <item>上传</item>
     </string-array>
 
     <string-array name="online_music_dialog">

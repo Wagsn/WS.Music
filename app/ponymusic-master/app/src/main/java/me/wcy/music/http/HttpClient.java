@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import me.wcy.music.model.ArtistInfo;
 import me.wcy.music.model.DownloadInfo;
 import me.wcy.music.model.Lrc;
+import me.wcy.music.model.Music;
 import me.wcy.music.model.OnlinePlaylist;
 import me.wcy.music.model.SearchMusic;
 
@@ -81,6 +82,13 @@ public class HttpClient {
 
     public static String getPlaylistUrl(){
         return getApiUrl() +"/playlist/list";
+    }
+
+    /**
+     * 上传本地音乐
+     */
+    public static void uploadLocalSong(Music music){
+
     }
 
     /**
