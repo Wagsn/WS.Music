@@ -5,7 +5,28 @@
     <title></title>
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data" action="/File/Index">
+    <form method="post" enctype="multipart/form-data" action="http://localhost:5100/file/upload/objectId">
+        <div>
+            <p>Upload one or more files using this form:</p>
+            <input type="file" name="files" multiple />
+        </div>
+        <div>
+            <p>Your FileGuid</p>
+            <input type="text" name="fileGuid" />
+        </div>
+        <div>
+            <p>Your FileName</p>
+            <input type="text" name="name" />
+        </div>
+        <div>
+            <p>Your Username</p>
+            <input type="text" name="username" />
+        </div>
+        <div>
+            <input type="submit" value="Upload" />
+        </div>
+    </form>
+    <!--<form method="post" enctype="multipart/form-data" action="/file/index">
         <div>
             <p>Upload one or more files using this form:</p>
             <input type="file" name="files" multiple />
@@ -17,6 +38,6 @@
         <div>
             <input type="submit" value="Upload" />
         </div>
-    </form>
+    </form>-->
 </body>
 </html>

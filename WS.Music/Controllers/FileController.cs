@@ -127,8 +127,8 @@ namespace FileServer
 
             var fileInfoStr = formModel.GetValue("FileInfo").FirstValue;
             var fileInfo = JsonUtil.ToObject<FileInfo>(fileInfoStr);
-            _musicStore.AddAll(fileInfo);
-            Console.WriteLine($"[File] [Index] fileInfo: {JsonUtil.ToJson(fileInfo)}");
+            //_musicStore.AddAll(fileInfo);
+            Console.WriteLine($"[FileController] [Index] fileInfo: {JsonUtil.ToJson(fileInfo)}");
 
             //var fileInfo = new FileInfo(); 
 
